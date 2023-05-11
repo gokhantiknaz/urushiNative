@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/46851135/236486477-fd94faaf-6efb-4559-8bb7-4d72adba25a7.svg)
+![image](https://raw.githubusercontent.com/gokhantiknaz/nativemyth/1adc87b2a1eb8183fbd0e5c69d56d2a4ab851d3a/src/images/icon.svg)
 
 # MythLights
 
