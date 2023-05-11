@@ -3,8 +3,8 @@ export default{
   backgroundColor: '#ffffff',
   white: '#ffffff',
   darkGrey: '#224957',
- 
-  // test colors for setup allignment
+  black:'#000000',
+// test colors for setup allignment
     test1: '#80ffa2',
     test2: '#e3b4a1',
     test3: '#f2fc90',

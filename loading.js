@@ -4,15 +4,12 @@ import { View, StyleSheet, Image, Text } from "react-native";
 
 
 const Loading_Screen = () => {
-
-
   return (
     <View style={styles.container}>
-
       <Image
         style={styles.image}
         resizeMode="contain"
-        source={require("./assets/load2.gif")}
+        source={require("./assets/loading.gif")}
       />
 
     </View>
