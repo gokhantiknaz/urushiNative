@@ -3,14 +3,11 @@ import {
   ActivityIndicator,
   StyleSheet,
   TextInput,
-  ScrollView,
-  KeyboardAvoidingView,
   FlatList,
-  Text,
   View,
 } from "react-native";
-import { Response_Item , Button_1 , colors } from "../components/export";
-import { db, collection, addDoc, doc, getDocs } from "../firebase/firebase-utilities";
+import { Response_Item , Button_1 , colors } from "../../components/export";
+import { db, collection, addDoc, doc, getDocs } from "../../firebase/firebase-utilities";
 
 const DATA = [
   {
@@ -33,7 +30,7 @@ const CreateChat = props => {
   const handleChatSubmit = async () => {
 
     setresponseRecieve(true);
-    
+
     if (inputText === "") {
       setresponseRecieve(false);
       return;
@@ -42,7 +39,7 @@ const CreateChat = props => {
 
 
     // const querySnapshot = await getDocs(collection(db, "conversation"));
-    
+
     // querySnapshot.forEach((doc) => {
     //   setResponseText(responseText + doc.data().message)
     //   console.log(doc.id, " => ", doc.data().message);
@@ -53,7 +50,7 @@ const CreateChat = props => {
     //     id: stringID,
     //     title: inputText
     //   });
-   
+
 
     try {
       const response = await fetch(
@@ -98,7 +95,7 @@ const CreateChat = props => {
         //     console.error("Error adding document: ", e);
         //   }
         // ///// Updating Collection ////////
-   
+
       } else {
         console.error("Invalid response format:", json);
       }
@@ -135,11 +132,11 @@ const CreateChat = props => {
             <View style={styles.container3}>
               <Button_1 title="Sent" onPress={handleChatSubmit} />
             </View>
-            
+
         </View>
         )}
        {/* {Platform.OS === "android" && <KeyboardAvoidingView behavior="padding" />} */}
-        
+
       {/* </ScrollView> */}
     </View>
   );

@@ -14,7 +14,7 @@ import {
   addDoc,
   doc,
   getDocs,
-} from "../firebase/firebase-utilities";
+} from "../../firebase/firebase-utilities";
 
 
 
@@ -70,7 +70,7 @@ const CreateImage = () => {
           onPress={generateImages}
           style={styles.button}
         />
-        
+
       </ScrollView>
     </View>
   );

@@ -44,7 +44,7 @@ const Button_1 = props => {
         <Text style={{  
           alignItems: 'center',
           fontFamily: 'OpenSans_600SemiBold',
-         fontSize:16, color: '#ffffff' 
+          fontSize:16, color: '#ffffff'
          }}>{props.title}</Text>
       </Pressable>
     </Animated.View>

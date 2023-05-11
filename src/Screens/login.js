@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     marginBottom: 16,
-    borderRadius: 12,
+    // borderRadius: 12,
     backgroundColor: "#224957",
     fontSize: 18,
     fontFamily: 'OpenSans_400Regular',

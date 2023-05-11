@@ -20,10 +20,6 @@ import {
   OpenSans_800ExtraBold_Italic,
 } from '@expo-google-fonts/open-sans';
 
-
-
-
-  
 try {
   initializeApp(firebaseConfig);
 } catch (err) {
