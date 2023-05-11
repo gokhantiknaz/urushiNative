@@ -1,8 +1,5 @@
 import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
-
-
-
 const Loading_Screen = () => {
   return (
     <View style={styles.container}>

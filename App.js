@@ -4,6 +4,8 @@ import firebaseConfig from './src/firebase/firebaseConfig';
 import Home from "./src/navigation/navigation";
 import AppLoading from 'expo-app-loading';
 import Loading_Screen from './loading';
+import './ i18n';
+
 import {
   useFonts,
   OpenSans_300Light,
@@ -19,6 +21,8 @@ import {
   OpenSans_700Bold_Italic,
   OpenSans_800ExtraBold_Italic,
 } from '@expo-google-fonts/open-sans';
+import {useTranslation} from "react-i18next";
+import {useState} from "react";
 
 try {
   initializeApp(firebaseConfig);
@@ -55,6 +59,15 @@ export default function App() {
     OpenSans_800ExtraBold_Italic,
   });
 
+  const {t, i18n} = useTranslation();
+  const [currentLanguage,setLanguage] =useState('en');
+
+  const changeLanguage = value => {
+    i18n
+        .changeLanguage(value)
+        .then(() => setLanguage(value))
+        .catch(err => console.log(err));
+  };
 
   if (!fontsLoaded) {
     return < Loading_Screen />;

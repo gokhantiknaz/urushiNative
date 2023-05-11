@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import {Text, TouchableOpacity, View} from "react-native";
 import {StyleSheet, Image, FlatList, Alert} from 'react-native'
+import {useTranslation} from "react-i18next";
 const FlatMenu = (props) => {
 
-
+    const {t, i18n} = useTranslation();
     const data = [
         {
             id: 1,
-            name: 'LIGHTS',
+            name:   t('light'),
             image: 'https://img.icons8.com/clouds/100/000000/groups.png',
             count: 124.711,
         },
