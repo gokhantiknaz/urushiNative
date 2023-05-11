@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {View, StyleSheet, Image, Text, FlatList, TouchableOpacity} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Button_1 from "../components/button1";
-import {FlatListItemSeparator} from "../components/deviceList";
+import {FlatListItemSeparator} from "../components/DeviceList";
 
 const Welcome_screen = () => {
 

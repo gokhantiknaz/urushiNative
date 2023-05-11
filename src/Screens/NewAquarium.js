@@ -8,7 +8,7 @@ import {
 import Button_1 from "../components/button1";
 import firebaseConfig from "../firebase/firebaseConfig";
 import {db, collection, addDoc} from "../firebase/firebase-utilities";
-import DeviceList from "../components/deviceList";
+import DeviceList from "../components/DeviceList";
 
 const NewAquarium = () => {
     const [email, setEmail] = React.useState("");
