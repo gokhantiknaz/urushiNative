@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/openMind.iml" filepath="$PROJECT_DIR$/.idea/openMind.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MythLights.iml" filepath="$PROJECT_DIR$/.idea/MythLights.iml" />
     </modules>
   </component>
 </project>
