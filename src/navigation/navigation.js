@@ -12,7 +12,6 @@ import UnderCons from "../components/UnderCons";
 import colors from "../components/colors";
 import {useTranslation} from "react-i18next";
 import images from "../images/images";
-import ImageBackgroundPage from "../Test";
 
 const Stack = createStackNavigator();
 
@@ -21,8 +20,6 @@ function AuthScreens() {
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
 
-
-            {/*<Stack.Screen name="xx" component={ImageBackgroundPage}/>*/}
             <Stack.Screen name="welcome_screen" component={Welcome_screen}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium}/>
             <Stack.Screen name="menu" component={Radialmenu} options={{
