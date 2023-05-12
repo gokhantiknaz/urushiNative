@@ -1,5 +1,5 @@
-import {LogBox} from 'react-native';
-import { getApp, initializeApp } from 'firebase/app';
+import {ImageBackground, LogBox} from 'react-native';
+import {getApp, initializeApp} from 'firebase/app';
 import firebaseConfig from './src/firebase/firebaseConfig';
 import Home from "./src/navigation/navigation";
 import AppLoading from 'expo-app-loading';
@@ -7,44 +7,7 @@ import Loading_Screen from './loading';
 import './ i18n';
 
 import {
-  useFonts,
-  OpenSans_300Light,
-  OpenSans_400Regular,
-  OpenSans_500Medium,
-  OpenSans_600SemiBold,
-  OpenSans_700Bold,
-  OpenSans_800ExtraBold,
-  OpenSans_300Light_Italic,
-  OpenSans_400Regular_Italic,
-  OpenSans_500Medium_Italic,
-  OpenSans_600SemiBold_Italic,
-  OpenSans_700Bold_Italic,
-  OpenSans_800ExtraBold_Italic,
-} from '@expo-google-fonts/open-sans';
-import {useTranslation} from "react-i18next";
-import {useState} from "react";
-
-try {
-  initializeApp(firebaseConfig);
-} catch (err) {
-  // we skip the “already exists” message which is
-  // not an actual error when we’re hot-reloading
-  if (!getApp.length) {
-    console.error("Firebase initialization error raised", err.stack);
-  }
-}
-
-const app = initializeApp(firebaseConfig)
-
-// LogBox.ignoreAllLogs(true)
-LogBox.ignoreLogs([
-  "expo-app-loading is deprecated in favor of expo-splash-screen"
-]);
-
-
-export default function App() {
-
-  let [fontsLoaded] = useFonts({
+    useFonts,
     OpenSans_300Light,
     OpenSans_400Regular,
     OpenSans_500Medium,
@@ -57,23 +20,54 @@ export default function App() {
     OpenSans_600SemiBold_Italic,
     OpenSans_700Bold_Italic,
     OpenSans_800ExtraBold_Italic,
-  });
+} from '@expo-google-fonts/open-sans';
+import {useTranslation} from "react-i18next";
+import {useState} from "react";
+import images from "./src/images/images";
 
-  const {t, i18n} = useTranslation();
-  const [currentLanguage,setLanguage] =useState('en');
+try {
+    initializeApp(firebaseConfig);
+} catch (err) {
+    // we skip the “already exists” message which is
+    // not an actual error when we’re hot-reloading
+    if (!getApp.length) {
+        console.error("Firebase initialization error raised", err.stack);
+    }
+}
 
-  const changeLanguage = value => {
-    i18n
-        .changeLanguage(value)
-        .then(() => setLanguage(value))
-        .catch(err => console.log(err));
-  };
+const app = initializeApp(firebaseConfig)
 
-  if (!fontsLoaded) {
-    return < Loading_Screen />;
-  } else {
-    return <Home />
-  }
+// LogBox.ignoreAllLogs(true)
+LogBox.ignoreLogs([
+                      "expo-app-loading is deprecated in favor of expo-splash-screen"
+                  ]);
+
+
+export default function App() {
+
+    let [fontsLoaded] = useFonts({
+                                     OpenSans_300Light, OpenSans_400Regular, OpenSans_500Medium, OpenSans_600SemiBold, OpenSans_700Bold, OpenSans_800ExtraBold, OpenSans_300Light_Italic, OpenSans_400Regular_Italic, OpenSans_500Medium_Italic, OpenSans_600SemiBold_Italic, OpenSans_700Bold_Italic, OpenSans_800ExtraBold_Italic,
+                                 });
+
+    const {t, i18n} = useTranslation();
+    const [currentLanguage, setLanguage] = useState('en');
+
+    const changeLanguage = value => {
+        i18n
+            .changeLanguage(value)
+            .then(() => setLanguage(value))
+            .catch(err => console.log(err));
+    };
+
+    if (!fontsLoaded) {
+        return < Loading_Screen/>;
+    } else {
+        return (
+            // <ImageBackground source={images.background}  style={{width:'100%', justifyContent: "center", flex: 1, alignItems: "center", backgroundColor:'#fff'}}>
+                <Home/>
+             // </ImageBackground>
+        );
+    }
 
 }
 

@@ -8,9 +8,10 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
+
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -20,7 +21,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+
       }
     },
     "web": {

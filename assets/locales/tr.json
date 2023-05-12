@@ -1,6 +1,8 @@
 {
   "translation": {
     "hello":"Merhaba",
-    "light": "Işıklar"
+    "light": "Işıklar",
+    "selectaquarium":"Akvaryum Seçiniz",
+    "newAquarium": "Yeni Akvaryum"
   }
 }

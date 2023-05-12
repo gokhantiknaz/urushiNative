@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: '#000000'
+
   },
   container1:{
     width: '100%',

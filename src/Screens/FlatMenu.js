@@ -2,40 +2,33 @@ import React, {useState} from 'react'
 import {Text, TouchableOpacity, View} from "react-native";
 import {StyleSheet, Image, FlatList, Alert} from 'react-native'
 import {useTranslation} from "react-i18next";
+import colors from "../components/colors";
+import images from "../images/images";
 const FlatMenu = (props) => {
 
     const {t, i18n} = useTranslation();
     const data = [
         {
             id: 1,
-            name:   t('light'),
-            image: 'https://img.icons8.com/clouds/100/000000/groups.png',
-            count: 124.711,
+            name:   t('connections'),
+            image: images.connection,
         },
         {
             id: 2,
-            name: 'PUMPS',
-            image: 'https://img.icons8.com/color/100/000000/real-estate.png',
-            count: 234.722,
+            name: t('auto'),
+            image: images.auto,
         },
         {
             id: 3,
-            name: 'DAIRY',
-            image: 'https://img.icons8.com/color/100/000000/find-matching-job.png',
-            count: 324.723,
+            name: t('manuel'),
+            image: images.manuel,
         },
         {
             id: 4,
-            name: 'MONITORS',
-            image: 'https://img.icons8.com/clouds/100/000000/employee-card.png',
-            count: 154.573,
-        },
-        {
-            id: 5,
-            name: 'SETTINGS',
-            image: 'https://img.icons8.com/color/100/000000/land-sales.png',
-            count: 124.678,
-        },
+            name: t('settings'),
+            image: images.settings,
+        }
+
     ]
 
     const [options, setOptions] = useState(data)
@@ -54,15 +47,9 @@ const FlatMenu = (props) => {
                 renderItem={({item}) => {
                     return (
                         <TouchableOpacity style={styles.card} onPress={() => clickEventListener(item)}>
-                            <Image style={styles.image} source={{uri: item.image}}/>
+                            <Image style={styles.image} source={item.image}/>
                             <View style={styles.cardContent}>
                                 <Text style={styles.name}>{item.name}</Text>
-                                <Text style={styles.count}>{item.count}</Text>
-                                <TouchableOpacity
-                                    style={styles.followButton}
-                                    onPress={() => clickEventListener(item)}>
-                                    <Text style={styles.followButtonText}>Explore now</Text>
-                                </TouchableOpacity>
                             </View>
                         </TouchableOpacity>
                     )
@@ -76,15 +63,19 @@ const FlatMenu = (props) => {
 const styles = StyleSheet.create({
                                      container: {
                                          flex: 1,
-                                         marginTop: 20,
-                                         backgroundColor: '#ebf0f7',
+
+
                                      },
                                      contentList: {
                                          flex: 1,
+                                         backgroundColor: colors.black,
+
                                      },
                                      cardContent: {
                                          marginLeft: 20,
                                          marginTop: 10,
+                                         backgroundColor:colors.black
+
                                      },
                                      image: {
                                          width: 90,
@@ -92,6 +83,7 @@ const styles = StyleSheet.create({
                                          borderRadius: 45,
                                          borderWidth: 2,
                                          borderColor: '#ebf0f7',
+                                         backgroundColor:colors.white
                                      },
 
                                      card: {
@@ -107,10 +99,11 @@ const styles = StyleSheet.create({
                                          marginLeft: 20,
                                          marginRight: 20,
                                          marginTop: 20,
-                                         backgroundColor: 'white',
+                                         backgroundColor: 'black',
                                          padding: 10,
                                          flexDirection: 'row',
                                          borderRadius: 30,
+
                                      },
 
                                      name: {

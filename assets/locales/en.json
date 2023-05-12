@@ -1,6 +1,8 @@
 {
   "translation": {
     "hello":"Hello",
-    "light": "Lights"
+    "light": "Lights",
+    "selectaquarium":"Select Aquarium",
+    "newAquarium": "New Aquarium"
   }
 }

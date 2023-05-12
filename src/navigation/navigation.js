@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, Text, Image, View} from 'react-native';
+import {StyleSheet, Text, Image, View, ImageBackground, SafeAreaView} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {auth, onAuthStateChanged} from "../firebase/firebase-utilities";
@@ -9,22 +9,39 @@ import Welcome_screen from '../Screens/Welcome';
 import FlatMenu from "../Screens/FlatMenu";
 import Radialmenu from "../components/RadialMenu/radialmenu";
 import UnderCons from "../components/UnderCons";
+import colors from "../components/colors";
+import {useTranslation} from "react-i18next";
+import images from "../images/images";
+import ImageBackgroundPage from "../Test";
 
 const Stack = createStackNavigator();
 
 function AuthScreens() {
+    const [t] = useTranslation();
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="radialmenu" component={Radialmenu}/>
-            {/*<Stack.Screen name="xx" component={SprialMenu}/>*/}
-            <Stack.Screen name="lights" component={FlatMenu}/>
+
+
+            {/*<Stack.Screen name="xx" component={ImageBackgroundPage}/>*/}
             <Stack.Screen name="welcome_screen" component={Welcome_screen}/>
-            <Stack.Screen name="login" component={Login}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium}/>
+            <Stack.Screen name="menu" component={Radialmenu} options={{
+                title: t('menu'), headerShown: false, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
+            <Stack.Screen name="lights" component={FlatMenu} options={{
+                title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
+            <Stack.Screen name="login" component={Login}/>
             <Stack.Screen name="UnderCons" component={UnderCons}/>
         </Stack.Navigator>
+
     );
 }
+
 function AppScreens() {
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -57,21 +74,10 @@ export default function Home() {
 
     }, []);
 
-
-    ////  Comment Below stack for Development Mode /////
-    ////  UnComment Below stack for Production Mode /////
     return (
         <NavigationContainer>
-            {user == true ? <AppScreens/> : <AuthScreens/>}
-        </NavigationContainer>
-    );
-
-
-    ///  {/* Developent Mode  */}  ///
-    ///  {/* UnComment below Stack for App */}  ///
-    return (
-        <NavigationContainer>
-            <AppScreens/>
+            <AuthScreens/>
         </NavigationContainer>
     );
 }
+
