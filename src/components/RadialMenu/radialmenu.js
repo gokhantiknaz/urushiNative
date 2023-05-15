@@ -15,9 +15,10 @@ let menuHtml =
 
 </head>
 <body>
+
 <!-- menu Pricipal -->
 <ul class="menu">
-    <div class="toggle" style='text-align: center ;margin:auto; justify-content: center; color: #04fc43' >
+    <div class="toggle" >
         <img src="data:image/jpg;base64, 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" alt="">
     </div>
     <!-- Menus Secundarios -->
@@ -65,18 +66,13 @@ let menuHtml =
     }
 
     body{
-        background-color: #1e1f23;
         display: flex;
         justify-content: center;
         align-items: center;
 
     }
     /* Size and Background  */
-    .toggle img
-    {
-        width: 70px;
-        cursor: pointer;
-    }
+    
     .menu li img
     {
         width: 30px;
@@ -85,13 +81,33 @@ let menuHtml =
     /* Video - Tutorial */
     .menu
     {
-
         position: relative;
-        width: 240px;
-        height: 235px;
+        width: 280px;
+        height: 280px;
         display: flex;
         justify-content: center;
         align-items: center;
+        padding:0;
+    }
+    .menu .toggle
+    {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        background: #2f363e;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        color:white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index: 10000;
+        transition: trasform 2.25s;
+    }
+    .toggle img
+    {
+        width: 50px;
+        cursor: pointer;
     }
     .menu li{
         position: absolute;
@@ -136,22 +152,7 @@ let menuHtml =
   
     }
     /* Resto */
-    .menu .toggle
-    {
-        position: relative;
-        width: 60px;
-        height: 60px;
-        background: #2f363e;
-        border: 2px solid #fff;
-        border-radius: 50%;
-        color:white;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-        z-index: 10000;
-        font-size: 2rem;
-        transition: trasform 2.25s;
-    }</style>
+    </style>
 
 <script>
 
@@ -188,6 +189,10 @@ export default function Radialmenu() {
 
     return (
         <SafeAreaView style={{flex: 1}}>
+            <Image
+            source={images.background}
+            style={styles.backgroundImage}
+            />
             <WebView
                 style={styles.WebViewStyle}
                 //Loading html file from project folder
@@ -208,6 +213,17 @@ const styles = StyleSheet.create({
                                          justifyContent: 'center',
                                          alignItems: 'center',
                                          flex: 1,
-                                         marginTop: 0
+                                         marginTop: 0,
+                                         backgroundColor: 'transparent'
                                      },
+                                     backgroundImage: {
+                                        flex: 1,
+                                        resizeMode: 'cover',
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        zIndex:0
+                                      },
                                  });

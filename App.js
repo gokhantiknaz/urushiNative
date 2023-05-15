@@ -63,9 +63,7 @@ export default function App() {
         return < Loading_Screen/>;
     } else {
         return (
-            // <ImageBackground source={images.background}  style={{width:'100%', justifyContent: "center", flex: 1, alignItems: "center", backgroundColor:'#fff'}}>
                 <Home/>
-             // </ImageBackground>
         );
     }
 
