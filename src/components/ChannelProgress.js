@@ -12,24 +12,26 @@ const ChannelProgress = (props) => {
     return (
 
         <View style={styles.container}>
-            <Text style={styles.text}>
-                {props.ChannelName}: {value} %
-            </Text>
-            <Slider style={styles.slide}
-                    value={value}
-                    minimumValue={0}
-                    maximumValue={100}
-                    step={1}
-                    minimumTrackTintColor={colors.test2}
-                    maximumTrackTintColor="white"
-                    onValueChange={setValue}
-                    onSlidingStart={value => {
-                        setSlideStartingValue(value);
-                    }}
-                    onSlidingComplete={value => {
-                        setSlideCompletionValue(value);
-                    }}
-            />
+            <View style={styles.item}>
+                <Text style={styles.text}>
+                    {props.ChannelName}: {value} %
+                </Text>
+                <Slider style={styles.slide}
+                        value={value}
+                        minimumValue={0}
+                        maximumValue={100}
+                        step={1}
+                        minimumTrackTintColor={colors.test2}
+                        maximumTrackTintColor="white"
+                        onValueChange={setValue}
+                        onSlidingStart={value => {
+                            setSlideStartingValue(value);
+                        }}
+                        onSlidingComplete={value => {
+                            setSlideCompletionValue(value);
+                        }}
+                />
+            </View>
         </View>
 
     );
@@ -37,18 +39,19 @@ const ChannelProgress = (props) => {
 export default ChannelProgress;
 const styles = StyleSheet.create({
                                      container: {
-                                         flex: 1,
-                                         marginTop: 80,
-                                         flexDirection: "row",
-                                         alignItems: 'flex-start',
-                                         marginRight: 20,
+                                         padding: 10,
+
+                                     },
+                                     item: {
+                                        display:"flex",
+                                        flexDirection:"row",
 
                                      },
                                      text: {
                                          marginEnd: 10,
-                                         marginLeft: 10,
                                          color: 'white',
-                                         width:120
+                                         width:120,
+                                         
                                      },
                                      slide: {
                                          flexGrow: 1,
