@@ -1,4 +1,4 @@
-import {ImageBackground, View} from "react-native";
+import {ImageBackground, View, StyleSheet} from "react-native";
 import ChannelProgress from "../components/ChannelProgress";
 import images from "../images/images";
 
@@ -9,23 +9,23 @@ const MainProgress = (props) => {
             <View style={{flex: 1, padding: 5}}>
 
                 <View style={{flex: 1}}></View>
-                <View style={{flex: 2}}>
-                    <View style={{height:40}}>
+                <View style={styles.progressContainer}>
+                    <View>
                         <ChannelProgress ChannelName='Royal'></ChannelProgress>
                     </View>
-                    <View style={{height:40}}>
+                    <View>
                         <ChannelProgress ChannelName='Blue'></ChannelProgress>
                     </View>
-                    <View style={{height:40}}>
+                    <View>
                         <ChannelProgress ChannelName='Cyan+'></ChannelProgress>
                     </View>
-                    <View style={{flex: 1}}>
+                    <View>
                         <ChannelProgress ChannelName='Actinic+'></ChannelProgress>
                     </View>
-                    <View style={{flex: 1}}>
+                    <View>
                         <ChannelProgress ChannelName='He White'></ChannelProgress>
                     </View>
-                    <View style={{flex: 1, justifyContent: 'flex-end'}}>
+                    <View>
                         <ChannelProgress ChannelName='Magenta+'></ChannelProgress>
                     </View>
                 </View>
@@ -36,3 +36,10 @@ const MainProgress = (props) => {
 }
 
 export default MainProgress;
+const styles = StyleSheet.create({
+    progressContainer: {
+        flex:2,
+        display: "flex",
+        justifyContent:"flex-end",
+    },
+});
