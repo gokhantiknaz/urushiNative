@@ -11,7 +11,7 @@ import Radialmenu from "../components/RadialMenu/radialmenu";
 import UnderCons from "../components/UnderCons";
 import colors from "../components/colors";
 import {useTranslation} from "react-i18next";
-import images from "../images/images";
+import MainProgress from "../Screens/MainProgress";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,7 @@ function AuthScreens() {
     const [t] = useTranslation();
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-
+            <Stack.Screen name="seekBar" component={MainProgress}/>
             <Stack.Screen name="welcome_screen" component={Welcome_screen}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium}/>
             <Stack.Screen name="menu" component={Radialmenu} options={{
