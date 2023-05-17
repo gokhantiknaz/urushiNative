@@ -3,6 +3,10 @@
     "hello":"Merhaba",
     "light": "Işıklar",
     "selectaquarium":"Akvaryum Seçiniz",
-    "newAquarium": "Yeni Akvaryum"
+    "newAquarium": "Yeni Akvaryum",
+    "settings": "Ayarlar",
+    "manuel": "Manuel",
+    "auto": "Otomatik",
+    "connections": "Bağlantılar"
   }
 }

@@ -11,7 +11,6 @@
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
-
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -21,12 +20,17 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#ffffff",
-
-      }
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.gokhantiknaz.MythLights"
     },
     "web": {
       "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0d92669c-43fd-4af7-a4a4-4a6abfa0dd6a"
+      }
     }
   }
 }

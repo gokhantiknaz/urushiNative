@@ -20,7 +20,7 @@ function AuthScreens() {
     const [t] = useTranslation();
     return (
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="seekBar" component={SpectrumChart}/>
+            <Stack.Screen name="chart" component={SpectrumChart}/>
             <Stack.Screen name="welcome_screen" component={Welcome_screen}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium}/>
             <Stack.Screen name="menu" component={Radialmenu} options={{
@@ -33,6 +33,7 @@ function AuthScreens() {
                     backgroundColor: colors.black,
                 }
             }}/>
+            <Stack.Screen name="seekBar" component={MainProgress}/>
             <Stack.Screen name="login" component={Login}/>
             <Stack.Screen name="UnderCons" component={UnderCons}/>
         </Stack.Navigator>

@@ -1,8 +1,12 @@
 {
   "translation": {
-    "hello":"Hello",
+    "hello": "Hello",
     "light": "Lights",
-    "selectaquarium":"Select Aquarium",
-    "newAquarium": "New Aquarium"
+    "selectaquarium": "Select Aquarium",
+    "newAquarium": "New Aquarium",
+    "settings": "Settings",
+    "manuel": "Manuel",
+    "auto": "Auto",
+    "connections": "Connections"
   }
 }
