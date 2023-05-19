@@ -1,5 +1,5 @@
 import React from "react";
-import {View, TextInput, Button, StyleSheet, Text, Alert} from "react-native";
+import {View, TextInput, Button, StyleSheet, Text, Alert, Dimensions} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {
     auth,
@@ -9,7 +9,9 @@ import Button_1 from "../components/button1";
 import firebaseConfig from "../firebase/firebaseConfig";
 import {db, collection, addDoc} from "../firebase/firebase-utilities";
 import DeviceList from "../components/DeviceList";
+import ImageSelect from "../components/ImagePicker";
 
+const width = Dimensions.get('window').width;
 const NewAquarium = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -43,9 +45,8 @@ const NewAquarium = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.container1}>
+            <View style={styles.newAquarium}>
                 <Text style={styles.SignUpLabel}>New Aquarium</Text>
-
                 <TextInput
                     style={styles.input}
                     placeholder="Aquarium Name"
@@ -54,10 +55,14 @@ const NewAquarium = () => {
                     onChangeText={setName}
                 />
             </View>
-            <View style={styles.container2}>
+            <View style={styles.imagepicker}>
+                <ImageSelect></ImageSelect>
+            </View>
+
+            <View style={styles.deviceList}>
                 <DeviceList></DeviceList>
             </View>
-            <View style={styles.container3}>
+            <View style={styles.savebutton}>
                 <Button_1 title="Save" onPress={handleSave}/>
             </View>
         </View>
@@ -71,9 +76,8 @@ const styles = StyleSheet.create({
                                          alignItems: "center",
                                          paddingHorizontal: "10%",
                                          backgroundColor: "black",
-
                                      },
-                                     container1: {
+                                     newAquarium: {
                                          width: "100%",
                                          justifyContent: "center",
                                          alignItems: "center",
@@ -81,13 +85,15 @@ const styles = StyleSheet.create({
                                          top: '10%',
                                          // backgroundColor: "red",
                                      },
-                                     container2: {
-                                         flex:2,
-                                         top: '10%',
-                                         justifyContent: "center",
-                                         alignItems: "center",
+                                     imagepicker: {
+                                         flex: 1,
                                      },
-                                     container3: {
+                                     deviceList: {
+                                         flex: 1,
+                                         width:width,
+                                         height:50
+                                     },
+                                     savebutton: {
                                          width: "100%",
                                          justifyContent: "center",
                                          alignItems: "center",
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
                                      },
 
                                      Button: {
-                                         width: "100%",
+
                                          height: 48,
                                          borderRadius: 8,
                                          backgroundColor: "#007AFF",

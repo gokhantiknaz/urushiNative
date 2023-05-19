@@ -25,7 +25,6 @@ const Button_1 = props => {
         expand_Down;
     }
 
-
     return (
         <Animated.View
             style={[
@@ -54,13 +53,13 @@ const Button_1 = props => {
 
 const styles = StyleSheet.create({
                                      container: {
-                                         width: '70%',
+                                         width: '80%',
                                          // backgroundColor: Colors.test2
                                      },
                                      button1: {
                                          alignSelf: 'stretch',
-                                         paddingVertical: "5.9%",
-                                         borderRadius: 25,
+                                         paddingVertical: "3%",
+                                         borderRadius: 10,
                                          backgroundColor: '#431cf3',
                                          alignItems: 'center',
                                          justifyContent: 'center',

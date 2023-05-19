@@ -19,24 +19,26 @@ const Stack = createStackNavigator();
 function AuthScreens() {
     const [t] = useTranslation();
     return (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="chart" component={SpectrumChart}/>
-            <Stack.Screen name="welcome_screen" component={Welcome_screen}/>
-            <Stack.Screen name="NewAquarium" component={NewAquarium}/>
-            <Stack.Screen name="menu" component={Radialmenu} options={{
-                title: t('menu'), headerShown: false, headerTintColor: '#fff', headerStyle: {
-                    backgroundColor: colors.black,
-                }
-            }}/>
-            <Stack.Screen name="lights" component={FlatMenu} options={{
-                title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
-                    backgroundColor: colors.black,
-                }
-            }}/>
-            <Stack.Screen name="seekBar" component={MainProgress}/>
-            <Stack.Screen name="login" component={Login}/>
-            <Stack.Screen name="UnderCons" component={UnderCons}/>
-        </Stack.Navigator>
+
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+                {/*<Stack.Screen name="chart" component={SpectrumChart}/>*/}
+                <Stack.Screen name="welcome_screen" component={Welcome_screen}/>
+                <Stack.Screen name="NewAquarium" component={NewAquarium}/>
+                <Stack.Screen name="menu" component={Radialmenu} options={{
+                    title: t('menu'), headerShown: false, headerTintColor: '#fff', headerStyle: {
+                        backgroundColor: colors.black,
+                    }
+                }}/>
+                <Stack.Screen name="lights" component={FlatMenu} options={{
+                    title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                        backgroundColor: colors.black,
+                    }
+                }}/>
+                <Stack.Screen name="seekBar" component={MainProgress}/>
+                <Stack.Screen name="login" component={Login}/>
+                <Stack.Screen name="UnderCons" component={UnderCons}/>
+            </Stack.Navigator>
+
 
     );
 }
@@ -74,6 +76,7 @@ export default function Home() {
     }, []);
 
     return (
+
         <NavigationContainer>
             <AuthScreens/>
         </NavigationContainer>

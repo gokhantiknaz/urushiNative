@@ -24,6 +24,7 @@ import {
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import images from "./src/images/images";
+import BleContextProvider from "./store/ble-context";
 
 try {
     initializeApp(firebaseConfig);
@@ -63,7 +64,9 @@ export default function App() {
         return < Loading_Screen/>;
     } else {
         return (
+            // <BleContextProvider>
                 <Home/>
+            // </BleContextProvider>
         );
     }
 

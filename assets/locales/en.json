@@ -7,6 +7,8 @@
     "settings": "Settings",
     "manuel": "Manuel",
     "auto": "Auto",
-    "connections": "Connections"
+    "connections": "Connections",
+    "imageselect": "Select your aquarium picture",
+    "deviceList":"Device List"
   }
 }

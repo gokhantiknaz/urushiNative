@@ -7,6 +7,8 @@
     "settings": "Ayarlar",
     "manuel": "Manuel",
     "auto": "Otomatik",
-    "connections": "Bağlantılar"
+    "connections": "Bağlantılar",
+    "imageselect": "Akvaryum fotosu seçiniz",
+    "deviceList":"Cihaz Listesi"
   }
 }

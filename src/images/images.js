@@ -8,6 +8,8 @@ export  default {
     connection:require('../../assets/lights-connection.png'),
     auto:require('../../assets/lights-auto.png'),
     manuel:require('../../assets/lights-manual.png'),
-    settings:require('../../assets/lights-settings.png')
+    settings:require('../../assets/lights-settings.png'),
+    deviceIcon:require('../../assets/icon.png'),
+    mythLight:require('../../assets/background.png')
 
 }
