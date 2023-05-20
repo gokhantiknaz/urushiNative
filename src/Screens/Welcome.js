@@ -9,7 +9,7 @@ import images from "../images/images";
 import {clearStorage, getData, saveData} from "../../data/useAsyncStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Welcome_screen = ({ navigation }) => {
+const Welcome_screen = ({navigation}) => {
 
 
     const LANGUAGES = [
@@ -20,7 +20,7 @@ const Welcome_screen = ({ navigation }) => {
 
     React.useEffect(() => {
         const focusHandler = navigation.addListener('focus', () => {
-           getAquariums();
+            getAquariums();
         });
         return focusHandler;
     }, [navigation]);
@@ -43,6 +43,7 @@ const Welcome_screen = ({ navigation }) => {
             const keys = await AsyncStorage.getAllKeys();
             const list = await getData("aquariumList");
             setAquarimList(list);
+            console.log(list);
         } catch (error) {
             console.log(error);
         }
@@ -61,9 +62,10 @@ const Welcome_screen = ({ navigation }) => {
             return <View style={[styles.item, styles.itemInvisible]}/>;
         }
         return (
-            <TouchableOpacity style={[styles.list, data.selectedClass]} onPress={() => {
-                navigation.navigate("menu", {aquarium: aquarimList.find(obj => obj.id === data.item.id)})
-            }}>
+            <TouchableOpacity style={[styles.list, data.selectedClass]}
+                              onPress={(x) => {
+                                  navigation.navigate("detail", {aquarium: data.item});
+                              }}>
                 <View style={styles.item}>
                     <Image source={{uri: `data:image/png;base64,${data.item.image}`}} style={{height: 60, width: 60}}></Image>
                     <Text style={{color: "white"}}>{data.item.name}</Text>
@@ -135,7 +137,7 @@ const Welcome_screen = ({ navigation }) => {
 };
 
 const width = Dimensions.get('window').width;
-const numColumns = 3;
+const numColumns = 2;
 const styles = StyleSheet.create({
                                      container: {
                                          flex: 1,

@@ -22,11 +22,10 @@ function AuthScreens() {
     return (
 
         <Stack.Navigator screenOptions={{headerShown: false}}>
-
             {/*<Stack.Screen name="chart" component={SpectrumChart}/>*/}
             <Stack.Screen name="welcome_screen" component={Welcome_screen}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium}/>
-            <Stack.Screen name="menu" component={AquarimDetailMenu} options={{
+            <Stack.Screen name="detail" component={AquarimDetailMenu} options={{
                 title: t('menu'), headerShown: false, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }

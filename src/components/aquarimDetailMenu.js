@@ -175,9 +175,6 @@ export default function AquarimDetailMenu(props) {
 
     const navigation = useNavigation();
     const selectedAquarium = props.route.params.aquarium;
-
-    console.log(selectedAquarium);
-
     function onMessage(data) {
         if (!data) {
             navigation.navigate("UnderCons")
@@ -199,7 +196,7 @@ export default function AquarimDetailMenu(props) {
             <View style={{flex: 1, alignItems: "center"}}>
                 <Text style={{color: "white", marginTop: 10, marginBottom: 20}}>{selectedAquarium.name}</Text>
                 {/*<Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}
-                <Image source={{uri: `${selectedAquarium.imageUri}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>
+                <Image source={{uri: `${selectedAquarium.imageUri??''}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>
             </View>
             <View style={{flex: 5}}>
                 <WebView
