@@ -10,11 +10,11 @@ const DeviceList = () => {
 
     const [t] = useTranslation();
     const [deviceList, setDeviceList] = useState([
-                                                     {key: 1, deviceId: "01-12-112", name: "IKIGAI 01"},
-                                                     {key: 2, deviceId: "01-12-113", name: "IKIGAI 02"},
-                                                     {key: 3, deviceId: "01-12-143", name: "IKIGAI 03"},
-                                                     {key: 4, deviceId: "01-12-134", name: "IKIGAI 04"},
-                                                     {key: 5, deviceId: "01-12-144", name: "IKIGAI 05"}
+                                                     {key: 1, deviceId: "01-12-112", devicename: "IKIGAI 01"},
+                                                     {key: 2, deviceId: "01-12-113", devicename: "IKIGAI 02"},
+                                                     {key: 3, deviceId: "01-12-143", devicename: "IKIGAI 03"},
+                                                     {key: 4, deviceId: "01-12-134", devicename: "IKIGAI 04"},
+                                                     {key: 5, deviceId: "01-12-144", devicename: "IKIGAI 05"}
                                                  ]);
 
 
@@ -54,13 +54,12 @@ const DeviceList = () => {
                 style={[styles.list, item.selectedClass]}
                 onPress={() => setSelectedItem(item)}
             >
-                <ImageBackground source={images.mythLight}>
                     <View style={styles.item}>
                         <Text style={styles.itemText}>{item.deviceId}</Text>
-                        <Text style={styles.itemText}>{item.name}</Text>
+                        <Text style={styles.itemText}>{item.devicename}</Text>
                         <Text style={styles.itemText}></Text>
                     </View>
-                </ImageBackground>
+
             </TouchableOpacity>
         );
     };

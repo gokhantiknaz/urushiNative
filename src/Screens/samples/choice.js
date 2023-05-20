@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Button_1 from "../../components/button1";
-import { db, collection, addDoc  } from "../../firebase/firebase-utilities";
+
 
 const Choice = () => {
   const navigation = useNavigation();

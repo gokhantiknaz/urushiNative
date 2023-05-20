@@ -53,14 +53,13 @@ const Button_1 = props => {
 
 const styles = StyleSheet.create({
                                      container: {
-                                         width: '80%',
-                                         // backgroundColor: Colors.test2
+                                         width: '90%'
                                      },
                                      button1: {
                                          alignSelf: 'stretch',
                                          paddingVertical: "3%",
                                          borderRadius: 10,
-                                         backgroundColor: '#431cf3',
+                                         backgroundColor: '#003cd6',
                                          alignItems: 'center',
                                          justifyContent: 'center',
                                      }

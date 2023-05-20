@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { Response_Item , Button_1 , colors } from "../../components/export";
-import { db, collection, addDoc, doc, getDocs } from "../../firebase/firebase-utilities";
+
 
 const DATA = [
   {

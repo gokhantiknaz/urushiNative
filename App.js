@@ -25,6 +25,7 @@ import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import images from "./src/images/images";
 import BleContextProvider from "./store/ble-context";
+import {saveData} from "./data/useAsyncStorage";
 
 try {
     initializeApp(firebaseConfig);
@@ -50,22 +51,12 @@ export default function App() {
                                      OpenSans_300Light, OpenSans_400Regular, OpenSans_500Medium, OpenSans_600SemiBold, OpenSans_700Bold, OpenSans_800ExtraBold, OpenSans_300Light_Italic, OpenSans_400Regular_Italic, OpenSans_500Medium_Italic, OpenSans_600SemiBold_Italic, OpenSans_700Bold_Italic, OpenSans_800ExtraBold_Italic,
                                  });
 
-    const {t, i18n} = useTranslation();
-    const [currentLanguage, setLanguage] = useState('en');
-
-    const changeLanguage = value => {
-        i18n
-            .changeLanguage(value)
-            .then(() => setLanguage(value))
-            .catch(err => console.log(err));
-    };
-
     if (!fontsLoaded) {
         return < Loading_Screen/>;
     } else {
         return (
             // <BleContextProvider>
-                <Home/>
+            <Home/>
             // </BleContextProvider>
         );
     }

@@ -3,7 +3,7 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": null,
+  "urlRandomness": "5s8gYq8",
   "https": false,
   "scheme": "com.gokhantiknaz.MythLights",
   "devClient": false

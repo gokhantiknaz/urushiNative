@@ -8,13 +8,6 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
-import {
-  db,
-  collection,
-  addDoc,
-  doc,
-  getDocs,
-} from "../../firebase/firebase-utilities";
 
 
 

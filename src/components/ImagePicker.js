@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import {useTranslation} from "react-i18next";
 import {Button_1} from "./export";
 
-export default function ImageSelect() {
+export default function ImageSelect(props) {
     const [image, setImage] = useState(null);
     const [t] = useTranslation();
     const pickImage = async () => {
@@ -14,19 +14,22 @@ export default function ImageSelect() {
                                                                    allowsEditing: true,
                                                                    aspect: [4, 3],
                                                                    quality: 1,
-                                                               });
-        console.log(result);
+                                                                   base64: true
 
+                                                               });
+        // console.log(result);
         if (!result.canceled) {
             setImage(result.assets[0].uri);
+            props.setImageUri(result.assets[0].uri);
+            props.setImage(result.assets[0].base64);
         }
     };
     const width = Dimensions.get('window').width;
     return (
 
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Button_1 title={t("imageselect")} onPress={pickImage} />
-            {image && <Image source={{uri: image}} style={{width:width , height: 80}}/>}
+            <Button_1 title={t("imageselect")} onPress={pickImage}/>
+            {image && <Image source={{uri: image}} style={{width: width, height: 80}}/>}
         </View>
     );
 }

@@ -1,71 +1,85 @@
-import React from "react";
-import {View, TextInput, Button, StyleSheet, Text, Alert, Dimensions} from "react-native";
+import React, {useEffect, useId, useState} from "react";
+import {View, TextInput, Button, StyleSheet, Text, Alert, Dimensions, ImageBackground} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import {
-    auth,
-    createUserWithEmailAndPassword,
-} from "../firebase/firebase-utilities";
+
 import Button_1 from "../components/button1";
 import firebaseConfig from "../firebase/firebaseConfig";
 import {db, collection, addDoc} from "../firebase/firebase-utilities";
 import DeviceList from "../components/DeviceList";
 import ImageSelect from "../components/ImagePicker";
+import {clearStorage, getData, removeItem, saveData} from "../../data/useAsyncStorage";
+import {mergeData} from "../../data/useAsyncStorage/useAsyncStorage";
+import images from "../images/images";
+import colors from "../components/colors";
+
 
 const width = Dimensions.get('window').width;
 const NewAquarium = () => {
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [name, setName] = useState("");
+    const [image, setImage] = useState(null);
+    const [deviceList, setDeviceList] = useState([]);
+    const [imageUri, setImageUri] = useState('');
 
-    const [name, setName] = React.useState("");
     const navigation = useNavigation();
 
-    const handleSave = () => {
+    const id = useId();
+
+    const save = async () => {
         try {
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(async (userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    const docRef = await addDoc(collection(db, "users"), {
-                        name: name,
-                        email: email,
-                        password: password,
-                    });
-                    console.log("Document written with ID: ", docRef.id);
-                }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
+            let myAquarium = {
+                id: id,
+                name: name,
+                image: image,
+                imageUri: imageUri
+            };
+            myAquarium.deviceList = deviceList;
 
-            });
-        } catch (error) {
-            console.error("Error", error);
+
+            let list = await getData("aquariumList");
+
+            if (list == null) {
+                let newlist = [];
+                newlist.push(myAquarium);
+                await saveData("aquariumList", newlist);
+            } else {
+                list.push(myAquarium);
+                await removeItem("aquariumList");
+                await saveData("aquariumList", list);
+
+            }
+            navigation.goBack();
+
+        } catch (e) {
+            console.log(e);
+            alert('Failed to save the data to the storage')
         }
-
-    };
+    }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.newAquarium}>
-                <Text style={styles.SignUpLabel}>New Aquarium</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Aquarium Name"
-                    placeholderTextColor={"#ffffff"}
-                    value={name}
-                    onChangeText={setName}
-                />
-            </View>
-            <View style={styles.imagepicker}>
-                <ImageSelect></ImageSelect>
-            </View>
+        <ImageBackground source={images.mythLight} style={{flex: 1}}>
+            <View style={styles.container}>
+                <View style={styles.newAquarium}>
+                    <Text style={styles.SignUpLabel}>New Aquarium</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Aquarium Name"
+                        placeholderTextColor={"#ffffff"}
+                        value={name}
+                        onChangeText={setName}
+                    />
+                </View>
+                <View style={styles.imagepicker}>
+                    <ImageSelect setImage={setImage} setImageUri={setImageUri}></ImageSelect>
+                </View>
 
-            <View style={styles.deviceList}>
-                <DeviceList></DeviceList>
+                <View style={styles.deviceList}>
+                    <DeviceList setDeviceList={setDeviceList}></DeviceList>
+                </View>
+                <View style={styles.savebutton}>
+                    <Button_1 title="Save" onPress={save}/>
+                </View>
             </View>
-            <View style={styles.savebutton}>
-                <Button_1 title="Save" onPress={handleSave}/>
-            </View>
-        </View>
+        </ImageBackground>
     );
 };
 
@@ -75,7 +89,6 @@ const styles = StyleSheet.create({
                                          justifyContent: "space-between",
                                          alignItems: "center",
                                          paddingHorizontal: "10%",
-                                         backgroundColor: "black",
                                      },
                                      newAquarium: {
                                          width: "100%",
@@ -87,23 +100,24 @@ const styles = StyleSheet.create({
                                      },
                                      imagepicker: {
                                          flex: 1,
+                                         width: width
                                      },
                                      deviceList: {
                                          flex: 1,
-                                         width:width,
-                                         height:50
+                                         width: width,
+                                         height: 50
                                      },
                                      savebutton: {
-                                         width: "100%",
+                                         width: width,
                                          justifyContent: "center",
                                          alignItems: "center",
                                          bottom: "5%"
                                      },
                                      SignUpLabel: {
-                                         fontSize: 40,
-                                         marginBottom: 50,
+                                         fontSize: 30,
+                                         marginBottom: 30,
                                          fontFamily: 'OpenSans_800ExtraBold',
-                                         color: "#224957",
+                                         color: "#003cd6",
                                      },
                                      input: {
                                          width: "100%",
@@ -118,16 +132,7 @@ const styles = StyleSheet.create({
                                          fontSize: 15,
                                          fontFamily: 'OpenSans_400Regular',
                                          color: "#ffffff",
-                                     },
-
-                                     Button: {
-
-                                         height: 48,
-                                         borderRadius: 8,
-                                         backgroundColor: "#007AFF",
-                                         justifyContent: "center",
-                                         alignItems: "center",
-                                     },
+                                     }
                                  });
 
 export default NewAquarium;

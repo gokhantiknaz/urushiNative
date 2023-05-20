@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TextInput, Button, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { auth, signInWithEmailAndPassword , onAuthStateChanged   } from "../firebase/firebase-utilities";
+
 import Button_1 from "../components/button1"
 
 
@@ -16,7 +16,7 @@ const SignIn = () => {
 
     signInWithEmailAndPassword (auth, email, password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
         const user = userCredential.user;
         // console.log("Signed Un", user);
         // navigation.navigate("CreateChat");
@@ -31,7 +31,7 @@ const SignIn = () => {
 
 
 
-    
+
   };
 
   return (

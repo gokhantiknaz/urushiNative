@@ -1,9 +1,10 @@
-import React from 'react';
-import {Image, ImageBackground, SafeAreaView, StyleSheet, Text, Dimensions} from 'react-native';
+import React, {useEffect} from 'react';
+import {Image, ImageBackground, SafeAreaView, StyleSheet, Text, Dimensions, Button} from 'react-native';
 import WebView from "react-native-webview";
 import {useNavigation} from "@react-navigation/native";
 import images from "../../images/images";
 import {BackgroundImage} from "@rneui/base";
+import {getData} from "../../../data/useAsyncStorage";
 
 let menuHtml =
     `<html lang="en">
@@ -170,8 +171,13 @@ let menuHtml =
 </html>
 `;
 
-export default function Radialmenu() {
+export default function AquarimDetailMenu(props) {
+
     const navigation = useNavigation();
+    const selectedAquarium = props.route.params.aquarium;
+
+    console.log(selectedAquarium);
+
     function onMessage(data) {
         if (!data) {
             navigation.navigate("UnderCons")
@@ -189,9 +195,12 @@ export default function Radialmenu() {
 
     return (
         <SafeAreaView style={{flex: 1}}>
+
+            {/*<Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}
+            <Text style={{color:"white"}}>{selectedAquarium.name}</Text>
             <Image
-            source={images.background}
-            style={styles.backgroundImage}
+                source={images.background}
+                style={styles.backgroundImage}
             />
             <WebView
                 style={styles.WebViewStyle}
@@ -217,13 +226,13 @@ const styles = StyleSheet.create({
                                          backgroundColor: 'transparent'
                                      },
                                      backgroundImage: {
-                                        flex: 1,
-                                        resizeMode: 'cover',
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        width: '100%',
-                                        height: '100%',
-                                        zIndex:0
-                                      },
+                                         flex: 1,
+                                         resizeMode: 'cover',
+                                         position: 'absolute',
+                                         top: 0,
+                                         left: 0,
+                                         width: '100%',
+                                         height: '100%',
+                                         zIndex: 0
+                                     },
                                  });
