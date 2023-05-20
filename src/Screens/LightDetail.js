@@ -4,7 +4,7 @@ import {StyleSheet, Image, FlatList, Alert} from 'react-native'
 import {useTranslation} from "react-i18next";
 import colors from "../components/colors";
 import images from "../images/images";
-const FlatMenu = (props) => {
+const LightDetail = (props) => {
 
     const {t, i18n} = useTranslation();
     const data = [
@@ -28,7 +28,17 @@ const FlatMenu = (props) => {
             name: t('settings'),
             image: images.settings,
         }
-
+        ,
+        {
+            id: 5,
+            name: t('templates'),
+            image: images.settings,
+        },
+        {
+            id: 6,
+            name: t('delete'),
+            image: images.settings,
+        }
     ]
 
     const [options, setOptions] = useState(data)
@@ -137,4 +147,4 @@ const styles = StyleSheet.create({
                                          fontSize: 12,
                                      },
                                  })
-export default FlatMenu;
+export default LightDetail;

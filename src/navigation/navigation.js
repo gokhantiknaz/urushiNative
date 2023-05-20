@@ -5,7 +5,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import Login from "../Screens/Login";
 import NewAquarium from "../Screens/NewAquarium";
 import Welcome_screen from '../Screens/Welcome';
-import FlatMenu from "../Screens/FlatMenu";
+import LightDetail from "../Screens/LightDetail";
 import AquarimDetailMenu from "../components/RadialMenu/aquarimDetailMenu";
 import UnderCons from "../components/UnderCons";
 import colors from "../components/colors";
@@ -27,7 +27,7 @@ function AuthScreens() {
                         backgroundColor: colors.black,
                     }
                 }}/>
-                <Stack.Screen name="lights" component={FlatMenu} options={{
+                <Stack.Screen name="lights" component={LightDetail} options={{
                     title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                         backgroundColor: colors.black,
                     }
