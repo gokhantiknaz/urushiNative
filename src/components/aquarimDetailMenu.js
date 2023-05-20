@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
-import {Image, ImageBackground, SafeAreaView, StyleSheet, Text, Dimensions, Button} from 'react-native';
+import {Image, ImageBackground, SafeAreaView, StyleSheet, Text, Dimensions, Button, View} from 'react-native';
 import WebView from "react-native-webview";
 import {useNavigation} from "@react-navigation/native";
-import images from "../../images/images";
+import images from "../images/images";
 import {BackgroundImage} from "@rneui/base";
-import {getData} from "../../../data/useAsyncStorage";
+import {getData} from "../../data/useAsyncStorage";
 
 let menuHtml =
     `<html lang="en">
@@ -195,24 +195,24 @@ export default function AquarimDetailMenu(props) {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-
-            {/*<Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}
-            <Text style={{color:"white"}}>{selectedAquarium.name}</Text>
-            <Image
-                source={images.background}
-                style={styles.backgroundImage}
-            />
-            <WebView
-                style={styles.WebViewStyle}
-                //Loading html file from project folder
-                source={{html: menuHtml}}
-                //Enable Javascript support
-                javaScriptEnabled={true}
-                //For the Cache
-                domStorageEnabled={true}
-                onMessage={onMessage}
-            />
-
+            <Image source={images.background} style={styles.backgroundImage}/>
+            <View style={{flex: 1, alignItems: "center"}}>
+                <Text style={{color: "white", marginTop: 10, marginBottom: 20}}>{selectedAquarium.name}</Text>
+                {/*<Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}
+                <Image source={{uri: `${selectedAquarium.imageUri}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>
+            </View>
+            <View style={{flex: 5}}>
+                <WebView
+                    style={styles.WebViewStyle}
+                    //Loading html file from project folder
+                    source={{html: menuHtml}}
+                    //Enable Javascript support
+                    javaScriptEnabled={true}
+                    //For the Cache
+                    domStorageEnabled={true}
+                    onMessage={onMessage}
+                />
+            </View>
         </SafeAreaView>
     );
 }

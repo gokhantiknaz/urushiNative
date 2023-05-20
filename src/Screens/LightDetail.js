@@ -4,13 +4,15 @@ import {StyleSheet, Image, FlatList, Alert} from 'react-native'
 import {useTranslation} from "react-i18next";
 import colors from "../components/colors";
 import images from "../images/images";
+
 const LightDetail = (props) => {
 
+    const {navigation} = props;
     const {t, i18n} = useTranslation();
     const data = [
         {
             id: 1,
-            name:   t('connections'),
+            name: t('connections'),
             image: images.connection,
         },
         {
@@ -22,6 +24,7 @@ const LightDetail = (props) => {
             id: 3,
             name: t('manuel'),
             image: images.manuel,
+            navigate: "manuelMod"
         },
         {
             id: 4,
@@ -38,12 +41,13 @@ const LightDetail = (props) => {
             id: 6,
             name: t('delete'),
             image: images.settings,
+            navigate: "delete"
         }
     ]
 
     const [options, setOptions] = useState(data)
     const clickEventListener = item => {
-        Alert.alert('Message', 'Item clicked. ' + item.name)
+        navigation.navigate(item.navigate);
     }
     return (
         <View style={styles.container}>
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
                                      cardContent: {
                                          marginLeft: 20,
                                          marginTop: 10,
-                                         backgroundColor:colors.black
+                                         backgroundColor: colors.black
 
                                      },
                                      image: {
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
                                          borderRadius: 45,
                                          borderWidth: 2,
                                          borderColor: '#ebf0f7',
-                                         backgroundColor:colors.white
+                                         backgroundColor: colors.white
                                      },
 
                                      card: {

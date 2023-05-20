@@ -22,7 +22,7 @@ const SprialMenu = () => {
 const styles = StyleSheet.create({
                                      container: {
                                          flex: 1,
-                                         backgroundColor: '#f6f6f6',
+                                         backgroundColor: 'black',
                                      },
                                      title: {
                                          paddingTop: 100,
