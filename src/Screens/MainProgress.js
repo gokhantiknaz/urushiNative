@@ -1,9 +1,11 @@
 import {ImageBackground, View, StyleSheet} from "react-native";
 import ChannelProgress from "../components/ChannelProgress";
 import images from "../images/images";
+import {useState} from "react";
 
 const MainProgress = (props) => {
 
+    const[value,setValue]  = useState(0);
     return (
         <ImageBackground source={images.background} style={{flex: 1}}>
             <View style={{flex: 1, padding: 5}}>
@@ -11,7 +13,7 @@ const MainProgress = (props) => {
                 <View style={{flex: 1}}></View>
                 <View style={styles.progressContainer}>
                     <View>
-                        <ChannelProgress ChannelName='Royal'></ChannelProgress>
+                        <ChannelProgress ChannelName='Royal' setValue={(e)=>{setValue(e)}}></ChannelProgress>
                     </View>
                     <View>
                         <ChannelProgress ChannelName='Blue'></ChannelProgress>

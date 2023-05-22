@@ -10,8 +10,6 @@ const SprialMenu = () => {
     };
 
     return (<View style={styles.container}>
-        <StatusBar barStyle={'default'}/>
-
         <View style={styles.content}>
             <FanButton updateIndex={(index) => setIndex(index)}/>
             <Text style={{marginTop: 36, fontSize: 18, fontWeight: '300'}}>MYTH LIGHTS</Text>

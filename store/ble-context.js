@@ -7,9 +7,9 @@ import { useEffect } from "react";
 
 
 
-export const BleContext = React.createContext({ //create context for ble manager 
+export const BleContext = React.createContext({ //create context for ble manager
     startScan: () => { },
-    connectDevice:async  (device) => { },
+    connectDevice:async  (device,id) => { },
     disconnectDevice: () => { },
     devices: [],
     connectedDevice: null,
@@ -17,7 +17,6 @@ export const BleContext = React.createContext({ //create context for ble manager
     getBleManagerConnectedDevices: async() => [],
     stopScan: () => { }
 });
-
 const BleContextProvider = ({ children }) => {
     const blxFns = useBlex()
     const bleDevices=blxFns.devices
@@ -30,7 +29,7 @@ const BleContextProvider = ({ children }) => {
         setBleFns({devices:bleDevices,...blxFns})
     }, [bleDevices])
 
- 
+
 
     return (
         <BleContext.Provider value={bleFns}>

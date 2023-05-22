@@ -13,6 +13,10 @@ import {useTranslation} from "react-i18next";
 import MainProgress from "../Screens/MainProgress";
 import SprialMenu from "../components/spiralMenu/SprialMenu";
 import {ManuelMod} from "../components/ManuelMod";
+import BLEScreen from "../Screens/BLEScreen";
+import BLEDevices from "../Screens/BLEDevices";
+import {BleContext} from "../../store/ble-context";
+import Loading_Screen from "../../loading";
 
 
 const Stack = createStackNavigator();
@@ -22,8 +26,9 @@ function AuthScreens() {
     return (
 
         <Stack.Navigator screenOptions={{headerShown: false}}>
+            {/*<Stack.Screen name="BleScreen" component={BLEScreen} options={{title: 'BLE Devce Scanner'}}/>*/}
             {/*<Stack.Screen name="chart" component={SpectrumChart}/>*/}
-            <Stack.Screen name="welcome_screen" component={Welcome_screen}/>
+            <Stack.Screen name="home" component={Welcome_screen}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium}/>
             <Stack.Screen name="detail" component={AquarimDetailMenu} options={{
                 title: t('menu'), headerShown: false, headerTintColor: '#fff', headerStyle: {
@@ -43,6 +48,7 @@ function AuthScreens() {
             <Stack.Screen name="login" component={Login}/>
             <Stack.Screen name="UnderCons" component={UnderCons}/>
             <Stack.Screen name="spiralMenu" component={SprialMenu}/>
+            <Stack.Screen name="BleDevices" component={BLEDevices}/>
         </Stack.Navigator>
     );
 }
@@ -60,6 +66,36 @@ function AppScreens() {
 }
 
 export default function Home() {
+
+    const [loading, setLoading] = useState(false);
+    const bleCtx = useContext(BleContext); //get ble context
+
+    React.useEffect(() => {
+        startsScan();
+    }, [])
+
+
+    const startsScan = async () => { // start scanning for bluetooth devices
+
+        if (loading) {
+            setLoading(false);
+            bleCtx.stopScan();
+            return;
+        }
+        const stopTimer = setTimeout(() => {
+            bleCtx.stopScan();
+            setLoading(false);
+            clearTimeout(stopTimer);
+        }, 60000);
+
+        setLoading(true);
+
+        bleCtx.startScan();
+    };
+
+    if (loading) {
+        return < Loading_Screen/>;
+    }
 
     return (
 

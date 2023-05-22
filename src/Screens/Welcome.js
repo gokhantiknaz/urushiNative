@@ -18,7 +18,7 @@ const Welcome_screen = ({navigation}) => {
     ];
     // const navigation = useNavigation();
 
-    React.useEffect(() => {
+    useEffect(() => {
         const focusHandler = navigation.addListener('focus', () => {
             getAquariums();
         });
@@ -29,7 +29,6 @@ const Welcome_screen = ({navigation}) => {
 
     const [aquarimList, setAquarimList] = useState([]);
 
-
     getData("language").then((val) => {
         setLanguage(val);
     });
@@ -37,26 +36,16 @@ const Welcome_screen = ({navigation}) => {
     const setLanguage = (code) => {
         return i18n.changeLanguage(code);
     };
-
     const getAquariums = async () => {
         try {
             const keys = await AsyncStorage.getAllKeys();
             const list = await getData("aquariumList");
             setAquarimList(list);
-            console.log(list);
+
         } catch (error) {
             console.log(error);
         }
     };
-
-    //useEffect(() => {getAquariums()}, [])
-    // useEffect(() => {
-    //     getAquariums()
-    //     return () => {
-    //     }
-    //
-    // }, [])
-
     const renderItem = (data) => {
         if (data.empty === true) {
             return <View style={[styles.item, styles.itemInvisible]}/>;

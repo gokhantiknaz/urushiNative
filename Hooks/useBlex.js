@@ -42,6 +42,7 @@ const useBlex = () => {
     };
 
     const requestPermissions = async () => { //request permissions for ios and android
+        console.log(Platform.OS);
         if (Platform.OS === "android") {
             if ((ExpoDevice.platformApiLevel ?? -1) < 31) {
                 const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
@@ -71,6 +72,7 @@ const useBlex = () => {
             return;
         }
         console.log("Scanning started");
+        setDevices([]);
         _BleManager.startDeviceScan(null, {
                                         allowDuplicates: false,
                                     },
@@ -100,6 +102,7 @@ const useBlex = () => {
         console.log("Connecting to device", id ? id : _device.name)
         const deviceID = id ? id : _device.id;
         _BleManager.stopDeviceScan();
+
 
         _BleManager.connectToDevice(deviceID,{timeout:60000}).then(async device => {
             return await device.discoverAllServicesAndCharacteristics();

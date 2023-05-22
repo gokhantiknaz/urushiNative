@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
     Text,
     View,
@@ -10,12 +10,11 @@ import {
 
 } from 'react-native';
 
-import { StatusBar } from 'expo-status-bar';
-
-import { BleContext } from '../Store/ble-context';
-const BLEScreen = ({ navigation }) => {
+import {StatusBar} from 'expo-status-bar';
+import {BleContext} from "../../store/ble-context";
 
 
+const BLEScreen = ({navigation}) => {
     const bleCtx = useContext(BleContext);
 
     const [isScanning, setIsScanning] = useState(false);
@@ -28,12 +27,12 @@ const BLEScreen = ({ navigation }) => {
             setIsScanning(false);
             bleCtx.stopScan();
             return;
-        } 1
+        }
         const stopTimer = setTimeout(() => {
             bleCtx.stopScan();
             setIsScanning(false);
             clearTimeout(stopTimer);
-          }, 60000);
+        }, 60000);
 
         setIsScanning(true);
         setBluetoothDevices([]);
@@ -50,12 +49,12 @@ const BLEScreen = ({ navigation }) => {
     }
 
     const connectToDevice = async device => { //call from connect button
-        if (!device) return;
+        if (!device) {
+            return;
+        }
         await bleCtx.connectDevice(device);
         bleCtx.sendDatatoDevice(device, 'AAA')
         navigation.navigate('BLEDevices')
-
-
     };
 
     const sendData = async () => { // send data to connected device
@@ -71,7 +70,7 @@ const BLEScreen = ({ navigation }) => {
     }, [bleCtx.devices]);
 
     // render list of bluetooth devices
-    const RenderItem = ({ device }) => {
+    const RenderItem = ({device}) => {
         const color = selectedDevice === device ? '#307ecc' : 'lightblue';
         return (
             <>
@@ -90,31 +89,16 @@ const BLEScreen = ({ navigation }) => {
                         }}>
                         <Text
                             style={{
-                                fontSize: 18,
-                                textTransform: 'capitalize',
-                                color: "black"//connected ? Colors.white : Colors.black,
+                                fontSize: 18, textTransform: 'capitalize', color: "black"//connected ? Colors.white : Colors.black,
                             }}>
                             {device.name}
                         </Text>
                         <View
-                            style={{
-                                backgroundColor: color,
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                            }}>
-                            <Text
-                                style={{
-                                    fontSize: 14,
-                                    color: "black"//connected ? Colors.white : Colors.black,
-                                }}>
+                            style={{backgroundColor: color, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <Text style={{fontSize: 14, color: "black"}}>
                                 RSSI: {device.rssi}
                             </Text>
-                            <Text
-                                style={{
-                                    fontSize: 14,
-                                    color: "black" //connected ? Colors.white : Colors.black,
-                                }}>
+                            <Text style={{fontSize: 14, color: "black"}}>
                                 ID: {device.id}
                             </Text>
                         </View>
@@ -126,25 +110,16 @@ const BLEScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={[styles.mainBody]}>
-            <StatusBar
-               style={"auto"}
-            />
-
             <ScrollView
                 // contentContainerStyle={styles.mainBody}
-                style={{ flex: 1 }}
-                contentInsetAdjustmentBehavior="automatic"
-            >
+                style={{flex: 1}}
+                contentInsetAdjustmentBehavior="automatic">
                 <View
                     style={{
                         marginBottom: 10,
                     }}>
                     <View>
-                        <Text
-                            style={{
-                                fontSize: 30,
-                                textAlign: 'center',
-                            }}>
+                        <Text style={{fontSize: 30, textAlign: 'center',}}>
                             React Native BLE
                         </Text>
                     </View>
@@ -160,7 +135,7 @@ const BLEScreen = ({ navigation }) => {
                     <TouchableOpacity
                         activeOpacity={0.5}
                         style={styles.buttonStyle}
-                        onPress={() => navigation.navigate("Devices", { device: "null" })}>
+                        onPress={() => navigation.navigate("Devices", {device: "null"})}>
                         <Text style={styles.buttonTextStyle}>
                             Goto BLEDevices
                         </Text>
@@ -173,12 +148,12 @@ const BLEScreen = ({ navigation }) => {
                         fontSize: 20,
                         marginLeft: 10,
                         marginBottom: 5,
-                                            }}>
+                    }}>
                     Nearby Devices: {bluetoothDevices.length}
                 </Text>
                 {bluetoothDevices.map(device => (
-                    <View style={{ marginHorizontal: 10 }} key={device.id}>
-                        <RenderItem device={device} />
+                    <View style={{marginHorizontal: 10}} key={device.id}>
+                        <RenderItem device={device}/>
                     </View>
                 ))}
             </ScrollView>
@@ -198,29 +173,30 @@ const BLEScreen = ({ navigation }) => {
 
 const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
-    mainBody: {
-        flex: 1,
-        justifyContent: 'center',
-        // height: windowHeight,
-        width: '100%',
-    },
-    buttonStyle: {
-        backgroundColor: '#307ecc',
-        borderWidth: 0,
-        color: '#FFFFFF',
-        borderColor: '#307ecc',
-        height: 45,
-        alignItems: 'center',
-        borderRadius: 10,
-        marginHorizontal: 10,
-        marginVertical: 5,
+                                     mainBody: {
+                                         flex: 1,
+                                         justifyContent: 'center',
+                                         // height: windowHeight,
+                                         width: '100%',
 
-    },
-    buttonTextStyle: {
-        color: '#FFFFFF',
-        paddingVertical: 10,
-        fontSize: 16,
-    },
-});
+                                     },
+                                     buttonStyle: {
+                                         backgroundColor: '#307ecc',
+                                         borderWidth: 0,
+                                         color: '#FFFFFF',
+                                         borderColor: '#307ecc',
+                                         height: 45,
+                                         alignItems: 'center',
+                                         borderRadius: 10,
+                                         marginHorizontal: 10,
+                                         marginVertical: 5,
+
+                                     },
+                                     buttonTextStyle: {
+                                         color: '#FFFFFF',
+                                         paddingVertical: 10,
+                                         fontSize: 16,
+                                     },
+                                 });
 
 export default BLEScreen;

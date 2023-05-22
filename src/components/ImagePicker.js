@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Image, View, Platform, Dimensions} from 'react-native';
+import {Button, Image, View, Platform, Dimensions, TouchableOpacity} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import {useTranslation} from "react-i18next";
 import {Button_1} from "./export";
@@ -28,8 +28,11 @@ export default function ImageSelect(props) {
     return (
 
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Button_1 title={t("imageselect")} onPress={pickImage}/>
-            {image && <Image source={{uri: image}} style={{width: width, height: 80}}/>}
+            {!image &&
+                <Button_1 title={t("imageselect")} onPress={pickImage}/>}
+            {image && <TouchableOpacity onPress={pickImage}>
+                <Image source={{uri: image}} style={{width: width, height: 80}}/>
+            </TouchableOpacity>}
         </View>
     );
 }

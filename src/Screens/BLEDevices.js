@@ -1,10 +1,7 @@
 import { View, Text, Button,ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-
-import { BleContext } from '../Store/ble-context';
-import { getAllKeys } from '../data/useAsyncStorage';
-
-
+import {BleContext} from "../../store/ble-context";
+import {getAllKeys} from "../../data/useAsyncStorage";
 
 const BLEDevices = () => {
     const [devices, setDevices] = useState([]);
@@ -16,10 +13,7 @@ const BLEDevices = () => {
         setConnectedDevices(_cDevices)
         const _devices=await getAllKeys()
         console.log("devices", _devices,connectedDevices)
-
     }
-
-
 
     useEffect(() => {
         checkDevice()

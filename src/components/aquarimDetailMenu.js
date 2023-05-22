@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Image, ImageBackground, SafeAreaView, StyleSheet, Text, Dimensions, Button, View} from 'react-native';
 import WebView from "react-native-webview";
 import {useNavigation} from "@react-navigation/native";
 import images from "../images/images";
 import {BackgroundImage} from "@rneui/base";
-import {getData} from "../../data/useAsyncStorage";
+import {getAllKeys, getData} from "../../data/useAsyncStorage";
+import {BleContext} from "../../store/ble-context";
 
 let menuHtml =
     `<html lang="en">
@@ -173,8 +174,13 @@ let menuHtml =
 
 export default function AquarimDetailMenu(props) {
 
+    const bleCtx = useContext(BleContext); //get ble context
     const navigation = useNavigation();
     const selectedAquarium = props.route.params.aquarium;
+
+    const [devices, setDevices] = useState([]);
+    const [connectedDevices, setConnectedDevices] = useState([]);
+
     function onMessage(data) {
         if (!data) {
             navigation.navigate("UnderCons")
@@ -190,13 +196,40 @@ export default function AquarimDetailMenu(props) {
         }
     }
 
+    const checkDevice = async () => { //get connected devices and saved devices
+        const _cDevices = await bleCtx.getBleManagerConnectedDevices();
+        selectedAquarium.deviceList.forEach(async (x) => {
+            if (_cDevices.find(a => a.id === x.id)) {
+                return;
+            }
+            var device = bleCtx.devices.find(a => a.id === x.id);
+            await connectToDevice(device,x.id);
+        });
+
+        setConnectedDevices(_cDevices)
+    }
+
+    const connectToDevice = async (device,id) => { //call from connect button
+        if (!device) {
+            return;
+        }
+        await bleCtx.connectDevice(device,id);
+    };
+
+    useEffect(() => {
+        checkDevice();
+        return () => {
+        }
+
+    }, [])
+
     return (
         <SafeAreaView style={{flex: 1}}>
             <Image source={images.background} style={styles.backgroundImage}/>
             <View style={{flex: 1, alignItems: "center"}}>
                 <Text style={{color: "white", marginTop: 10, marginBottom: 20}}>{selectedAquarium.name}</Text>
                 {/*<Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}
-                <Image source={{uri: `${selectedAquarium.imageUri??''}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>
+                <Image source={{uri: `${selectedAquarium.imageUri ?? ''}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>
             </View>
             <View style={{flex: 5}}>
                 <WebView

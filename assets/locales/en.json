@@ -9,6 +9,7 @@
     "auto": "Auto",
     "connections": "Connections",
     "imageselect": "Photo",
-    "deviceList":"Device List"
+    "deviceList":"Device List",
+    "Success": "Saved Successfully"
   }
 }

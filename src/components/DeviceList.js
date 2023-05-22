@@ -1,21 +1,53 @@
-import {Dimensions, FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import React, {useState} from "react";
+import {Dimensions, FlatList, Image, ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import React, {useContext, useEffect, useState} from "react";
 import {Icon} from "react-native-elements";
 import {useTranslation} from "react-i18next";
 import images from "../images/images";
 import colors from "./colors";
+import {BleContext} from "../../store/ble-context";
 
-const numColumns = 3;
-const DeviceList = () => {
+const numColumns = 2;
+const DeviceList = (props) => {
 
+    const bleCtx = useContext(BleContext);
+
+    const [isScanning, setIsScanning] = useState(false);
+    const [bluetoothDevices, setBluetoothDevices] = useState([]);
     const [t] = useTranslation();
-    const [deviceList, setDeviceList] = useState([
-                                                     {key: 1, deviceId: "01-12-112", devicename: "IKIGAI 01"},
-                                                     {key: 2, deviceId: "01-12-113", devicename: "IKIGAI 02"},
-                                                     {key: 3, deviceId: "01-12-143", devicename: "IKIGAI 03"},
-                                                     {key: 4, deviceId: "01-12-134", devicename: "IKIGAI 04"},
-                                                     {key: 5, deviceId: "01-12-144", devicename: "IKIGAI 05"}
-                                                 ]);
+
+    // const [deviceList, setDeviceList] = useState([
+    //                                                  {key: 1, id: "01-12-112", name: "IKIGAI 01 adasdas"},
+    //                                                  {key: 2, id: "01-12-113", name: "IKIGAI 02"},
+    //                                                  {key: 3, id: "01-12-143", name: "IKIGAI 03"},
+    //                                                  {key: 4, id: "01-12-134", name: "IKIGAI 04"},
+    //                                                  {key: 5, id: "01-12-144", name: "IKIGAI 05"}
+    //                                              ]);
+
+    useEffect(() => {
+        startsScan();
+    }, [])
+
+    const startsScan = async () => { // start scanning for bluetooth devices
+        if (isScanning) {
+            setIsScanning(false);
+            bleCtx.stopScan();
+            return;
+        }
+        const stopTimer = setTimeout(() => {
+            bleCtx.stopScan();
+            setIsScanning(false);
+            clearTimeout(stopTimer);
+        }, 60000);
+
+        setIsScanning(true);
+        setBluetoothDevices([]);
+        bleCtx.startScan();
+    };
+
+    useEffect(() => {
+        // update current list of bluetooth devices when new device is discovered in useBLE hook
+        setBluetoothDevices(bleCtx.devices);
+    }, [bleCtx.devices]);
 
 
     const formatData = (data, numColumns) => {
@@ -23,43 +55,49 @@ const DeviceList = () => {
 
         let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
         while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
-            data.push({key: `blank-${numberOfElementsLastRow}`, empty: true, deviceId: "", name: ""});
+            data.push({key: `blank-${numberOfElementsLastRow}`, empty: true, id: "", name: ""});
             numberOfElementsLastRow++;
         }
 
         return data;
     };
 
-
     const [selectedIds, setSelectedIds] = useState([]);
 
     const setSelectedItem = data => {
-        let tmpdeviceList = [...deviceList];
+        let tmpdeviceList = [...bluetoothDevices];
         data.isSelect = !data.isSelect;
         data.selectedClass = data.isSelect ? styles.selected : styles.list;
 
         const index = tmpdeviceList.findIndex(
-            item => data.deviceId === item.deviceId
+            item => data.id === item.id
         );
         tmpdeviceList[index] = data;
-        setDeviceList(tmpdeviceList);
+        setBluetoothDevices(tmpdeviceList);
+
+        let selectedAquariums = tmpdeviceList.filter(x => x.isSelect === true).map(a => ({name: a.name, id: a.id}));
+
+        props.setDeviceList(selectedAquariums);
     };
 
     const renderItem = ({item}) => {
         if (item.empty === true) {
             return <View style={[styles.item, styles.itemInvisible]}/>;
         }
+        if (item.name !== "IKIGAI") {
+            return;
+        }
         return (
             <TouchableOpacity
                 style={[styles.list, item.selectedClass]}
-                onPress={() => setSelectedItem(item)}
-            >
-                    <View style={styles.item}>
-                        <Text style={styles.itemText}>{item.deviceId}</Text>
-                        <Text style={styles.itemText}>{item.devicename}</Text>
-                        <Text style={styles.itemText}></Text>
-                    </View>
-
+                onPress={() => setSelectedItem(item)}>
+                {/*<ImageBackground source={images.deviceIcon}>*/}
+                <Image source={images.deviceIcon} style={{height: 50, width: 50}}></Image>
+                <View style={styles.item}>
+                    <Text style={styles.itemText}>{item.name}</Text>
+                    <Text style={styles.itemText}>{item.id}</Text>
+                </View>
+                {/*</ImageBackground>*/}
             </TouchableOpacity>
         );
     };
@@ -68,10 +106,10 @@ const DeviceList = () => {
         <View style={styles.container}>
             <Text style={styles.title}>{t('deviceList')}</Text>
             <FlatList
-                data={formatData(deviceList, numColumns)}
+                data={formatData(bluetoothDevices, numColumns)}
                 ItemSeparatorComponent={FlatListItemSeparator}
                 renderItem={item => renderItem(item)}
-                keyExtractor={item => item.deviceId.toString()}
+                keyExtractor={item => item?.id.toString()}
                 extraData={selectedIds}
                 numColumns={numColumns}
             />

@@ -1,14 +1,29 @@
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import Slider from '@react-native-community/slider';
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import colors from "./colors";
 import images from "../images/images";
+import {BleContext} from "../../store/ble-context";
 
 const ChannelProgress = (props) => {
+    const bleCtx = useContext(BleContext);
     const [slideStartingValue, setSlideStartingValue] = useState(0);
     const [slideCompletionValue, setSlideCompletionValue] = useState(0);
 
     const [value, setValue] = useState(props.Value ?? 0);
+
+    useEffect(() => {
+        sendData();
+    }, [slideCompletionValue])
+
+    const sendData = async () => {
+        let connectedDevices = await bleCtx.getBleManagerConnectedDevices();
+
+        connectedDevices.forEach(x=>{
+            bleCtx.sendDatatoDevice(x, slideCompletionValue.toString());
+        });
+    }
+
     return (
 
         <View style={styles.container}>
@@ -28,7 +43,9 @@ const ChannelProgress = (props) => {
                             setSlideStartingValue(value);
                         }}
                         onSlidingComplete={value => {
+
                             setSlideCompletionValue(value);
+
                         }}
                 />
             </View>
@@ -43,15 +60,15 @@ const styles = StyleSheet.create({
 
                                      },
                                      item: {
-                                        display:"flex",
-                                        flexDirection:"row",
+                                         display: "flex",
+                                         flexDirection: "row",
 
                                      },
                                      text: {
                                          marginEnd: 10,
                                          color: 'white',
-                                         width:120,
-                                         
+                                         width: 120,
+
                                      },
                                      slide: {
                                          flexGrow: 1,

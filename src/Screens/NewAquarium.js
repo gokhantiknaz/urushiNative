@@ -11,7 +11,9 @@ import {clearStorage, getData, removeItem, saveData} from "../../data/useAsyncSt
 import {mergeData} from "../../data/useAsyncStorage/useAsyncStorage";
 import images from "../images/images";
 import colors from "../components/colors";
+import {useTranslation} from "react-i18next";
 
+import Dialog from "react-native-dialog";
 
 const width = Dimensions.get('window').width;
 const NewAquarium = () => {
@@ -19,6 +21,9 @@ const NewAquarium = () => {
     const [image, setImage] = useState(null);
     const [deviceList, setDeviceList] = useState([]);
     const [imageUri, setImageUri] = useState('');
+    const [t] = useTranslation();
+
+    const [showModal, setShowModal] = useState(false);
 
     const navigation = useNavigation();
 
@@ -26,36 +31,52 @@ const NewAquarium = () => {
 
     const save = async () => {
         try {
+
             let myAquarium = {
                 id: id,
                 name: name,
                 image: image,
-                imageUri: imageUri
+                imageUri: imageUri,
+                modelId: 1
             };
             myAquarium.deviceList = deviceList;
-
 
             let list = await getData("aquariumList");
 
             if (list == null) {
                 let newlist = [];
                 newlist.push(myAquarium);
+
                 await saveData("aquariumList", newlist);
             } else {
                 list.push(myAquarium);
+
                 await removeItem("aquariumList");
                 await saveData("aquariumList", list);
-
             }
-            navigation.goBack();
 
+            setShowModal(true);
         } catch (e) {
             console.log(e);
             alert('Failed to save the data to the storage')
         }
     }
-
+    if (showModal) {
+        return (<View style={styles.dialog}>
+            <Dialog.Container visible={showModal}>
+                <Dialog.Title></Dialog.Title>
+                <Dialog.Description>
+                    {t("Success")}
+                </Dialog.Description>
+                <Dialog.Button label="Ok" onPress={() => {
+                    setShowModal(false);
+                    navigation.goBack();
+                }}/>
+            </Dialog.Container>
+        </View>);
+    }
     return (
+
         <ImageBackground source={images.mythLight} style={{flex: 1}}>
             <View style={styles.container}>
                 <View style={styles.newAquarium}>
@@ -79,6 +100,8 @@ const NewAquarium = () => {
                     <Button_1 title="Save" onPress={save}/>
                 </View>
             </View>
+
+
         </ImageBackground>
     );
 };
@@ -103,9 +126,8 @@ const styles = StyleSheet.create({
                                          width: width
                                      },
                                      deviceList: {
-                                         flex: 1,
-                                         width: width,
-                                         height: 50
+                                         flex: 2,
+                                         width: width
                                      },
                                      savebutton: {
                                          width: width,
@@ -132,7 +154,13 @@ const styles = StyleSheet.create({
                                          fontSize: 15,
                                          fontFamily: 'OpenSans_400Regular',
                                          color: "#ffffff",
-                                     }
+                                     },
+                                     dialog: {
+                                         flex: 1,
+                                         backgroundColor: "#fff",
+                                         alignItems: "center",
+                                         justifyContent: "center",
+                                     },
                                  });
 
 export default NewAquarium;
