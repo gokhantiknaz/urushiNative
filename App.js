@@ -55,9 +55,9 @@ export default function App() {
         return < Loading_Screen/>;
     } else {
         return (
-            <BleContextProvider>
+            // <BleContextProvider>
                 <Home/>
-            </BleContextProvider>
+            // </BleContextProvider>
         );
     }
 

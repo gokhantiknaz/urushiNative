@@ -26,6 +26,7 @@ function AuthScreens() {
     return (
 
         <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="spiralMenux" component={SprialMenu}/>
             {/*<Stack.Screen name="BleScreen" component={BLEScreen} options={{title: 'BLE Devce Scanner'}}/>*/}
             {/*<Stack.Screen name="chart" component={SpectrumChart}/>*/}
             <Stack.Screen name="home" component={Welcome_screen}/>
@@ -67,35 +68,35 @@ function AppScreens() {
 
 export default function Home() {
 
-    const [loading, setLoading] = useState(false);
-    const bleCtx = useContext(BleContext); //get ble context
-
-    React.useEffect(() => {
-        startsScan();
-    }, [])
-
-
-    const startsScan = async () => { // start scanning for bluetooth devices
-
-        if (loading) {
-            setLoading(false);
-            bleCtx.stopScan();
-            return;
-        }
-        const stopTimer = setTimeout(() => {
-            bleCtx.stopScan();
-            setLoading(false);
-            clearTimeout(stopTimer);
-        }, 60000);
-
-        setLoading(true);
-
-        bleCtx.startScan();
-    };
-
-    if (loading) {
-        return < Loading_Screen/>;
-    }
+    // const [loading, setLoading] = useState(false);
+    // const bleCtx = useContext(BleContext); //get ble context
+    //
+    // React.useEffect(() => {
+    //     startsScan();
+    // }, [])
+    //
+    //
+    // const startsScan = async () => { // start scanning for bluetooth devices
+    //
+    //     if (loading) {
+    //         setLoading(false);
+    //         bleCtx.stopScan();
+    //         return;
+    //     }
+    //     const stopTimer = setTimeout(() => {
+    //         bleCtx.stopScan();
+    //         setLoading(false);
+    //         clearTimeout(stopTimer);
+    //     }, 60000);
+    //
+    //     setLoading(true);
+    //
+    //     bleCtx.startScan();
+    // };
+    //
+    // if (loading) {
+    //     return < Loading_Screen/>;
+    // }
 
     return (
 

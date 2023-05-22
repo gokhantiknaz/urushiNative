@@ -6,5 +6,5 @@
   "urlRandomness": "5s8gYq8",
   "https": false,
   "scheme": "com.gokhantiknaz.MythLights",
-  "devClient": true
+  "devClient": false
 }
