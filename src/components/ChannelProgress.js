@@ -10,11 +10,17 @@ const ChannelProgress = (props) => {
     const [slideStartingValue, setSlideStartingValue] = useState(0);
     const [slideCompletionValue, setSlideCompletionValue] = useState(0);
 
-    const [value, setValue] = useState(props.Value ?? 0);
+    const [value, setValue] = useState(props.value ?? 0);
+
+    const [returnobj, setReturnObj] = useState({});
 
     useEffect(() => {
-        setValue(props.Value)
-    }, [props.Value])
+        setValue(props.value)
+    }, [props.value])
+
+    useEffect(() => {
+        props.setValue(returnobj);
+    }, [returnobj])
 
     useEffect(() => {
         sendData();
@@ -46,9 +52,8 @@ const ChannelProgress = (props) => {
                             setSlideStartingValue(value);
                         }}
                         onSlidingComplete={value => {
-
+                            setReturnObj({channel: props.Channel, value: value});
                             setSlideCompletionValue(value);
-
                         }}
                 />
             </View>

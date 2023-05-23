@@ -80,7 +80,7 @@ const NewAquarium = () => {
         <ImageBackground source={images.mythLight} style={{flex: 1}}>
             <View style={styles.container}>
                 <View style={styles.newAquarium}>
-                    <Text style={styles.SignUpLabel}>New Aquarium</Text>
+                    <Text style={styles.SignUpLabel}>{t("newAquarium")}</Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Aquarium Name"

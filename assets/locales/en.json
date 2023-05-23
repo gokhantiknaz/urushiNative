@@ -10,6 +10,8 @@
     "connections": "Connections",
     "imageselect": "Photo",
     "deviceList":"Device List",
-    "Success": "Saved Successfully"
+    "Success": "Saved Successfully",
+    "templatename": "Template Name"
+
   }
 }
