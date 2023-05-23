@@ -1,11 +1,14 @@
 import MainProgress from "../Screens/MainProgress";
 import SpectrumChart from "./SpectrumChart";
-import {View, Text, ImageBackground, Image, Button} from "react-native";
+import {View, Text, ImageBackground, Image, Button, useWindowDimensions} from "react-native";
 import SwitchSelector from "react-native-switch-selector";
 import images from "../images/images";
 import colors from "./colors";
 import {RadialSlider} from "react-native-radial-slider";
 import {useState} from "react";
+import {SceneMap, TabView} from "react-native-tab-view";
+import * as React from "react";
+import TemplateList from "./TemplateList";
 
 export const ManuelMod = (props) => {
 
@@ -49,19 +52,15 @@ export const ManuelMod = (props) => {
                     <MainProgress></MainProgress>
                 </View>
 
-
                 <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{flex: 1,padding:10}}>
+                        {/*<Button title="Load"></Button>*/}
+                    </View>
                     <View style={{flex: 1,padding:10}}>
                         <Button title="Save"></Button>
                     </View>
-                    <View style={{flex: 1,padding:10}}>
-                        <Button title="Load"></Button>
-                    </View>
                     {/*<SpectrumChart></SpectrumChart>*/}
                 </View>
-
-
-
             </View>
         </ImageBackground>
     );

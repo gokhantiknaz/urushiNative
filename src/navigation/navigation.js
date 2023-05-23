@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, Text, Image, View, ImageBackground, SafeAreaView} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import Login from "../Screens/Login";
@@ -10,13 +9,11 @@ import AquarimDetailMenu from "../components/AquarimDetailMenu";
 import UnderCons from "../components/UnderCons";
 import colors from "../components/colors";
 import {useTranslation} from "react-i18next";
-import MainProgress from "../Screens/MainProgress";
 import SprialMenu from "../components/spiralMenu/SprialMenu";
-import {ManuelMod} from "../components/ManuelMod";
-import BLEScreen from "../Screens/BLEScreen";
+
 import BLEDevices from "../Screens/BLEDevices";
-import {BleContext} from "../../store/ble-context";
-import Loading_Screen from "../../loading";
+import {ManuelModTab} from "../Screens/ManuelModTab";
+import TemplateList from "../components/TemplateList";
 
 
 const Stack = createStackNavigator();
@@ -29,16 +26,23 @@ function AuthScreens() {
             {/*<Stack.Screen name="spiralMenux" component={SprialMenu}/>*/}
             {/*<Stack.Screen name="BleScreen" component={BLEScreen} options={{title: 'BLE Devce Scanner'}}/>*/}
             {/*<Stack.Screen name="chart" component={SpectrumChart}/>*/}
-
-            <Stack.Screen name="manuelMod" component={ManuelMod} options={{
-                title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+            <Stack.Screen name="home" component={Welcome_screen} options={{
+                title: t('Welcome'), headerShown: false, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
-            <Stack.Screen name="home" component={Welcome_screen}/>
-            <Stack.Screen name="NewAquarium" component={NewAquarium}/>
+            <Stack.Screen name="manuelModTab" component={ManuelModTab} options={{
+                title: t('ManuelMod'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
+            <Stack.Screen name="NewAquarium" component={NewAquarium} options={{
+                title: t('NewAquarium'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
             <Stack.Screen name="detail" component={AquarimDetailMenu} options={{
-                title: t('menu'), headerShown: false, headerTintColor: '#fff', headerStyle: {
+                title: t('AquariumDetail'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
