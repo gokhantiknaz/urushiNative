@@ -7,32 +7,32 @@ const MainProgress = (props) => {
 
     const[value,setValue]  = useState(0);
     return (
-        <ImageBackground source={images.background} style={{flex: 1}}>
+
             <View style={{flex: 1, padding: 5}}>
 
                 <View style={{flex: 1}}></View>
                 <View style={styles.progressContainer}>
                     <View>
-                        <ChannelProgress ChannelName='Royal' setValue={(e)=>{setValue(e)}}></ChannelProgress>
+                        <ChannelProgress Value={props.allValue} ChannelName='Royal' setValue={(e)=>{setValue(e)}}></ChannelProgress>
                     </View>
                     <View>
-                        <ChannelProgress ChannelName='Blue'></ChannelProgress>
+                        <ChannelProgress Value={props.allValue} ChannelName='Blue'></ChannelProgress>
                     </View>
                     <View>
-                        <ChannelProgress ChannelName='Cyan+'></ChannelProgress>
+                        <ChannelProgress Value={props.allValue} ChannelName='Cyan+'></ChannelProgress>
                     </View>
                     <View>
-                        <ChannelProgress ChannelName='Actinic+'></ChannelProgress>
+                        <ChannelProgress Value={props.allValue} ChannelName='Actinic+'></ChannelProgress>
                     </View>
                     <View>
-                        <ChannelProgress ChannelName='He White'></ChannelProgress>
+                        <ChannelProgress Value={props.allValue} ChannelName='He White'></ChannelProgress>
                     </View>
                     <View>
-                        <ChannelProgress ChannelName='Magenta+'></ChannelProgress>
+                        <ChannelProgress Value={props.allValue} ChannelName='Magenta+'></ChannelProgress>
                     </View>
                 </View>
             </View>
-        </ImageBackground>
+
     )
         ;
 }

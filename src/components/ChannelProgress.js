@@ -13,13 +13,16 @@ const ChannelProgress = (props) => {
     const [value, setValue] = useState(props.Value ?? 0);
 
     useEffect(() => {
+        setValue(props.Value)
+    }, [props.Value])
+
+    useEffect(() => {
         sendData();
     }, [slideCompletionValue])
 
     const sendData = async () => {
         let connectedDevices = await bleCtx.getBleManagerConnectedDevices();
-
-        connectedDevices.forEach(x=>{
+        connectedDevices.forEach(x => {
             bleCtx.sendDatatoDevice(x, slideCompletionValue.toString());
         });
     }

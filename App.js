@@ -21,11 +21,7 @@ import {
     OpenSans_700Bold_Italic,
     OpenSans_800ExtraBold_Italic,
 } from '@expo-google-fonts/open-sans';
-import {useTranslation} from "react-i18next";
-import {useState} from "react";
-import images from "./src/images/images";
-import BleContextProvider from "./store/ble-context";
-import {saveData} from "./data/useAsyncStorage";
+
 
 try {
     initializeApp(firebaseConfig);

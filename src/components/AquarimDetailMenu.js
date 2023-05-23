@@ -203,18 +203,11 @@ export default function AquarimDetailMenu(props) {
                 return;
             }
             var device = bleCtx.devices.find(a => a.id === x.id);
-            await connectToDevice(device,x.id);
+            await bleCtx.connectDevice(device, id);
         });
 
         setConnectedDevices(_cDevices)
     }
-
-    const connectToDevice = async (device,id) => { //call from connect button
-        if (!device) {
-            return;
-        }
-        await bleCtx.connectDevice(device,id);
-    };
 
     useEffect(() => {
         checkDevice();

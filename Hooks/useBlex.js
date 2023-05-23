@@ -9,6 +9,9 @@ import * as ExpoDevice from "expo-device";
 const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
+// import BleManager from 'react-native-ble-manager'
+// import { NativeModules, NativeEventEmitter } from 'react-native'
+
 const useBlex = () => {
     const _BleManager = useMemo(() => new BleManager(), []);
     const [devices, setDevices] = useState([]);
@@ -59,10 +62,7 @@ const useBlex = () => {
             return true;
         }
     };
-
-
     const isDuplicteDevice = (devices, nextDevice) => devices.findIndex((device) => nextDevice.id === device.id) > -1; //check if device is already in the list
-
     const startScan = async () => {
         //check permission BLE and Location permissions
         const isGranted = await requestPermissions();
@@ -92,17 +92,14 @@ const useBlex = () => {
                                     }
         );
     };
-
     const stopScan = () => { //stop scanning for devices
         console.log("Scanning stopped");
         _BleManager.stopDeviceScan();
     };
-
     const connectDevice = async (_device, id = null) => { //connect to device
         console.log("Connecting to device", id ? id : _device.name)
         const deviceID = id ? id : _device.id;
         _BleManager.stopDeviceScan();
-
 
         _BleManager.connectToDevice(deviceID,{timeout:60000}).then(async device => {
             return await device.discoverAllServicesAndCharacteristics();
@@ -131,7 +128,6 @@ const useBlex = () => {
                 }
         );
     }
-
     const getBleManagerConnectedDevices = async () => { //get connected devices
         try
         {
@@ -143,7 +139,6 @@ const useBlex = () => {
         }
 
     }
-
     const disconnectDevice = () => { //disconnect from device
         connectedDevice.cancelConnection();
     };

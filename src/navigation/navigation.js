@@ -6,7 +6,7 @@ import Login from "../Screens/Login";
 import NewAquarium from "../Screens/NewAquarium";
 import Welcome_screen from '../Screens/Welcome';
 import LightDetail from "../Screens/LightDetail";
-import AquarimDetailMenu from "../components/aquarimDetailMenu";
+import AquarimDetailMenu from "../components/AquarimDetailMenu";
 import UnderCons from "../components/UnderCons";
 import colors from "../components/colors";
 import {useTranslation} from "react-i18next";
@@ -26,9 +26,15 @@ function AuthScreens() {
     return (
 
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="spiralMenux" component={SprialMenu}/>
+            {/*<Stack.Screen name="spiralMenux" component={SprialMenu}/>*/}
             {/*<Stack.Screen name="BleScreen" component={BLEScreen} options={{title: 'BLE Devce Scanner'}}/>*/}
             {/*<Stack.Screen name="chart" component={SpectrumChart}/>*/}
+
+            <Stack.Screen name="manuelMod" component={ManuelMod} options={{
+                title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
             <Stack.Screen name="home" component={Welcome_screen}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium}/>
             <Stack.Screen name="detail" component={AquarimDetailMenu} options={{
@@ -41,11 +47,7 @@ function AuthScreens() {
                     backgroundColor: colors.black,
                 }
             }}/>
-            <Stack.Screen name="manuelMod" component={ManuelMod} options={{
-                title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
-                    backgroundColor: colors.black,
-                }
-            }}/>
+
             <Stack.Screen name="login" component={Login}/>
             <Stack.Screen name="UnderCons" component={UnderCons}/>
             <Stack.Screen name="spiralMenu" component={SprialMenu}/>
