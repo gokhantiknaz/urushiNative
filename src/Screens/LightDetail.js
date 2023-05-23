@@ -26,7 +26,7 @@ const LightDetail = (props) => {
             id: 3,
             name: t('manuel'),
             image: images.manuel,
-            navigate: "manuelMod"
+            navigate: "manuelModTab"
         },
         {
             id: 4,

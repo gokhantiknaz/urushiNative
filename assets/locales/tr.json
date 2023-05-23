@@ -10,6 +10,8 @@
     "connections": "Bağlantılar",
     "imageselect": "Akvaryum fotosu seçiniz",
     "deviceList":"Cihaz Listesi",
-    "Success": "Kayıt İşlemi Başarılı"
+    "Success": "Kayıt İşlemi Başarılı",
+    "templatename": "Template Adı"
+
   }
 }
