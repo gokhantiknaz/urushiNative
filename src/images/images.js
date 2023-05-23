@@ -5,10 +5,12 @@ export  default {
     pump:require('../../assets/pumps.png'),
     monitor:require('../../assets/monitors.png'),
     dairy:require('../../assets/daily.png'),
-    connection:require('../../assets/lights-connection.png'),
-    auto:require('../../assets/lights-auto.png'),
-    manuel:require('../../assets/lights-manual.png'),
-    settings:require('../../assets/lights-settings.png'),
+    connection:require('../../assets/connection.png'),
+    auto:require('../../assets/auto.png'),
+    manuel:require('../../assets/manuel.png'),
+    settings:require('../../assets/setting.png'),
+    template:require('../../assets/template.png'),
+    delete:require('../../assets/delete.png'),
     deviceIcon:require('../../assets/icon.png'),
     mythLight:require('../../assets/background.png')
 

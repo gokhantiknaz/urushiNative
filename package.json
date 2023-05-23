@@ -58,7 +58,8 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.9",
     "react-native-webview": "11.23.1",
-    "save": "^2.9.0"
+    "save": "^2.9.0",
+    "expo-linear-gradient": "~12.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

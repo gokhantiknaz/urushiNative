@@ -30,19 +30,22 @@ function AuthScreens() {
             {/*<Stack.Screen name="BleScreen" component={BLEScreen} options={{title: 'BLE Devce Scanner'}}/>*/}
             {/*<Stack.Screen name="chart" component={SpectrumChart}/>*/}
 
+          
+
+            <Stack.Screen name="home" component={Welcome_screen}/>
             <Stack.Screen name="manuelMod" component={ManuelMod} options={{
                 title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
-            <Stack.Screen name="home" component={Welcome_screen}/>
+           
             <Stack.Screen name="NewAquarium" component={NewAquarium}/>
             <Stack.Screen name="detail" component={AquarimDetailMenu} options={{
                 title: t('menu'), headerShown: false, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
-            <Stack.Screen name="lights" component={LightDetail} options={{
+           <Stack.Screen name="lights" component={LightDetail} options={{
                 title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
