@@ -16,7 +16,6 @@ import { Pressable } from "react-native";
 import { Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-
 const minToTime = (minute) => {
 	//convert minutes to time
 	const hours = Math.floor(minute / 60)

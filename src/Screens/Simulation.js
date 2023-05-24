@@ -10,6 +10,15 @@ import {getData} from "../../data/useAsyncStorage";
 
 export const Simulation = () => {
 
+    const DUMMY_DATA = [
+        // <--- This is the data that is being used to create the draggable dots
+        {power: 0, time: 480, color: "lightsalmon"},
+        {power: 50, time: 720, color: "darkorange"},
+        {power: 50, time: 1080, color: "darkturquoise"},
+        {power: 0, time: 1250, color: "chartreuse"}
+    ];
+
+
     const actions = [
         {
             text: "Load",
@@ -26,11 +35,10 @@ export const Simulation = () => {
         }
     ];
     const [selectedChannel, setChannel] = useState(1);
-    const [channelData, setChannelData] = useState({});
+    const [points, setPoints] = useState(null);
+    const [allPoints, setAllPoints] = useState([]);
+    const [data, setData] = useState({Channel: 1, Point: DUMMY_DATA});
 
-    useEffect(() => {
-        getData("simulationData")
-    }, [selectedChannel])
     var channels = [
         {label: constants.Channel1, value: 1},
         {label: constants.Channel2, value: 2},
@@ -39,6 +47,40 @@ export const Simulation = () => {
         {label: constants.Channel5, value: 5},
         {label: constants.Channel6, value: 6},
     ];
+
+    useEffect(() => {
+        let selectedChannelPoint = allPoints.filter(x => x.Channel == selectedChannel);
+        if (selectedChannelPoint.length > 0) {
+            setData(selectedChannelPoint[0]);
+        }
+    }, [selectedChannel])
+
+    const getSimulation = async () => {
+        let simulationlist = await getData("simulation");
+    }
+
+    useEffect(() => {
+        if (points != null) {
+            let obj = {Channel: selectedChannel, Point: points};
+            saveSimulation(obj);
+        }
+    }, [points])
+
+
+    const saveSimulation = (obj) => {
+
+        let tmpallpoints = [...allPoints];
+        const index = tmpallpoints.findIndex(
+            x => obj.Channel === x.Channel
+        );
+        if (index === -1) {
+            tmpallpoints.push(obj);
+        } else {
+            tmpallpoints[index] = obj;
+        }
+        setAllPoints(tmpallpoints)
+    }
+
     return (
         <SafeAreaView style={{flex: 1}}>
             <View style={styles.container}>
@@ -53,48 +95,12 @@ export const Simulation = () => {
                         onPress={(value) => {setChannel(value)}}
                     />
 
-                    {/* To create radio buttons, loop through your array of options */}
-                    {/*<RadioForm*/}
-                    {/*    formHorizontal={true}*/}
-                    {/*    animation={true}*/}
-                    {/*>*/}
-                    {/*    {*/}
-                    {/*        channels.map((obj, i) => (*/}
-                    {/*            <RadioButton labelHorizontal={true} key={i}>*/}
-                    {/*                /!*  You can set RadioButtonLabel before RadioButtonInput *!/*/}
-                    {/*                <RadioButtonInput*/}
-                    {/*                    obj={obj}*/}
-                    {/*                    index={i}*/}
-
-                    {/*                    onPress={(e) => {console.log(e)}}*/}
-                    {/*                    borderWidth={1}*/}
-                    {/*                    buttonInnerColor={'#e74c3c'}*/}
-
-                    {/*                    buttonSize={10}*/}
-                    {/*                    buttonOuterSize={15}*/}
-                    {/*                    buttonStyle={{}}*/}
-                    {/*                    buttonWrapStyle={{marginLeft: 5}}*/}
-                    {/*                />*/}
-                    {/*                <RadioButtonLabel*/}
-                    {/*                    obj={obj}*/}
-                    {/*                    index={i}*/}
-                    {/*                    labelHorizontal={false}*/}
-                    {/*                    onPress={(e) => {console.log(e)}}*/}
-                    {/*                    labelStyle={{fontSize: 10, color: '#2ecc71'}}*/}
-                    {/*                    labelWrapStyle={{}}*/}
-                    {/*                />*/}
-                    {/*            </RadioButton>*/}
-                    {/*        ))}*/}
-
-                    {/*</RadioForm>*/}
-
                 </View>
                 <ImageBackground
                     source={require("../../assets/bg.jpg")}
                     resizeMode='cover'
-                    style={{flex: 15, width: "100%"}}
-                >
-                    <SettingsChartScreen data={channelData}/>
+                    style={{flex: 15, width: "100%"}}>
+                    <SettingsChartScreen data={data.Point} setPoints={setPoints}/>
                 </ImageBackground>
                 <FloatingAction
                     actions={actions}
