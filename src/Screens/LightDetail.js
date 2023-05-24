@@ -21,6 +21,7 @@ const LightDetail = (props) => {
             id: 2,
             name: t('auto'),
             image: images.auto,
+            navigate: "simulation"
         },
         {
             id: 3,
@@ -51,16 +52,16 @@ const LightDetail = (props) => {
     const clickEventListener = item => {
         navigation.navigate(item.navigate);
     }
- 
-    
-   
+
+
+
     return (
         <View style={styles.container}>
             {
                 data.map((item) => {
                     return (
-                                <LinearGradient colors={['#3696af', '#232f5d' ]} style={styles.card}>
-                                <TouchableOpacity key={item.id} onPress={() => clickEventListener(item)}>
+                                <LinearGradient colors={['#3696af', '#232f5d' ]} style={styles.card} key={item.id}>
+                                <TouchableOpacity  onPress={() => clickEventListener(item)}>
                                     <View style={styles.cardContent}>
                                         <Image style={styles.image} source={item.image}/>
                                         <Text style={styles.name}>{item.name}</Text>
@@ -70,14 +71,14 @@ const LightDetail = (props) => {
                         );
                     }
                 )
-            }                  
-        </View>   
+            }
+        </View>
     );
 }
 
 
 const styles = StyleSheet.create({
-    
+
                                     container: {
                                         flex: 1,
                                         flexDirection: 'row',

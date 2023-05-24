@@ -14,6 +14,7 @@ import SprialMenu from "../components/spiralMenu/SprialMenu";
 import BLEDevices from "../Screens/BLEDevices";
 import {ManuelModTab} from "../Screens/ManuelModTab";
 import TemplateList from "../components/TemplateList";
+import {Simulation} from "../Screens/Simulation";
 
 
 const Stack = createStackNavigator();
@@ -48,6 +49,12 @@ function AuthScreens() {
             }}/>
            <Stack.Screen name="lights" component={LightDetail} options={{
                 title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
+
+            <Stack.Screen name="simulation" component={Simulation} options={{
+                title: t('simulation'), headerShown: false, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
