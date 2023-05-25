@@ -10,6 +10,7 @@ import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import Dialog from "react-native-dialog";
 import {useTranslation} from "react-i18next";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
+import {SheetManager} from "react-native-actions-sheet";
 
 export const ManuelMod = (props) => {
 
@@ -39,17 +40,21 @@ export const ManuelMod = (props) => {
     }
 
     useEffect(() => {
-        setTemplate(allProgress);
+        if (allProgress) {
+            setTemplate(allProgress);
+        }
+
     }, [allProgress])
-    const save = async () => {
+    const save = async (templateName) => {
+        console.log(template);
         let savedTemplates = await getData("manueltemplates");
         if (savedTemplates == null) {
             let newlist = [];
-            let obj = {name: name, value: template};
+            let obj = {name: templateName, value: template};
             newlist.push(obj);
             await saveData("manueltemplates", newlist);
         } else {
-            let obj = {name: name, value: template};
+            let obj = {name: templateName, value: template};
             savedTemplates.push(obj);
             await removeItem("manueltemplates");
             await saveData("manueltemplates", savedTemplates);
@@ -87,10 +92,9 @@ export const ManuelMod = (props) => {
                         formHorizontal={true}
                         animation={true}
                     >
-                        {/* To create radio buttons, loop through your array of options */}
                         {
                             delays.map((obj, i) => (
-                                <RadioButton labelHorizontal={true} key={obj.value} >
+                                <RadioButton labelHorizontal={true} key={obj.value}>
                                     {/*  You can set RadioButtonLabel before RadioButtonInput */}
 
                                     <RadioButtonInput
@@ -129,30 +133,37 @@ export const ManuelMod = (props) => {
                         {/*<Button title="Load"></Button>*/}
                     </View>
                     <View style={{flex: 1, padding: 10}}>
-                        <Button title={t("Save")} onPress={() => { setShowModal(true)}}></Button>
+                        <Button title={t("Save")} onPress={async () => {
+                            const templateName = await SheetManager.show("GetName-Sheet", {
+                                payload: {value: t("templatename")},
+                            });
+                            if (templateName && templateName.length > 0) {
+                                save(templateName);
+                            }
+                        }}></Button>
                     </View>
                     {/*<SpectrumChart></SpectrumChart>*/}
                 </View>
             </View>
-            <Dialog.Container visible={showModal} contentStyle={{height: 150, width: '100%', backgroundColor: 'white'}}>
-                <Dialog.Description>
-                    <View style={{backgroundColor:'grey',width:300}}>
-                        <Text style={{width:'100%'}}>{t("templatename")}</Text>
-                        <TextInput
-                            style={{borderColor: 'gray', borderWidth: 1}}
-                            placeholderTextColor={"black"}
-                            value={name}
-                            onChangeText={setName}
-                        />
-                    </View>
+            {/*<Dialog.Container visible={showModal} style={styles.dialog} contentStyle={{height: 150, width: '100%', backgroundColor: '#9BDEE8'}}>*/}
+            {/*    <Dialog.Description>*/}
+            {/*        <View style={{backgroundColor: '#9BDEE8', width: 300}}>*/}
+            {/*            <Text style={{width: '100%'}}>{t("templatename")}</Text>*/}
+            {/*            <TextInput*/}
+            {/*                style={{borderColor: 'gray', borderWidth: 1}}*/}
+            {/*                placeholderTextColor={"black"}*/}
+            {/*                value={name}*/}
+            {/*                onChangeText={setName}*/}
+            {/*            />*/}
+            {/*        </View>*/}
 
-                </Dialog.Description>
-                <Dialog.Button label="Cancel" onPress={() => {
-                    setName('');
-                    setShowModal(false);
-                }}/>
-                <Dialog.Button label="Ok" onPress={() => { save(); }}/>
-            </Dialog.Container>
+            {/*    </Dialog.Description>*/}
+            {/*    <Dialog.Button label="Cancel" onPress={() => {*/}
+            {/*        setName('');*/}
+            {/*        setShowModal(false);*/}
+            {/*    }}/>*/}
+            {/*    <Dialog.Button label="Ok" onPress={() => { save(); }}/>*/}
+            {/*</Dialog.Container>*/}
         </ImageBackground>
     );
 }
@@ -160,6 +171,8 @@ export const ManuelMod = (props) => {
 const styles = StyleSheet.create({
                                      dialog: {
                                          flex: 1,
-                                         width: '100%'
+                                         backgroundColor: "#fff",
+                                         alignItems: "center",
+                                         justifyContent: "center",
                                      }
                                  });

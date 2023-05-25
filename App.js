@@ -5,6 +5,9 @@ import Home from "./src/navigation/navigation";
 import AppLoading from 'expo-app-loading';
 import Loading_Screen from './loading';
 import './ i18n';
+import {SheetProvider} from "react-native-actions-sheet";
+import './src/components/Sheets';
+
 
 import {
     useFonts,
@@ -53,10 +56,13 @@ export default function App() {
     } else {
         return (
             // <BleContextProvider>
-            <MythContextProvider>
-                <Home/>
-            </MythContextProvider>
-            // </BleContextProvider>
+            <SheetProvider>
+                <MythContextProvider>
+                    <Home/>
+                </MythContextProvider>
+            </SheetProvider>
+            //</BleContextProvider>
+
         );
     }
 

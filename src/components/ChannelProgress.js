@@ -51,8 +51,8 @@ const ChannelProgress = (props) => {
                         onSlidingStart={value => {
                             setSlideStartingValue(value);
                         }}
-                        onSlidingComplete={value => {
-                            setReturnObj({channel: props.Channel, value: value});
+                        onSlidingComplete={e => {
+                            setReturnObj({channel: props.Channel, value: e});
                             setSlideCompletionValue(value);
                         }}
                 />

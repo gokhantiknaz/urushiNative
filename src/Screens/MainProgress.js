@@ -9,23 +9,30 @@ const MainProgress = (props) => {
     const [progressObject, setProgressObject] = useState({channel: '', value: 0});
     const [allProgress, setAllProgress] = useState([{channel: 1, value: 0}, {channel: 2, value: 0}, {channel: 3, value: 0}, {channel: 4, value: 0}, {channel: 5, value: 0}, {channel: 6, value: 0}]);
 
+
     useEffect(() => {
-        if (!allProgress) {
-            return;
-        }
-        const newState = allProgress.map(obj => {
-            if (obj.channel === progressObject.channel) {
-                return {...obj, value: progressObject.value};
+        if (progressObject) {
+            if (!allProgress) {
+                return;
             }
-            return obj;
-        });
-        setAllProgress(newState);
-        props.setAllProgress(newState);
+            const newState = allProgress.map(obj => {
+                if (obj.channel === progressObject.channel) {
+                    return {...obj, value: progressObject.value};
+                }
+                return obj;
+            });
+
+            setAllProgress(newState);
+            props.setAllProgress(newState);
+        }
+
     }, [progressObject])
 
     useEffect(() => {
-        setAllProgress(ctx.manuelTemplate);
-        props.setAllProgress(ctx.manuelTemplate);
+        if (ctx.manuelTemplate) {
+            setAllProgress(ctx.manuelTemplate);
+            props.setAllProgress(ctx.manuelTemplate);
+        }
     }, [ctx.manuelTemplate])
 
     const getValue = (channel) => {

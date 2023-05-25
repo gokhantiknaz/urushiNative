@@ -20,10 +20,7 @@ const TemplateList = (props) => {
     useEffect(() => {
         getTemplates();
     }, [])
-
     const loadTemplate = item => {
-        // load templated
-        console.log(item);
         ctx.setTemplate(item.value);
         props.jumpTo("manuelMod");
     }
@@ -35,6 +32,8 @@ const TemplateList = (props) => {
 
         await removeItem("manueltemplates");
         await saveData("manueltemplates", newArray);
+
+        setTemplateList(newArray);
         Alert.alert(t("success"));
     }
 

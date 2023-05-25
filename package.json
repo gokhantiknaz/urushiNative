@@ -39,6 +39,7 @@
     "react-dom": "18.1.0",
     "react-i18next": "^12.2.2",
     "react-native": "0.70.8",
+    "react-native-actions-sheet": "^0.8.29",
     "react-native-base64": "^0.2.1",
     "react-native-ble-plx": "^2.0.3",
     "react-native-btr": "^2.2.0",

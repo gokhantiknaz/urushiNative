@@ -16,6 +16,7 @@ const LightDetail = (props) => {
             id: 1,
             name: t('connections'),
             image: images.connection,
+            navigate: "UnderCons"
         },
         {
             id: 2,
@@ -33,18 +34,20 @@ const LightDetail = (props) => {
             id: 4,
             name: t('settings'),
             image: images.settings,
+            navigate: "UnderCons"
         }
         ,
         {
             id: 5,
             name: t('templates'),
             image: images.template,
+            navigate: "UnderCons"
         },
         {
             id: 6,
             name: t('delete'),
             image: images.delete,
-            navigate: "delete"
+            navigate: "UnderCons"
         }
     ]
 
