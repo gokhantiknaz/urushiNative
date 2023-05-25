@@ -1,6 +1,6 @@
 import { registerSheet } from 'react-native-actions-sheet';
-import ExampleSheet from "./GetNameSheet";
-import ConfirmSheet from "./ConfirmSheet";
+import ExampleSheet from "./SheetsDialogs/GetNameSheet";
+import ConfirmSheet from "./SheetsDialogs/ConfirmSheet";
 
 
 registerSheet("GetName-Sheet", ExampleSheet);

@@ -100,8 +100,6 @@ const NewAquarium = () => {
                     <Button_1 title="Save" onPress={save}/>
                 </View>
             </View>
-
-
         </ImageBackground>
     );
 };

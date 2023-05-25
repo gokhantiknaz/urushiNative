@@ -46,33 +46,22 @@ const Welcome_screen = ({navigation}) => {
             console.log(error);
         }
     };
-    const renderItem = (data) => {
-        if (data.empty === true) {
-            return <View style={[styles.item, styles.itemInvisible]}/>;
-        }
-        return (
-            <TouchableOpacity style={[styles.list, data.selectedClass]}
-                              onPress={(x) => {
-                                  navigation.navigate("detail", {aquarium: data.item});
-                              }}>
-                <View style={styles.item}>
-                    <Image source={{uri: `data:image/png;base64,${data.item.image}`}} style={{height: 60, width: 60}}></Image>
-                    <Text style={{color: "white"}}>{data.item.name}</Text>
-                    <Text style={{color: "white"}}></Text>
-                </View>
 
-            </TouchableOpacity>
-        );
-    }
-    const formatData = (data, numColumns) => {
-        const numberOfFullRows = Math.floor(data.length / numColumns);
-        let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
-        while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
-            data.push({key: `blank-${numberOfElementsLastRow}`, empty: true, id: "", name: ""});
-            numberOfElementsLastRow++;
-        }
-        return data;
-    };
+    const RowInfo = (item) => (
+        <TouchableOpacity style={[styles.list, item.selectedClass]}
+                          onPress={(x) => {
+                              console.log(item);
+                              navigation.navigate("detail", {aquarium: item});
+                          }}>
+        <View style={styles.item}>
+            <Text style={{ fontSize: 12,color:'white'}}>{'Name : ' + item.name}</Text>
+            <Image source={{uri: `data:image/png;base64,${item.image}`}} style={{height: 60, width: 60}}></Image>
+        </View>
+        </TouchableOpacity>
+    );
+    const renderItem2 = ({ item }) => (
+        <RowInfo name={item.name} image={item.image}/>
+    );
 
     return (
         <ImageBackground source={images.background} style={{alignContent: "center", flex: 1, alignItems: "center"}}>
@@ -104,14 +93,12 @@ const Welcome_screen = ({navigation}) => {
                 <View style={styles.containerList}>
                     <Text style={{color: colors.test5, paddingBottom: "10%"}}>{t('selectaquarium')}</Text>
                     {aquarimList &&
-
                         <FlatList
-                            data={formatData(aquarimList, numColumns)}
+                            data={aquarimList}
+                            renderItem={renderItem2}
                             ItemSeparatorComponent={FlatListItemSeparator}
-                            renderItem={item => renderItem(item)}
-                            keyExtractor={item => item.id.toString()}
-                            numColumns={numColumns}>
-                        </FlatList>
+                            keyExtractor={item => item.name}
+                        />
                     }
                 </View>
                 <View style={styles.button}>
