@@ -1,27 +1,34 @@
+import * as React from "react";
 import MainProgress from "../Screens/MainProgress";
-import SpectrumChart from "./SpectrumChart";
 import {View, Text, ImageBackground, Image, Button, useWindowDimensions, TextInput, StyleSheet, Alert} from "react-native";
 import SwitchSelector from "react-native-switch-selector";
 import images from "../images/images";
 import colors from "./colors";
 import {RadialSlider} from "react-native-radial-slider";
 import {useEffect, useState} from "react";
-
-import * as React from "react";
-
 import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import Dialog from "react-native-dialog";
 import {useTranslation} from "react-i18next";
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 
 export const ManuelMod = (props) => {
 
     const [template, setTemplate] = useState(null);
     const [allProgress, setAllProgress] = useState([]);
+    const [delay, setDelay] = useState(1);
+
+
+    var delays = [
+        {label: '1Min', value: 1},
+        {label: '10Min', value: 10},
+        {label: '30Min', value: 30},
+    ]
 
     const options = [
         {label: "ON", value: "1"},
         {label: "OFF", value: "0"}
     ];
+
     const [t] = useTranslation();
     const [speed, setSpeed] = useState(0);
     const [name, setName] = useState("");
@@ -34,7 +41,6 @@ export const ManuelMod = (props) => {
     useEffect(() => {
         setTemplate(allProgress);
     }, [allProgress])
-
     const save = async () => {
         let savedTemplates = await getData("manueltemplates");
         if (savedTemplates == null) {
@@ -44,7 +50,6 @@ export const ManuelMod = (props) => {
             await saveData("manueltemplates", newlist);
         } else {
             let obj = {name: name, value: template};
-            console.log(savedTemplates);
             savedTemplates.push(obj);
             await removeItem("manueltemplates");
             await saveData("manueltemplates", savedTemplates);
@@ -67,15 +72,52 @@ export const ManuelMod = (props) => {
                             onPress={value => console.log(`Call onPress with value: ${value}`)}
                         />
                     </View>
-                    {/*<SpectrumChart></SpectrumChart>*/}
                 </View>
-                <View style={{flex: 2, alignItems: 'center'}}>
+                <View style={{flex: 4, alignItems: 'center'}}>
                     {/*https://www.npmjs.com/package/react-native-radial-slider2*/}
                     {/*https://github.com/SimformSolutionsPvtLtd/react-native-radial-slider*/}
                     <RadialSlider titleStyle={{color: 'white'}} unit='%' title='Total Intensity' value={speed} min={0} max={100} onChange={setSpeed}
                                   onComplete={setIntesity}
                     />
                     {/*<Text style={{color: "white"}}>{speed}</Text>*/}
+                </View>
+
+                <View style={{flex: 1, alignItems: 'center'}}>
+                    <RadioForm
+                        formHorizontal={true}
+                        animation={true}
+                    >
+                        {/* To create radio buttons, loop through your array of options */}
+                        {
+                            delays.map((obj, i) => (
+                                <RadioButton labelHorizontal={true} key={obj.value} >
+                                    {/*  You can set RadioButtonLabel before RadioButtonInput */}
+
+                                    <RadioButtonInput
+                                        obj={obj}
+                                        index={obj.value}
+                                        isSelected={delay === obj.value}
+                                        onPress={(value) => {setDelay(value)}}
+                                        borderWidth={1}
+                                        buttonInnerColor={'#e74c3c'}
+                                        buttonOuterColor={delay === obj.value ? '#2196f3' : '#000'}
+                                        buttonSize={30}
+                                        buttonOuterSize={40}
+                                        buttonStyle={{}}
+                                        buttonWrapStyle={{marginLeft: 10}}
+                                    />
+                                    <RadioButtonLabel
+                                        obj={obj}
+                                        index={obj.value}
+                                        labelHorizontal={true}
+                                        onPress={(value) => {setDelay(value)}}
+                                        labelStyle={{fontSize: 10, color: 'white'}}
+                                        labelWrapStyle={{}}
+                                    />
+                                </RadioButton>
+                            ))
+                        }
+                    </RadioForm>
                 </View>
 
                 <View style={{flex: 4}}>
@@ -93,12 +135,11 @@ export const ManuelMod = (props) => {
                 </View>
             </View>
             <Dialog.Container visible={showModal} contentStyle={{height: 150, width: '100%', backgroundColor: 'white'}}>
-
                 <Dialog.Description>
-                    <View>
-                        <Text>{t("templatename")}</Text>
+                    <View style={{backgroundColor:'grey',width:300}}>
+                        <Text style={{width:'100%'}}>{t("templatename")}</Text>
                         <TextInput
-                            style={{ borderColor: 'gray', borderWidth: 1 }}
+                            style={{borderColor: 'gray', borderWidth: 1}}
                             placeholderTextColor={"black"}
                             value={name}
                             onChangeText={setName}

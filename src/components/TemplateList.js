@@ -2,12 +2,14 @@ import {Alert, Dimensions, FlatList, Image, ImageBackground, StyleSheet, Text, T
 import images from "../images/images";
 import React, {useContext, useEffect, useState} from "react";
 import colors from "./colors";
-import {getData, removeItem} from "../../data/useAsyncStorage";
+import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {Icon} from "react-native-elements";
+import {useTranslation} from "react-i18next";
 
 const TemplateList = (props) => {
 
+    const [t] = useTranslation();
     const [templateList, setTemplateList] = useState([]);
     const ctx = useContext(MythContext);
     const getTemplates = async () => {
@@ -21,9 +23,21 @@ const TemplateList = (props) => {
 
     const loadTemplate = item => {
         // load templated
+        console.log(item);
         ctx.setTemplate(item.value);
         props.jumpTo("manuelMod");
     }
+    const deleteTemplate = async (item) => {
+        let savedTemplates = await getData("manueltemplates");
+        let newArray = (savedTemplates.filter(function (t) {
+            return t.name !== item.name
+        }));
+
+        await removeItem("manueltemplates");
+        await saveData("manueltemplates", newArray);
+        Alert.alert(t("success"));
+    }
+
     return (
         <ImageBackground source={images.background} style={{flex: 1}}>
             <View style={styles.container}>
@@ -44,15 +58,15 @@ const TemplateList = (props) => {
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.delete}>
-                                    <TouchableOpacity  onPress={() => {Alert.alert('delete alarm')}}>
+                                    <TouchableOpacity onPress={() => {deleteTemplate(item)}}>
                                         <Icon name='delete' color='red'/>
-                                    </TouchableOpacity>
-                                </View>
+                                        </TouchableOpacity>
+                                        </View>
 
-                            </View>
-                        )
-                    }}
-                    />
+                                        </View>
+                                        )
+                                    }}
+                />
             </View>
         </ImageBackground>
     );

@@ -4,7 +4,7 @@ import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SettingsChartScreen from "../components/SettingsChartScreen";
 import constants from "../../data/constants";
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
+import RadioForm from "react-native-simple-radio-button";
 import {FloatingAction} from "react-native-floating-action";
 import {getData} from "../../data/useAsyncStorage";
 
