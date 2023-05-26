@@ -9,15 +9,20 @@ import {useEffect} from "react";
 export const MythContext = React.createContext({
                                                    manuelTemplate: {},
                                                    setTemplate: () => { },
+                                                   setAquarium: () => { },
+                                                   aquarium: {},
                                                });
 const MythContextProvider = ({children}) => {
     const [manuelTemlate, setManuelTemplate] = useState();
+    const [selectedAquarium, setSelectedAquarium] = useState();
     const setTemplate = (template) => {
         setManuelTemplate(template);
     }
-
+    const setAq = (aq) => {
+        setSelectedAquarium(aq);
+    }
     return (
-        <MythContext.Provider value={{manuelTemplate: manuelTemlate,setTemplate:setTemplate}}>
+        <MythContext.Provider value={{manuelTemplate: manuelTemlate, setTemplate: setTemplate, setAquarium: setAq, aquarium: selectedAquarium}}>
             {children}
         </MythContext.Provider>
     )

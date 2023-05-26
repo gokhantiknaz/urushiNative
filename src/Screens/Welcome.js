@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, StyleSheet, Image, Text, FlatList, TouchableOpacity, Pressable, ImageBackground, Dimensions} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Button_1 from "../components/button1";
@@ -8,10 +8,11 @@ import {useTranslation} from "react-i18next";
 import images from "../images/images";
 import {clearStorage, getData, saveData} from "../../data/useAsyncStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {MythContext} from "../../store/myth-context";
 
 const Welcome_screen = ({navigation}) => {
 
-
+    const ctx = useContext(MythContext);
     const LANGUAGES = [
         {code: "tr", label: "Türkçe"},
         {code: "en", label: "English"}
@@ -47,19 +48,25 @@ const Welcome_screen = ({navigation}) => {
         }
     };
 
+    const navigate = (item) => {
+
+        ctx.setAquarium(item);
+        ctx.setTemplate()
+        navigation.navigate("detail", {aquarium: item});
+    }
+
     const RowInfo = (item) => (
         <TouchableOpacity style={[styles.list, item.selectedClass]}
                           onPress={(x) => {
-                              console.log(item);
-                              navigation.navigate("detail", {aquarium: item});
+                              navigate(item);
                           }}>
-        <View style={styles.item}>
-            <Text style={{ fontSize: 12,color:'white'}}>{'Name : ' + item.name}</Text>
-            <Image source={{uri: `data:image/png;base64,${item.image}`}} style={{height: 60, width: 60}}></Image>
-        </View>
+            <View style={styles.item}>
+                <Text style={{fontSize: 12, color: 'white'}}>{'Name : ' + item.name}</Text>
+                <Image source={{uri: `data:image/png;base64,${item.image}`}} style={{height: 60, width: 60}}></Image>
+            </View>
         </TouchableOpacity>
     );
-    const renderItem2 = ({ item }) => (
+    const renderItem2 = ({item}) => (
         <RowInfo name={item.name} image={item.image}/>
     );
 
@@ -116,12 +123,11 @@ const width = Dimensions.get('window').width;
 const numColumns = 2;
 const styles = StyleSheet.create({
                                      container: {
-                                         flex: 1,
                                          justifyContent: "space-around",
                                          alignItems: "center",
                                      },
                                      Image: {
-                                         flex: 2, width: width, paddingTop: "20%", alignItems: "center"
+                                         width: width, paddingTop: "20%", alignItems: "center"
                                      },
                                      containerLang: {},
                                      button: {
@@ -131,10 +137,10 @@ const styles = StyleSheet.create({
                                          alignItems: "center"
                                      },
                                      containerFlag: {
-                                         paddingTop: '15%'
+                                         paddingTop: '10%'
                                      },
                                      containerList: {
-                                         flex: 9,
+
                                          width: width,
                                          paddingTop: '5%',
                                          paddingHorizontal: '5%',

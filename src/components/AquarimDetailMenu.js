@@ -198,13 +198,16 @@ export default function AquarimDetailMenu(props) {
 
     const checkDevice = async () => { //get connected devices and saved devices
         const _cDevices = await bleCtx.getBleManagerConnectedDevices();
-        selectedAquarium.deviceList.forEach(async (x) => {
-            if (_cDevices.find(a => a.id === x.id)) {
-                return;
-            }
-            var device = bleCtx.devices.find(a => a.id === x.id);
-            await bleCtx.connectDevice(device, id);
-        });
+        if(selectedAquarium && selectedAquarium.default && selectedAquarium.length>0)
+        {
+            selectedAquarium.deviceList?.forEach(async (x) => {
+                if (_cDevices.find(a => a.id === x.id)) {
+                    return;
+                }
+                var device = bleCtx.devices.find(a => a.id === x.id);
+                await bleCtx.connectDevice(device, id);
+            });
+        }
 
         setConnectedDevices(_cDevices)
     }

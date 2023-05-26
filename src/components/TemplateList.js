@@ -59,45 +59,46 @@ const TemplateList = (props) => {
                                 <View style={styles.delete}>
                                     <TouchableOpacity onPress={() => {deleteTemplate(item)}}>
                                         <Icon name='delete' color='red'/>
-                                        </TouchableOpacity>
-                                        </View>
+                                    </TouchableOpacity>
+                                </View>
 
-                                        </View>
-                                        )
-                                    }}
+                            </View>
+                        )
+                    }}
                 />
             </View>
         </ImageBackground>
     );
 }
 
-    export default TemplateList;
+export default TemplateList;
 
 
-    const styles = StyleSheet.create({
-                                         container: {
-                                             flex: 1,
-                                             marginTop: 10
-                                         },
-                                         contentList: {
-                                             flex: 1,
-                                             marginTop: 10
-                                         },
-                                         cardContent: {
-                                             marginTop: 50,
-                                             width: '80%',
-                                             color: 'white'
-                                         },
-                                         delete: {
-                                             marginTop: 50,
-                                             width: '20%',
-                                             color: 'white'
-                                         },
-                                         name: {
-                                             fontSize: 18,
-                                             flex: 1,
-                                             alignSelf: 'center',
-                                             color: '#3399ff',
-                                             fontWeight: 'bold',
-                                         }
-                                     })
+const styles = StyleSheet.create({
+                                     container: {
+                                         flex: 1,
+                                         marginTop: 10
+                                     },
+                                     contentList: {
+                                         flex: 1,
+                                         marginTop: 10
+                                     },
+                                     cardContent: {
+                                         marginTop: 50,
+                                         width: '80%',
+                                         color: 'white',
+
+                                     },
+                                     delete: {
+                                         marginTop: 50,
+                                         width: '20%',
+                                         color: 'white'
+                                     },
+                                     name: {
+                                         fontSize: 18,
+                                         flex: 1,
+                                         alignSelf: 'center',
+                                         color: '#3399ff',
+                                         fontWeight: 'bold',
+                                     }
+                                 })

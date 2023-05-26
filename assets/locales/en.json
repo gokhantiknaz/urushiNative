@@ -11,7 +11,7 @@
     "imageselect": "Photo",
     "deviceList":"Device List",
     "Success": "Saved Successfully",
-    "templatename": "Template Name"
-
+    "templatename": "Template Name",
+    "delete": "Delete"
   }
 }

@@ -11,7 +11,8 @@
     "imageselect": "Akvaryum fotosu seçiniz",
     "deviceList":"Cihaz Listesi",
     "Success": "Kayıt İşlemi Başarılı",
-    "templatename": "Template Adı"
+    "templatename": "Template Adı",
+    "delete": "Sil"
 
   }
 }
