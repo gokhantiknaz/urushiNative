@@ -49,7 +49,6 @@ const Welcome_screen = ({navigation}) => {
     };
 
     const navigate = (item) => {
-
         ctx.setAquarium(item);
         ctx.setTemplate()
         navigation.navigate("detail", {aquarium: item});
@@ -62,7 +61,13 @@ const Welcome_screen = ({navigation}) => {
                           }}>
             <View style={styles.item}>
                 <Text style={{fontSize: 12, color: 'white'}}>{'Name : ' + item.name}</Text>
-                <Image source={{uri: `data:image/png;base64,${item.image}`}} style={{height: 60, width: 60}}></Image>
+
+                {item.image ?
+                    <Image source={{uri: `data:image/png;base64,${item.image}`}} style={{height: 60, width: 60}}></Image>
+                    :
+                    <Image source={images.mythLight} style={{height: 60, width: 60}}></Image>
+                }
+
             </View>
         </TouchableOpacity>
     );
@@ -160,7 +165,6 @@ const styles = StyleSheet.create({
                                      item: {
                                          alignItems: 'center',
                                          justifyContent: 'center',
-                                         width: Dimensions.get('window').width / numColumns, // approximate a square
                                      },
                                      itemInvisible: {
                                          backgroundColor: 'transparent',

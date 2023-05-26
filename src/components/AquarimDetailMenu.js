@@ -198,8 +198,7 @@ export default function AquarimDetailMenu(props) {
 
     const checkDevice = async () => { //get connected devices and saved devices
         const _cDevices = await bleCtx.getBleManagerConnectedDevices();
-        if(selectedAquarium && selectedAquarium.default && selectedAquarium.length>0)
-        {
+        if (selectedAquarium && selectedAquarium.default && selectedAquarium.length > 0) {
             selectedAquarium.deviceList?.forEach(async (x) => {
                 if (_cDevices.find(a => a.id === x.id)) {
                     return;
@@ -224,7 +223,10 @@ export default function AquarimDetailMenu(props) {
             <Image source={images.background} style={styles.backgroundImage}/>
             <View style={{flex: 1, alignItems: "center"}}>
                 <Text style={{color: "white", marginTop: 10, marginBottom: 20}}>{selectedAquarium.name}</Text>
-                <Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>
+                {selectedAquarium.image ?
+                    <Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image> :
+                    <Image source={images.deviceIcon} style={{height: 300, width: Dimensions.get('window').width}}></Image>
+                }
                 {/*<Image source={{uri: `${selectedAquarium.imageUri ?? ''}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}
             </View>
             <View style={{flex: 5}}>

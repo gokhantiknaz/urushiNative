@@ -12,6 +12,6 @@ export  default {
     template:require('../../assets/template.png'),
     delete:require('../../assets/delete.png'),
     deviceIcon:require('../../assets/icon.png'),
-    mythLight:require('../../assets/background.png')
+    mythLight:require('../../assets/icon.png')
 
 }
