@@ -17,9 +17,11 @@ const Welcome_screen = ({navigation}) => {
         {code: "tr", label: "Türkçe"},
         {code: "en", label: "English"}
     ];
-    // const navigation = useNavigation();
 
     useEffect(() => {
+        getData("language").then((val) => {
+            setLanguage(val);
+        });
         const focusHandler = navigation.addListener('focus', () => {
             getAquariums();
         });
@@ -30,9 +32,6 @@ const Welcome_screen = ({navigation}) => {
 
     const [aquarimList, setAquarimList] = useState([]);
 
-    getData("language").then((val) => {
-        setLanguage(val);
-    });
     const selectedLanguageCode = i18n.language;
     const setLanguage = (code) => {
         return i18n.changeLanguage(code);
@@ -53,21 +52,19 @@ const Welcome_screen = ({navigation}) => {
         ctx.setTemplate()
         navigation.navigate("detail", {aquarium: item});
     }
-
     const RowInfo = (item) => (
         <TouchableOpacity style={[styles.list, item.selectedClass]}
                           onPress={(x) => {
                               navigate(item);
                           }}>
             <View style={styles.item}>
-                <Text style={{fontSize: 12, color: 'white'}}>{'Name : ' + item.name}</Text>
-
                 {item.image ?
                     <Image source={{uri: `data:image/png;base64,${item.image}`}} style={{height: 60, width: 60}}></Image>
                     :
                     <Image source={images.mythLight} style={{height: 60, width: 60}}></Image>
                 }
 
+                <Text style={{marginTop:5,fontSize: 12, color: 'white'}}>{'Name : ' + item.name}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -128,6 +125,7 @@ const width = Dimensions.get('window').width;
 const numColumns = 2;
 const styles = StyleSheet.create({
                                      container: {
+                                         flex: 1,
                                          justifyContent: "space-around",
                                          alignItems: "center",
                                      },
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
                                          paddingTop: '10%'
                                      },
                                      containerList: {
-
+                                         flex: 9,
                                          width: width,
                                          paddingTop: '5%',
                                          paddingHorizontal: '5%',
@@ -165,6 +163,7 @@ const styles = StyleSheet.create({
                                      item: {
                                          alignItems: 'center',
                                          justifyContent: 'center',
+                                         marginTop:5
                                      },
                                      itemInvisible: {
                                          backgroundColor: 'transparent',

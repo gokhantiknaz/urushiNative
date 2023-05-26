@@ -3,6 +3,7 @@ import * as React from "react";
 import {SceneMap, TabView} from "react-native-tab-view";
 import TemplateList from "../components/TemplateList";
 import {ManuelMod} from "../components/ManuelMod";
+import {useTranslation} from "react-i18next";
 
 const renderScene = SceneMap({
                                  manuelMod: ManuelMod,
@@ -23,9 +24,10 @@ const renderScene = SceneMap({
 export const ManuelModTab = () => {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
+    const [t] = useTranslation();
     const [routes] = React.useState([
                                         {key: 'manuelMod', title: 'Manuel Mod'},
-                                        {key: 'template', title: 'Templates'},
+                                        {key: 'template', title: t('favs')},
                                     ]);
 
     return (

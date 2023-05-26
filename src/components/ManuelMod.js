@@ -18,7 +18,6 @@ export const ManuelMod = (props) => {
     const [allProgress, setAllProgress] = useState([]);
     const [delay, setDelay] = useState(1);
 
-
     var delays = [
         {label: '1Min', value: 1},
         {label: '10Min', value: 10},

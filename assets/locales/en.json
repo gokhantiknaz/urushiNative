@@ -12,6 +12,7 @@
     "deviceList":"Device List",
     "Success": "Saved Successfully",
     "templatename": "Template Name",
-    "delete": "Delete"
+    "delete": "Delete",
+    "favs": "Favorites"
   }
 }

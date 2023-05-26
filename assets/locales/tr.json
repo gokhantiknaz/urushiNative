@@ -12,7 +12,8 @@
     "deviceList":"Cihaz Listesi",
     "Success": "Kayıt İşlemi Başarılı",
     "templatename": "Template Adı",
-    "delete": "Sil"
+    "delete": "Sil",
+    "favs": "Favoriler"
 
   }
 }

@@ -5,6 +5,6 @@
   "minify": false,
   "urlRandomness": "5s8gYq8",
   "https": false,
-  "scheme": "com.gokhantiknaz.MythLights",
+  "scheme": "exp+mythlights",
   "devClient": false
 }

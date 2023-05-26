@@ -77,7 +77,7 @@ const NewAquarium = () => {
     }
     return (
 
-        <ImageBackground source={images.mythLight} style={{flex: 1}}>
+        <ImageBackground source={images.background} style={{flex: 1}}>
             <View style={styles.container}>
                 <View style={styles.newAquarium}>
                     <Text style={styles.SignUpLabel}>{t("newAquarium")}</Text>
