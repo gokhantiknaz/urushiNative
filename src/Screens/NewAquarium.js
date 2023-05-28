@@ -18,8 +18,9 @@ import Dialog from "react-native-dialog";
 const width = Dimensions.get('window').width;
 const NewAquarium = () => {
     const [name, setName] = useState("");
-    const [image, setImage] = useState(null);
+
     const [deviceList, setDeviceList] = useState([]);
+    const [image, setImage] = useState(null);
     const [imageUri, setImageUri] = useState('');
     const [t] = useTranslation();
 
