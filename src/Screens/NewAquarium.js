@@ -29,7 +29,7 @@ const NewAquarium = () => {
 
     const id = useId();
 
-    const save = async () => {
+    const save = () => {
         try {
 
             let myAquarium = {
@@ -37,23 +37,25 @@ const NewAquarium = () => {
                 name: name,
                 image: image,
                 imageUri: imageUri,
-                modelId: 1
+                modelId: 1,
+                createdDate: new Date()
             };
             myAquarium.deviceList = deviceList;
 
-            let list = await getData("aquariumList");
+             getData("aquariumList").then(list=>{
+                 if (list == null) {
+                     let newlist = [];
+                     newlist.push(myAquarium);
+                     saveData("aquariumList", newlist).then(res=>{
 
-            if (list == null) {
-                let newlist = [];
-                newlist.push(myAquarium);
-
-                await saveData("aquariumList", newlist);
-            } else {
-                list.push(myAquarium);
-
-                await removeItem("aquariumList");
-                await saveData("aquariumList", list);
-            }
+                     });
+                 } else {
+                     list.push(myAquarium);
+                     removeItem("aquariumList").then(res=>{
+                         saveData("aquariumList", list);
+                     });
+                 }
+             });
 
             setShowModal(true);
         } catch (e) {

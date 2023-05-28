@@ -15,6 +15,7 @@ import BLEDevices from "../Screens/BLEDevices";
 import {ManuelModTab} from "../Screens/ManuelModTab";
 import TemplateList from "../components/TemplateList";
 import {Simulation} from "../Screens/Simulation";
+import AquarimSettings from "../components/AquarimSettings";
 
 
 const Stack = createStackNavigator();
@@ -47,7 +48,7 @@ function AuthScreens() {
                     backgroundColor: colors.black,
                 }
             }}/>
-           <Stack.Screen name="lights" component={LightDetail} options={{
+            <Stack.Screen name="lights" component={LightDetail} options={{
                 title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
@@ -58,8 +59,13 @@ function AuthScreens() {
                     backgroundColor: colors.black,
                 }
             }}/>
+            <Stack.Screen name="aquariumsettings" component={AquarimSettings} options={{
+                title: t('aquariumsettings'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
 
-            <Stack.Screen name="login" component={Login}/>
+
             <Stack.Screen name="UnderCons" component={UnderCons}/>
             <Stack.Screen name="spiralMenu" component={SprialMenu}/>
             <Stack.Screen name="BleDevices" component={BLEDevices}/>

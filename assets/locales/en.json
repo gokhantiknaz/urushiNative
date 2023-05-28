@@ -13,6 +13,11 @@
     "Success": "Saved Successfully",
     "templatename": "Template Name",
     "delete": "Delete",
-    "favs": "Favorites"
+    "favs": "Favorites",
+    "aquariumsettings": "Settings",
+    "aquariumname": "Aquarium Name",
+    "createddate": "Created Date",
+    "shareinsta": "Share",
+    "devicenumber": "Connected Devices"
   }
 }

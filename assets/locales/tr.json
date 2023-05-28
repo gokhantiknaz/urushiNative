@@ -13,7 +13,11 @@
     "Success": "Kayıt İşlemi Başarılı",
     "templatename": "Template Adı",
     "delete": "Sil",
-    "favs": "Favoriler"
-
+    "favs": "Favoriler",
+    "aquariumsettings": "Ayarlar",
+    "aquariumname": "Akvaryum Adı",
+    "createddate": "Kayıt Tarihi",
+    "shareinsta": "Instagramda Paylaş",
+    "devicenumber": "Bağlı Cihazlar"
   }
 }

@@ -187,12 +187,12 @@ export default function AquarimDetailMenu(props) {
         }
         if (data.nativeEvent.data == 'lights') {
             navigation.navigate("lights")
+        }
+
+        if (data.nativeEvent.data == 'settings') {
+            navigation.navigate("aquariumsettings");
         } else {
-            if (data.nativeEvent.data == 'settings') {
-                navigation.navigate("NewAquarium")
-            } else {
-                navigation.navigate("UnderCons")
-            }
+            navigation.navigate("UnderCons")
         }
     }
 
