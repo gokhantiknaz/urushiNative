@@ -124,7 +124,7 @@ export const ManuelMod = (props) => {
                 </View>
 
                 <View style={{flex: 4}}>
-                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress}></MainProgress>
+                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay}></MainProgress>
                 </View>
 
                 <View style={{flex: 1, flexDirection: 'row'}}>

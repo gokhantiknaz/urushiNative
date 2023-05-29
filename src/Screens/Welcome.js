@@ -53,23 +53,26 @@ const Welcome_screen = ({navigation}) => {
         navigation.navigate("detail", {aquarium: item});
     }
     const RowInfo = (item) => (
-        <TouchableOpacity style={[styles.list, item.selectedClass]}
+        <TouchableOpacity style={[styles.list, item.item.selectedClass]}
                           onPress={(x) => {
-                              navigate(item);
+                              navigate(item.item);
                           }}>
             <View style={styles.item}>
-                {item.image ?
-                    <Image source={{uri: `data:image/png;base64,${item.image}`}} style={{height: 60, width: 60}}></Image>
+                {item.item.image ?
+                    <Image source={{uri: `data:image/png;base64,${item.item.image}`}} style={{height: 60, width: 60}}></Image>
                     :
                     <Image source={images.mythLight} style={{height: 60, width: 60}}></Image>
                 }
 
-                <Text style={{marginTop:5,fontSize: 12, color: 'white'}}>{'Name : ' + item.name}</Text>
+                <Text style={{marginTop: 5, fontSize: 12, color: 'white'}}>{item.item.name}</Text>
             </View>
         </TouchableOpacity>
     );
     const renderItem2 = ({item}) => (
-        <RowInfo name={item.name} image={item.image}/>
+        <>
+            <RowInfo item={item}/>
+        </>
+
     );
 
     return (
@@ -163,7 +166,7 @@ const styles = StyleSheet.create({
                                      item: {
                                          alignItems: 'center',
                                          justifyContent: 'center',
-                                         marginTop:5
+                                         marginTop: 5
                                      },
                                      itemInvisible: {
                                          backgroundColor: 'transparent',

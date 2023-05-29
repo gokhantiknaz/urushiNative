@@ -6,6 +6,7 @@ import images from "../images/images";
 import {BackgroundImage} from "@rneui/base";
 import {getAllKeys, getData} from "../../data/useAsyncStorage";
 import {BleContext} from "../../store/ble-context";
+import {MythContext} from "../../store/myth-context";
 
 let menuHtml =
     `<html lang="en">
@@ -174,9 +175,10 @@ let menuHtml =
 
 export default function AquarimDetailMenu(props) {
 
+    const ctx = useContext(MythContext);
     const bleCtx = useContext(BleContext); //get ble context
     const navigation = useNavigation();
-    const selectedAquarium = props.route.params.aquarium;
+
 
     const [devices, setDevices] = useState([]);
     const [connectedDevices, setConnectedDevices] = useState([]);
@@ -184,27 +186,30 @@ export default function AquarimDetailMenu(props) {
     function onMessage(data) {
         if (!data) {
             navigation.navigate("UnderCons")
-        }
-        if (data.nativeEvent.data == 'lights') {
-            navigation.navigate("lights")
-        }
-
-        if (data.nativeEvent.data == 'settings') {
-            navigation.navigate("aquariumsettings");
         } else {
-            navigation.navigate("UnderCons")
+            if (data.nativeEvent.data === 'lights') {
+                navigation.navigate("lights");
+                return;
+            }
+            if (data.nativeEvent.data === 'settings') {
+                navigation.navigate("aquariumsettings");
+                return;
+            } else {
+                navigation.navigate("UnderCons");
+                return;
+            }
         }
     }
 
     const checkDevice = async () => { //get connected devices and saved devices
         const _cDevices = await bleCtx.getBleManagerConnectedDevices();
-        if (selectedAquarium && selectedAquarium.default && selectedAquarium.length > 0) {
-            selectedAquarium.deviceList?.forEach(async (x) => {
-                if (_cDevices.find(a => a.id === x.id)) {
-                    return;
+        if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+
+            ctx.aquarium.deviceList?.forEach(async (x) => {
+                let devices = bleCtx.devices.filter(a => a.id === x.id);
+                if (devices.length > 0) {
+                    await bleCtx.connectDevice(devices[0], x.id);
                 }
-                var device = bleCtx.devices.find(a => a.id === x.id);
-                await bleCtx.connectDevice(device, id);
             });
         }
 
@@ -222,9 +227,9 @@ export default function AquarimDetailMenu(props) {
         <SafeAreaView style={{flex: 1}}>
             <Image source={images.background} style={styles.backgroundImage}/>
             <View style={{flex: 1, alignItems: "center"}}>
-                <Text style={{color: "white", marginTop: 10, marginBottom: 20}}>{selectedAquarium.name}</Text>
-                {selectedAquarium.image ?
-                    <Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image> :
+                <Text style={{color: "white", marginTop: 10, marginBottom: 20}}>{ctx.aquarium.name}</Text>
+                {ctx.aquarium.image ?
+                    <Image source={{uri: `data:image/png;base64,${ctx.aquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image> :
                     <Image source={images.deviceIcon} style={{height: 300, width: Dimensions.get('window').width}}></Image>
                 }
                 {/*<Image source={{uri: `${selectedAquarium.imageUri ?? ''}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}

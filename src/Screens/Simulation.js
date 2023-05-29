@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SettingsChartScreen from "../components/SettingsChartScreen";
-import constants from "../../data/constants";
 import RadioForm from "react-native-simple-radio-button";
 import {FloatingAction} from "react-native-floating-action";
 import {getData} from "../../data/useAsyncStorage";
+import {MythContext} from "../../store/myth-context";
+import {Models} from "../../data/Model";
+import {findArrayElementById} from "../utils";
 
 export const Simulation = () => {
 
+    const ctx = useContext(MythContext);
     const DUMMY_DATA = [
         // <--- This is the data that is being used to create the draggable dots
         {power: 0, time: 480, color: "lightsalmon"},
@@ -18,11 +21,9 @@ export const Simulation = () => {
         {power: 0, time: 1250, color: "chartreuse"}
     ];
 
-
     const actions = [
         {
             text: "Load",
-
             icon: require("../../assets/loadIcon.png"),
             name: "bt_load",
             position: 2
@@ -39,14 +40,13 @@ export const Simulation = () => {
     const [allPoints, setAllPoints] = useState([]);
     const [data, setData] = useState({Channel: 1, Point: DUMMY_DATA});
 
-    var channels = [
-        {label: constants.Channel1, value: 1},
-        {label: constants.Channel2, value: 2},
-        {label: constants.Channel3, value: 3},
-        {label: constants.Channel4, value: 4},
-        {label: constants.Channel5, value: 5},
-        {label: constants.Channel6, value: 6},
-    ];
+    const [channels, setChannels] = useState([]);
+
+    useEffect(() => {
+        let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
+        let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+        setChannels(subModel.Channels);
+    }, [])
 
     useEffect(() => {
         let selectedChannelPoint = allPoints.filter(x => x.Channel == selectedChannel);
@@ -54,7 +54,6 @@ export const Simulation = () => {
             setData(selectedChannelPoint[0]);
         }
     }, [selectedChannel])
-
     const getSimulation = async () => {
         let simulationlist = await getData("simulation");
     }
@@ -65,10 +64,7 @@ export const Simulation = () => {
             saveSimulation(obj);
         }
     }, [points])
-
-
     const saveSimulation = (obj) => {
-
         let tmpallpoints = [...allPoints];
         const index = tmpallpoints.findIndex(
             x => obj.Channel === x.Channel
@@ -80,6 +76,15 @@ export const Simulation = () => {
         }
         setAllPoints(tmpallpoints)
     }
+
+    // var tempchannels = [
+    //     {label: constants.Channel1, value: 1},
+    //     {label: constants.Channel2, value: 2},
+    //     {label: constants.Channel3, value: 3},
+    //     {label: constants.Channel4, value: 4},
+    //     {label: constants.Channel5, value: 5},
+    //     {label: constants.Channel6, value: 6},
+    // ];
 
     return (
         <SafeAreaView style={{flex: 1}}>

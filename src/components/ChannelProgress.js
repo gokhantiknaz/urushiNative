@@ -22,16 +22,7 @@ const ChannelProgress = (props) => {
         props.setValue(returnobj);
     }, [returnobj])
 
-    useEffect(() => {
-        sendData();
-    }, [slideCompletionValue])
 
-    const sendData = async () => {
-        let connectedDevices = await bleCtx.getBleManagerConnectedDevices();
-        connectedDevices.forEach(x => {
-            bleCtx.sendDatatoDevice(x, slideCompletionValue.toString());
-        });
-    }
 
     return (
 

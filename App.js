@@ -25,6 +25,7 @@ import {
     OpenSans_800ExtraBold_Italic,
 } from '@expo-google-fonts/open-sans';
 import MythContextProvider from "./store/myth-context";
+import BleContextProvider from "./store/ble-context";
 
 
 try {
@@ -56,12 +57,12 @@ export default function App() {
     } else {
         return (
             // <BleContextProvider>
-            <SheetProvider>
-                <MythContextProvider>
-                    <Home/>
-                </MythContextProvider>
-            </SheetProvider>
-            //</BleContextProvider>
+                <SheetProvider>
+                    <MythContextProvider>
+                        <Home/>
+                    </MythContextProvider>
+                </SheetProvider>
+            // </BleContextProvider>
 
         );
     }
