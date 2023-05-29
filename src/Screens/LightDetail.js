@@ -7,6 +7,7 @@ import images from "../images/images";
 import {LinearGradient} from 'expo-linear-gradient';
 import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
+import {showConfirmDialog} from "../components/Confirm";
 
 
 const LightDetail = (props) => {
@@ -50,10 +51,9 @@ const LightDetail = (props) => {
             id: 6,
             name: t('delete'),
             image: images.delete,
-            onClick: deleteTemplate
         }
     ]
-    const deleteTemplate = async (item) => {
+    const deleteAquarium = async () => {
 
         let allAquariums = await getData("aquariumList");
         let newArray = (allAquariums.filter(function (t) {
@@ -73,7 +73,7 @@ const LightDetail = (props) => {
             navigation.navigate(item.navigate);
         }
         if (item.id === 6) {
-            deleteTemplate(item);
+            return showConfirmDialog(() => {deleteAquarium()});
         }
     }
 

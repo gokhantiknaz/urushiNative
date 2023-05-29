@@ -39,25 +39,25 @@ const NewAquarium = () => {
                 image: image,
                 imageUri: imageUri,
                 modelId: 1,
-                submodelId:1,
+                submodelId: 1,
                 createdDate: new Date()
             };
             myAquarium.deviceList = deviceList;
 
-             getData("aquariumList").then(list=>{
-                 if (list == null) {
-                     let newlist = [];
-                     newlist.push(myAquarium);
-                     saveData("aquariumList", newlist).then(res=>{
+            getData("aquariumList").then(list => {
+                if (list == null) {
+                    let newlist = [];
+                    newlist.push(myAquarium);
+                    saveData("aquariumList", newlist).then(res => {
 
-                     });
-                 } else {
-                     list.push(myAquarium);
-                     removeItem("aquariumList").then(res=>{
-                         saveData("aquariumList", list);
-                     });
-                 }
-             });
+                    });
+                } else {
+                    list.push(myAquarium);
+                    removeItem("aquariumList").then(res => {
+                        saveData("aquariumList", list);
+                    });
+                }
+            });
 
             setShowModal(true);
         } catch (e) {

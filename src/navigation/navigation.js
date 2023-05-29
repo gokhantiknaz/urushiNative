@@ -5,7 +5,7 @@ import Login from "../Screens/Login";
 import NewAquarium from "../Screens/NewAquarium";
 import Welcome_screen from '../Screens/Welcome';
 import LightDetail from "../Screens/LightDetail";
-import AquarimDetailMenu from "../components/AquarimDetailMenu";
+import MainMenu from "../components/MainMenu";
 import UnderCons from "../components/UnderCons";
 import colors from "../components/colors";
 import {useTranslation} from "react-i18next";
@@ -43,7 +43,7 @@ function AuthScreens() {
                     backgroundColor: colors.black,
                 }
             }}/>
-            <Stack.Screen name="detail" component={AquarimDetailMenu} options={{
+            <Stack.Screen name="detail" component={MainMenu} options={{
                 title: t('AquariumDetail'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }

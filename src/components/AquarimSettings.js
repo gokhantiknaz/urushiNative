@@ -1,11 +1,12 @@
-import {Dimensions, Image, ImageBackground, StatusBar, View, StyleSheet, Text, TextInput, Button, Pressable, TouchableOpacity} from "react-native";
+import {Dimensions, Image, ImageBackground, StatusBar, View, StyleSheet, Text, TextInput, Button, Pressable, TouchableOpacity, Alert} from "react-native";
 import images from "../images/images";
 import React, {useContext, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
 import {useTranslation} from "react-i18next";
-import {clearStorage, getAllKeys, getData} from "../../data/useAsyncStorage";
+import {clearStorage, getAllKeys, getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import ImageSelect from "./ImagePicker";
 import * as ImagePicker from "expo-image-picker";
+import {findArrayElementById} from "../utils";
 
 const width = Dimensions.get('window').width;
 const AquarimSettings = (props) => {
@@ -62,9 +63,20 @@ const AquarimSettings = (props) => {
         <View style={styles.row}>{children}</View>
     )
     const save = async () => {
-        // let selectedAquarium = ctx.aquarium;
-        // selectedAquarium.name = name;
-        let datas = await getAllKeys()
+        getData("aquariumList").then(result => {
+            let selected = findArrayElementById(result, ctx.aquarium.name, "name");
+            const index = result.findIndex(emp => emp.id === selected.id);
+
+            let tempList = [...result];
+            tempList[index] = selectedAquarium;
+
+            removeItem("aquariumList").then(res => {
+                saveData("aquariumList", tempList).then(resX => {
+                    Alert.alert("Başarıyla güncellendi");
+                    ctx.setAquarium(selectedAquarium);
+                });
+            });
+        });
     }
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -74,15 +86,16 @@ const AquarimSettings = (props) => {
                                                                    aspect: [4, 3],
                                                                    quality: 1,
                                                                    base64: true
-
                                                                });
         // console.log(result);
         if (!result.canceled) {
             setImage(result.assets[0].uri);
             setImageUri(result.assets[0].uri);
-            setSelectedAquarium({...selectedAquarium,image:result.assets[0].base64});
+            setSelectedAquarium({...selectedAquarium, image: result.assets[0].base64});
         }
     };
+
+   
 
     return (
         <ImageBackground style={{flex: 1}} source={images.background}>
@@ -106,7 +119,11 @@ const AquarimSettings = (props) => {
                     <View style={styles["2col"]}>
                         <TextInput style={{color: 'white', backgroundColor: 'grey'}}
                                    value={selectedAquarium.name}
-                                   onChangeText={setName} placeholder={t('aquariumname')}></TextInput>
+                                   onChangeText={(e) => {
+                                       let tmp = {...selectedAquarium};
+                                       tmp.name = e;
+                                       setSelectedAquarium(tmp);
+                                   }} placeholder={t('aquariumname')}></TextInput>
                     </View>
                 </View>
 

@@ -173,7 +173,7 @@ let menuHtml =
 </html>
 `;
 
-export default function AquarimDetailMenu(props) {
+export default function MainMenu(props) {
 
     const ctx = useContext(MythContext);
     const bleCtx = useContext(BleContext); //get ble context
