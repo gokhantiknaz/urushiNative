@@ -39,6 +39,7 @@ const NewAquarium = () => {
                 image: image,
                 imageUri: imageUri,
                 modelId: 1,
+                submodelId:1,
                 createdDate: new Date()
             };
             myAquarium.deviceList = deviceList;
