@@ -77,15 +77,6 @@ export const Simulation = () => {
         setAllPoints(tmpallpoints)
     }
 
-    // var tempchannels = [
-    //     {label: constants.Channel1, value: 1},
-    //     {label: constants.Channel2, value: 2},
-    //     {label: constants.Channel3, value: 3},
-    //     {label: constants.Channel4, value: 4},
-    //     {label: constants.Channel5, value: 5},
-    //     {label: constants.Channel6, value: 6},
-    // ];
-
     return (
         <SafeAreaView style={{flex: 1}}>
             <View style={styles.container}>
