@@ -21,7 +21,7 @@ const LightDetail = (props) => {
             id: 1,
             name: t('connections'),
             image: images.connection,
-            navigate: "UnderCons"
+            navigate: "lightConnections"
         },
         {
             id: 2,

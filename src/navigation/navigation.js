@@ -16,6 +16,7 @@ import {ManuelModTab} from "../Screens/ManuelModTab";
 import TemplateList from "../components/TemplateList";
 import {Simulation} from "../Screens/Simulation";
 import AquarimSettings from "../components/AquarimSettings";
+import LightConnections from "../Screens/LightConnections";
 
 
 const Stack = createStackNavigator();
@@ -61,6 +62,12 @@ function AuthScreens() {
             }}/>
             <Stack.Screen name="aquariumsettings" component={AquarimSettings} options={{
                 title: t('aquariumsettings'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
+
+            <Stack.Screen name="lightConnections" component={LightConnections} options={{
+                title: t('lightConnections'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
