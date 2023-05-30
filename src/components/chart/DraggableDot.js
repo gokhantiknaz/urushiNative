@@ -197,7 +197,6 @@ const DraggableDot = (props) => {
 
     return (
         <Animated.View style={[styles.lines, {zIndex: 100 - index}, animatedLineStyle]}>
-
             <Animated.View style={[styles.label, styles.labelTime, animatedLabelTime]}>
                 <Pressable
                     style={{flex: 1, justifyContent: "center", alignItems: "center"}}
@@ -214,10 +213,6 @@ const DraggableDot = (props) => {
             </Animated.View>
             <Animated.View style={[styles.label, styles.labelPower, animatedLabelPower]}>
                 <Text style={[styles.text]}>{`${Math.round(pointRealValues.power)}%`}</Text>
-            </Animated.View>
-
-            <Animated.View style={{marginTop:30,marginLeft:40}}>
-                <Text>{props.channel}</Text>
             </Animated.View>
             <GestureDetector gesture={panGesture}>
                 <Animated.View style={[styles.dot, animatedDotStyle]}/>

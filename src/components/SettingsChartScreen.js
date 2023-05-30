@@ -109,8 +109,6 @@ const SettingsChartScreen = (props) => {
                     <ValueBar layout={chartLayout}/>
                     <ChartGraph data={points.values}/>
                     {points.values.map((point, index) => {
-
-
                         return (
                             <DraggableDot
                                 pointUpdateCallBack={pointsUpdateCallBack}
@@ -124,6 +122,8 @@ const SettingsChartScreen = (props) => {
                             />
                         );
                     })}
+
+                    <Text style={{color:'red'}}>{props.channel}</Text>
                 </View>
             </GestureHandlerRootView>
 
