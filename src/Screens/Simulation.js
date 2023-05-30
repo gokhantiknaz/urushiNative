@@ -13,6 +13,7 @@ import {findArrayElementById} from "../utils";
 export const Simulation = () => {
 
     const ctx = useContext(MythContext);
+
     const DUMMY_DATA = [
         // <--- This is the data that is being used to create the draggable dots
         {power: 0, time: 480, color: "lightsalmon"},
@@ -21,31 +22,41 @@ export const Simulation = () => {
         {power: 0, time: 1250, color: "chartreuse"}
     ];
 
-    const actions = [
-        {
-            text: "Load",
-            icon: require("../../assets/loadIcon.png"),
-            name: "bt_load",
-            position: 2
-        },
-        {
-            text: "Save",
-            icon: require("../../assets/saveIcon.png"),
-            name: "bt_save",
-            position: 1
-        }
-    ];
+    const [channels, setChannels] = useState([]);
     const [selectedChannel, setChannel] = useState(1);
     const [points, setPoints] = useState(null);
     const [allPoints, setAllPoints] = useState([]);
     const [data, setData] = useState({Channel: 1, Point: DUMMY_DATA});
-
-    const [channels, setChannels] = useState([]);
+    const [actions, setActions] = useState([]);
 
     useEffect(() => {
+
+
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
         setChannels(subModel.Channels);
+        let tmpactions = [];
+        tmpactions.push({
+                            text: "Load",
+                            icon: require("../../assets/loadIcon.png"),
+                            name: "bt_load",
+                            position: 2,
+                            id: 98
+                        });
+        tmpactions.push({
+                            text: "Save",
+                            icon: require("../../assets/saveIcon.png"),
+                            name: "bt_save",
+                            position: 1,
+                            id: 99
+                        });
+
+        subModel.Channels.map(x => {
+            tmpactions.push({text: x.label, icon: require("../../assets/aibot_one.png"), name: x.label, position: 2, id: x.value});
+        });
+
+        setActions(tmpactions);
+
     }, [])
 
     useEffect(() => {
@@ -78,35 +89,24 @@ export const Simulation = () => {
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <View style={styles.container}>
-                <View style={{flex: 1, marginTop: 10}}>
-                    {/*https://www.npmjs.com/package/react-native-simple-radio-button*/}
-                    <RadioForm
-                        radio_props={channels}
-                        initial={0}
-                        formHorizontal={true}
-                        labelHorizontal={false}
-                        animation={true}
-                        onPress={(value) => {setChannel(value)}}
-                    />
+        <View style={styles.container}>
+            <StatusBar hidden={true}></StatusBar>
+            <ImageBackground
+                source={require("../../assets/bg.jpg")}
+                resizeMode='cover'
+                style={{flex: 15, width: "100%", height: "100%"}}>
+                <SettingsChartScreen data={data.Point} setPoints={setPoints}/>
+            </ImageBackground>
+            <FloatingAction
+                actions={actions}
+                position='right'
+                onPressItem={name => {
+                    let tmp = findArrayElementById(actions, name, "name");
+                    setChannel(tmp.id);
+                }}
+            />
+        </View>
 
-                </View>
-                <ImageBackground
-                    source={require("../../assets/bg.jpg")}
-                    resizeMode='cover'
-                    style={{flex: 15, width: "100%"}}>
-                    <SettingsChartScreen data={data.Point} setPoints={setPoints}/>
-                </ImageBackground>
-                <FloatingAction
-                    actions={actions}
-                    position='right'
-                    onPressItem={name => {
-                        console.log(`selected button: ${name}`);
-                    }}
-                />
-            </View>
-        </SafeAreaView>
     );
 }
 

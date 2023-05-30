@@ -9,6 +9,7 @@ import images from "../images/images";
 import {clearStorage, getData, saveData} from "../../data/useAsyncStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {MythContext} from "../../store/myth-context";
+import {Models} from "../../data/Model";
 
 const Welcome_screen = ({navigation}) => {
 
@@ -54,9 +55,7 @@ const Welcome_screen = ({navigation}) => {
     }
     const RowInfo = (item) => (
         <TouchableOpacity style={[styles.list, item.item.selectedClass]}
-                          onPress={(x) => {
-                              navigate(item.item);
-                          }}>
+                          onPress={(x) => { navigate(item.item); }}>
             <View style={styles.item}>
                 {item.item.image ?
                     <Image source={{uri: `data:image/png;base64,${item.item.image}`}} style={{height: 60, width: 60}}></Image>
