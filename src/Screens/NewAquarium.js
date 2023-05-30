@@ -14,6 +14,7 @@ import colors from "../components/colors";
 import {useTranslation} from "react-i18next";
 
 import Dialog from "react-native-dialog";
+import {StatusBar} from "expo-status-bar";
 
 const width = Dimensions.get('window').width;
 const NewAquarium = () => {
@@ -67,6 +68,7 @@ const NewAquarium = () => {
     }
     if (showModal) {
         return (<View style={styles.dialog}>
+
             <Dialog.Container visible={showModal}>
                 <Dialog.Title></Dialog.Title>
                 <Dialog.Description>
@@ -83,6 +85,7 @@ const NewAquarium = () => {
 
         <ImageBackground source={images.background} style={{flex: 1}}>
             <View style={styles.container}>
+                <StatusBar hidden={true}></StatusBar>
                 <View style={styles.newAquarium}>
                     <Text style={styles.SignUpLabel}>{t("newAquarium")}</Text>
                     <TextInput

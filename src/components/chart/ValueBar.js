@@ -7,14 +7,16 @@ const ValueBar = ({layout}) => {
     <View style={styles.container}>
 
       <View style={styles.labelContainer}>
+
       {
-      
+
         [...Array(5)].map((_, i) => {
          return <Text key={i} style={[{width:(layout.width-100)/5, left: i * (layout.width-30)/5  },styles.label]}>
-                    {i * 25}%
+                    {i * 25} %
           </Text>
-        })  
+        })
   }
+
       </View>
     </View>
   )

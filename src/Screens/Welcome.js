@@ -10,6 +10,7 @@ import {clearStorage, getData, saveData} from "../../data/useAsyncStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
+import {StatusBar} from "expo-status-bar";
 
 const Welcome_screen = ({navigation}) => {
 
@@ -76,6 +77,7 @@ const Welcome_screen = ({navigation}) => {
 
     return (
         <ImageBackground source={images.background} style={{alignContent: "center", flex: 1, alignItems: "center"}}>
+            <StatusBar hidden={true}></StatusBar>
             <View style={styles.container}>
                 <View style={styles.Image}>
                     <Image

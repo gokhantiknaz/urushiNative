@@ -8,6 +8,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {showConfirmDialog} from "../components/Confirm";
+import {StatusBar} from "expo-status-bar";
 
 
 const LightDetail = (props) => {
@@ -79,6 +80,7 @@ const LightDetail = (props) => {
 
     return (
         <View style={styles.container}>
+            <StatusBar hidden={true}></StatusBar>
             {
                 data.map((item) => {
                              return (

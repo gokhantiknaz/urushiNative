@@ -23,6 +23,7 @@ export const Simulation = () => {
     ];
 
     const [channels, setChannels] = useState([]);
+    const [channelName, setChannelName] = useState([]);
     const [selectedChannel, setChannel] = useState(1);
     const [points, setPoints] = useState(null);
     const [allPoints, setAllPoints] = useState([]);
@@ -94,14 +95,15 @@ export const Simulation = () => {
             <ImageBackground
                 source={require("../../assets/bg.jpg")}
                 resizeMode='cover'
-                style={{flex: 15, width: "100%", height: "100%"}}>
-                <SettingsChartScreen data={data.Point} setPoints={setPoints}/>
+                style={{width: "100%", height: "100%"}}>
+                <SettingsChartScreen data={data.Point} setPoints={setPoints} channel={channelName}/>
             </ImageBackground>
             <FloatingAction
                 actions={actions}
                 position='right'
                 onPressItem={name => {
                     let tmp = findArrayElementById(actions, name, "name");
+                    setChannelName(name);
                     setChannel(tmp.id);
                 }}
             />

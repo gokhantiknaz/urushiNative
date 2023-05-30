@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, Text} from "react-native";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import DraggableDot from "../components/chart/DraggableDot";
 import LeftTimeBar from "../components/chart/LeftTimeBar";
@@ -104,10 +104,13 @@ const SettingsChartScreen = (props) => {
                         setChartLayout({...e.nativeEvent.layout});
                     }}
                     style={styles.container}>
+
                     <LeftTimeBar layout={chartLayout}/>
                     <ValueBar layout={chartLayout}/>
                     <ChartGraph data={points.values}/>
                     {points.values.map((point, index) => {
+
+
                         return (
                             <DraggableDot
                                 pointUpdateCallBack={pointsUpdateCallBack}
@@ -117,6 +120,7 @@ const SettingsChartScreen = (props) => {
                                 limits={limits[index]}
                                 showTimePicker={onTimeOickerShow}
                                 layout={chartLayout}
+                                channel={props.channel}
                             />
                         );
                     })}

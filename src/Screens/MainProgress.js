@@ -1,9 +1,10 @@
 import {ImageBackground, View, StyleSheet} from "react-native";
 import ChannelProgress from "../components/ChannelProgress";
 import images from "../images/images";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
 import bleContext, {BleContext} from "../../store/ble-context";
+import {StatusBar} from "expo-status-bar";
 
 const MainProgress = (props) => {
     const ctx = useContext(MythContext);
@@ -84,6 +85,7 @@ const MainProgress = (props) => {
 
     return (
         <View style={{flex: 1, padding: 5}}>
+            <StatusBar hidden={true}></StatusBar>
             <View style={styles.progressContainer}>
                 <View>
                     <ChannelProgress value={getValue(1)} ChannelName='Royal' Channel={1} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>

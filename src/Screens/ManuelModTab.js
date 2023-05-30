@@ -4,6 +4,7 @@ import {SceneMap, TabView} from "react-native-tab-view";
 import TemplateList from "../components/TemplateList";
 import {ManuelMod} from "../components/ManuelMod";
 import {useTranslation} from "react-i18next";
+import {StatusBar} from "expo-status-bar";
 
 const renderScene = SceneMap({
                                  manuelMod: ManuelMod,
@@ -32,7 +33,7 @@ export const ManuelModTab = () => {
 
     return (
         <View style={{flex: 1}}>
-
+            <StatusBar hidden={true}></StatusBar>
             {/*<TabView*/}
             {/*    renderTabBar={props => <TabBar {...props} />}*/}
             {/*    navigationState={{index, routes}}*/}
