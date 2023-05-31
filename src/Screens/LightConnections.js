@@ -4,14 +4,42 @@ import {BleContext} from "../../store/ble-context";
 import {Button_1} from "../components/export";
 import {useTranslation} from "react-i18next";
 import images from "../images/images";
+import {MythContext} from "../../store/myth-context";
+import {removeItemFromArray} from "../utils";
 
 const LightConnections = (props) => {
 
-    var bleCtx = useContext(BleContext);
+    const bleCtx = useContext(BleContext);
+    const ctx = useContext(MythContext);
+
     const [t] = useTranslation();
     const [isScanning, setIsScanning] = useState(false);
     const [bluetoothDevices, setBluetoothDevices] = useState([]);
+    const [connected, setConnected] = useState(false);
 
+    const peripherals = new Map();
+    useEffect(() => {
+
+        handleGetConnectedDevices();
+
+
+    }, []);
+
+    const handleGetConnectedDevices = () => {
+        bleCtx.getBleManagerConnectedDevices().then(results => {
+            if (results.length == 0) {
+                console.log('No connected bluetooth devices');
+            } else {
+                for (let i = 0; i < results.length; i++) {
+                    let peripheral = results[i];
+                    peripheral.connected = true;
+                    peripherals.set(peripheral.id, peripheral);
+                    setConnected(true);
+                    setBluetoothDevices(Array.from(peripherals.values()));
+                }
+            }
+        });
+    };
     const search = async () => {
         if (isScanning) {
             setIsScanning(false);
@@ -32,22 +60,55 @@ const LightConnections = (props) => {
     useEffect(() => {
         // update current list of bluetooth devices when new device is discovered in useBLE hook
         setBluetoothDevices(bleCtx.devices);
+
+        if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+            ctx.aquarium.deviceList.forEach(x => {
+                console.log(x.id);
+                let device = bleCtx.devices.filter(a => a.id == x.id)[0];
+                if (device) {
+                    device.connected = true;
+                }
+            })
+        }
+
     }, [bleCtx.devices]);
 
+    const removeFromDeviceList = (peripheral) => {
+        let newArray = removeItemFromArray(ctx.aquarium.deviceList, peripheral, "id");
+        peripheral.connected = false;
+        let newAq = {...ctx.aquarium};
+        newAq.deviceList = newArray;
+        ctx.setAquarium(newAq);
+    }
+
+    const additemtoDeviceList = (peripheral) => {
+
+        peripheral.connected = true;
+        let newArray = ctx.aquarium.deviceList.slice();
+        newArray.push(peripheral);
+        console.log(newArray);
+
+        let newAq = {...ctx.aquarium};
+        newAq.deviceList = newArray;
+        ctx.setAquarium(newAq);
+
+    }
     const RenderItem = ({peripheral}) => {
-        const color = peripheral.connected ? 'green' : '#fff';
+        // if (peripheral.name !== "IKIGAI") {
+        //     return;
+        // }
+        const color = peripheral.connected ? 'green' : 'grey';
         return (
             <>
                 <Text
                     style={{
-                        fontSize: 20,
+                        fontSize: 5,
                         marginLeft: 10,
                         marginBottom: 5,
-                        color: "white",
+                        color: "black",
                     }}>
-                    Nearby Devices:
                 </Text>
-                <TouchableOpacity onPress={() => console.log(peripheral)}>
+                <TouchableOpacity onPress={() => peripheral.connected ? removeFromDeviceList(peripheral) : additemtoDeviceList(peripheral)}>
                     <View
                         style={{
                             backgroundColor: color,
@@ -58,11 +119,18 @@ const LightConnections = (props) => {
                         }}>
                         <Text
                             style={{
-                                fontSize: 18,
+                                fontSize: 15,
                                 textTransform: 'capitalize',
-                                color: "white",
+                                color: "black",
                             }}>
                             {peripheral.name}
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: 13,
+                                color: "black",
+                            }}>
+                            Status: {peripheral.connected ? t("connected") : t("notconnected")}
                         </Text>
                         <View
                             style={{
@@ -73,15 +141,15 @@ const LightConnections = (props) => {
                             }}>
                             <Text
                                 style={{
-                                    fontSize: 14,
-                                    color: "white",
+                                    fontSize: 13,
+                                    color: "black",
                                 }}>
                                 RSSI: {peripheral.rssi}
                             </Text>
                             <Text
                                 style={{
-                                    fontSize: 14,
-                                    color: "white",
+                                    fontSize: 13,
+                                    color: "black",
                                 }}>
                                 ID: {peripheral.id}
                             </Text>

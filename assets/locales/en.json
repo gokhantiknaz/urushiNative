@@ -18,6 +18,8 @@
     "aquariumname": "Aquarium Name",
     "createddate": "Created Date",
     "shareinsta": "Share",
-    "devicenumber": "Connected Devices"
+    "devicenumber": "Connected Devices",
+    "notconnected": "Not Connected",
+    "connected": "Connected"
   }
 }

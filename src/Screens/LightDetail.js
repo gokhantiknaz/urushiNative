@@ -65,7 +65,7 @@ const LightDetail = (props) => {
         await saveData("aquariumList", newArray);
 
         navigation.navigate("home");
-        Alert.alert(t("success"));
+        Alert.alert(t("success"),"Deleted Successfully");
     }
 
     const [options, setOptions] = useState(data)
@@ -75,6 +75,7 @@ const LightDetail = (props) => {
         }
         if (item.id === 6) {
             return showConfirmDialog(() => {deleteAquarium()});
+
         }
     }
 

@@ -18,6 +18,8 @@
     "aquariumname": "Akvaryum Adı",
     "createddate": "Kayıt Tarihi",
     "shareinsta": "Instagramda Paylaş",
-    "devicenumber": "Bağlı Cihazlar"
+    "devicenumber": "Bağlı Cihazlar",
+    "notconnected": "Bağlı Değil",
+    "connected": "Bağlı"
   }
 }
