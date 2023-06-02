@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View, Button} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SettingsChartScreen from "../components/SettingsChartScreen";
 import RadioForm from "react-native-simple-radio-button";
@@ -9,6 +9,7 @@ import {getData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
 import {findArrayElementById} from "../utils";
+import { Icon } from '@rneui/themed';
 
 export const Simulation = () => {
 
@@ -98,6 +99,22 @@ export const Simulation = () => {
                 style={{width: "100%", height: "100%"}}>
                 <SettingsChartScreen data={data.Point} setPoints={setPoints} channel={channelName}/>
             </ImageBackground>
+            <View style={styles.buttonContainer}>
+                <Icon
+                    reverse
+                    name='arrow-back-outline'
+                    type='ionicon'
+                    color='#163dab'
+                    raised={true}
+                />
+                <Icon
+                    reverse
+                    name='arrow-forward-outline'
+                    type='ionicon'
+                    color='#163dab'
+                    raised={true}
+                />
+            </View>
             <FloatingAction
                 actions={actions}
                 position='right'
@@ -119,6 +136,19 @@ const styles = StyleSheet.create({
                                          alignItems: 'center',
                                          justifyContent: 'center',
                                          paddingHorizontal: 10
-                                     }
+                                     },
+                                     buttonContainer: {
+                                        position:"absolute",
+                                        display:"flex",
+                                        justifyContent:'flex-end',
+                                        bottom:25,
+                                        left:20,
+                                        width:'70%',
+                                        flexDirection:'row',
+                                     },
+                                    button: {
+                                        position:'relative',
+                                        marginRight:'20px',
+                                    }
                                  });
 
