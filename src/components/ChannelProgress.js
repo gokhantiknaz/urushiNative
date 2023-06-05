@@ -2,9 +2,7 @@ import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import Slider from '@react-native-community/slider';
 import {useContext, useEffect, useState} from "react";
 import colors from "./colors";
-import images from "../images/images";
 import {BleContext} from "../../store/ble-context";
-import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 const ChannelProgress = (props) => {
     const bleCtx = useContext(BleContext);
@@ -28,7 +26,9 @@ const ChannelProgress = (props) => {
 
         <View style={styles.container}>
             <View style={styles.item}>
-
+                <Text style={styles.text}>
+                    {props.ChannelName}: {value} %
+                </Text>
                 <Slider style={styles.slide}
                         value={value}
                         minimumValue={0}

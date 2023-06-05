@@ -4,6 +4,7 @@ import {Icon} from "react-native-elements";
 import {useTranslation} from "react-i18next";
 import images from "../images/images";
 import {BleContext} from "../../store/ble-context";
+import {Button_1} from "./export";
 
 const DeviceList = (props) => {
 
@@ -60,13 +61,16 @@ const DeviceList = (props) => {
 
         let selectedAquariums = tmpdeviceList.filter(x => x.isSelect === true).map(a => ({name: a.name, id: a.id}));
 
+        console.log(selectedAquariums);
         props.setDeviceList(selectedAquariums);
     };
+
+
 
     const renderHeader = () => {
         return (
             <View>
-                <Text style={styles.header}>Found Device</Text>
+                <Button_1 title=  {isScanning ? 'Scanning...' : 'Scan Bluetooth Devices'} onPress={startsScan} />
             </View>
         );
     };
@@ -92,9 +96,9 @@ const DeviceList = (props) => {
             <View
                 style={{
                     height: 1,
-                    width: '100%',
+                    width: width,
                     backgroundColor: '#CED0CE',
-                    marginLeft: '5%'
+
                 }}
             />
         )

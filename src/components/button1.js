@@ -44,7 +44,7 @@ const Button_1 = props => {
                 <Text style={{
                     alignItems: 'center',
                     fontFamily: 'OpenSans_600SemiBold',
-                    fontSize: 16, color: '#ffffff'
+                    fontSize: 15, color: '#ffffff'
                 }}>{props.title}</Text>
             </Pressable>
         </Animated.View>
@@ -56,10 +56,11 @@ const styles = StyleSheet.create({
                                          width: '90%'
                                      },
                                      button1: {
+
                                          alignSelf: 'stretch',
                                          paddingVertical: "3%",
                                          borderRadius: 10,
-                                         backgroundColor: "#bcd635",
+                                         backgroundColor: "#5D92C4",
                                          alignItems: 'center',
                                          justifyContent: 'center',
                                      }

@@ -41,13 +41,14 @@ export const ManuelModTab = () => {
     const ctx = useContext(MythContext);
 
     useEffect(() => {
-        bleCtx.getBleManagerConnectedDevices().then((res) => {
-            console.log(res);// 3 taneden ikisine baglı değil 1ine baglıysa baglı olmayana da baglanmak gerek. kontrolünü ekleyeceğiz.
-            if (res.length == 0) {
-                searchAndConnect();
-                return;
-            }
-        });
+        console.log("devices,",bleCtx.devices);
+        // bleCtx.getBleManagerConnectedDevices().then((res) => {
+        //     console.log(res);// 3 taneden ikisine baglı değil 1ine baglıysa baglı olmayana da baglanmak gerek. kontrolünü ekleyeceğiz.
+        //     if (res.length == 0) {
+        //      //   searchAndConnect();
+        //         return;
+        //     }
+        // });
     }, [])
 
     useEffect(() => {

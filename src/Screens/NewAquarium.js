@@ -33,7 +33,6 @@ const NewAquarium = () => {
 
     const save = () => {
         try {
-
             let myAquarium = {
                 id: id,
                 name: name,
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
                                      deviceList: {
                                          flex: 2,
                                          width: width,
-                                         alignItems:"center"
+                                         marginLeft:50
                                      },
                                      savebutton: {
                                          width: width,
@@ -143,10 +142,10 @@ const styles = StyleSheet.create({
                                          bottom: "5%"
                                      },
                                      SignUpLabel: {
-                                         fontSize: 30,
+                                         fontSize: 20,
                                          marginBottom: 30,
                                          fontFamily: 'OpenSans_800ExtraBold',
-                                         color: "#003cd6",
+                                         color: "#5DB4C4",
                                      },
                                      input: {
                                          width: "100%",
