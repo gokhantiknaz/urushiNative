@@ -1,8 +1,8 @@
-import { BleManager } from "react-native-ble-plx";
+import {BleManager} from "react-native-ble-plx";
 
-import { View, Text, PermissionsAndroid, Platform } from 'react-native'
-import React, { memo, useEffect, useMemo, useState } from 'react'
-import { LogBox } from 'react-native';
+import {View, Text, PermissionsAndroid, Platform} from 'react-native'
+import React, {memo, useEffect, useMemo, useState} from 'react'
+import {LogBox} from 'react-native';
 import base64 from "react-native-base64";
 import * as ExpoDevice from "expo-device";
 
@@ -70,6 +70,8 @@ const useBlex = () => {
         }
         console.log("Scanning started");
         setDevices([]);
+
+
         _BleManager.startDeviceScan(null, {
                                         allowDuplicates: false,
                                     },
@@ -98,7 +100,7 @@ const useBlex = () => {
         const deviceID = id ? id : _device.id;
         _BleManager.stopDeviceScan();
 
-        _BleManager.connectToDevice(deviceID,{timeout:60000}).then(async device => {
+        _BleManager.connectToDevice(deviceID, {timeout: 60000}).then(async device => {
             return await device.discoverAllServicesAndCharacteristics();
         }).then(device => {
             console.log(`Device connected with ${device.name}`);
@@ -126,18 +128,20 @@ const useBlex = () => {
         );
     }
     const getBleManagerConnectedDevices = async () => { //get connected devices
-        try
-        {
+        try {
             const connectedDevices = await _BleManager.connectedDevices([SERVICE_UUID]);
             return connectedDevices;
-        }catch(err)
-        {
+        } catch (err) {
             console.log("getBleManagerConnectedDevices Error", err)
         }
 
     }
     const disconnectDevice = () => { //disconnect from device
         connectedDevice.cancelConnection();
+    };
+    const disconnectDeviceByDevice = (device) => { //disconnect from device
+        console.log("disconnected from:" + device.name);
+        device.cancelConnection();
     };
 
     return ( //return functions and variables
@@ -149,7 +153,8 @@ const useBlex = () => {
             connectedDevice,
             sendDatatoDevice,
             getBleManagerConnectedDevices,
-            stopScan
+            stopScan,
+            disconnectDeviceByDevice
         }
     )
 }

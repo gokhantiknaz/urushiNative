@@ -15,29 +15,26 @@ const LightConnections = (props) => {
     const [t] = useTranslation();
     const [isScanning, setIsScanning] = useState(false);
     const [bluetoothDevices, setBluetoothDevices] = useState([]);
-    const [connected, setConnected] = useState(false);
+    const [connectedDevices, setConnectedDevices] = useState([]);
 
     const peripherals = new Map();
     useEffect(() => {
-
-        handleGetConnectedDevices();
-
-
+        GetConnectedDevices();
+        search();
     }, []);
 
-    const handleGetConnectedDevices = () => {
+    const GetConnectedDevices = () => {
         bleCtx.getBleManagerConnectedDevices().then(results => {
             if (results.length == 0) {
                 console.log('No connected bluetooth devices');
             } else {
+
                 for (let i = 0; i < results.length; i++) {
                     let peripheral = results[i];
-                    peripheral.connected = true;
-                    peripherals.set(peripheral.id, peripheral);
-                    setConnected(true);
-                    setBluetoothDevices(Array.from(peripherals.values()));
+                    bleCtx.disconnectDeviceByDevice(peripheral);
                 }
             }
+            search();
         });
     };
     const search = async () => {
@@ -59,9 +56,9 @@ const LightConnections = (props) => {
 
     useEffect(() => {
         // update current list of bluetooth devices when new device is discovered in useBLE hook
-        setBluetoothDevices(bleCtx.devices);
-
-
+        let tmpArray =  connectedDevices.concat(bleCtx.devices);
+        setBluetoothDevices(tmpArray);
+        //
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             ctx.aquarium.deviceList.forEach(x => {
                 let device = bleCtx.devices.filter(a => a.id == x.id)[0];

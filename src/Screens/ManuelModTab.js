@@ -35,20 +35,17 @@ export const ManuelModTab = () => {
                                         {key: 'template', title: t('favs')},
                                     ]);
 
-
-    const [connectedDevices, setConnectedDevices] = useState();
     const bleCtx = useContext(BleContext);
     const ctx = useContext(MythContext);
 
     useEffect(() => {
-        console.log("devices,",bleCtx.devices);
-        // bleCtx.getBleManagerConnectedDevices().then((res) => {
-        //     console.log(res);// 3 taneden ikisine baglı değil 1ine baglıysa baglı olmayana da baglanmak gerek. kontrolünü ekleyeceğiz.
-        //     if (res.length == 0) {
-        //      //   searchAndConnect();
-        //         return;
-        //     }
-        // });
+        bleCtx.getBleManagerConnectedDevices().then((res) => {
+            console.log(res);// 3 taneden ikisine baglı değil 1ine baglıysa baglı olmayana da baglanmak gerek. kontrolünü ekleyeceğiz.
+            if (res.length != ctx.aquarium.deviceList.length) {
+                searchAndConnect();
+                return;
+            }
+        });
     }, [])
 
     useEffect(() => {
@@ -57,15 +54,10 @@ export const ManuelModTab = () => {
 
     const searchAndConnect = async () => {
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
-            // ctx.aquarium.deviceList.map(x => {return x.connected = false});
             ctx.aquarium.deviceList.forEach(x => {
-                // if (!x.connected) {
                 bleCtx.connectDevice(null, x.id).then(result => {
                     console.log("I:", x.name + " connected");
-                    // x.connected = true;
                 });
-
-                // }
             })
         }
     }
