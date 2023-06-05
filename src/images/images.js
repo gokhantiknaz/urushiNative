@@ -14,5 +14,6 @@ export  default {
     deviceIcon:require('../../assets/icon.png'),
     mythLight:require('../../assets/icon.png'),
     insta:require('../../assets/instagram.png'),
+    checked:require('../../assets/blue-check.png')
 
 }

@@ -31,7 +31,7 @@ export default function ImageSelect(props) {
             {!image &&
                 <Button_1 title={t("imageselect")} onPress={pickImage}/>}
             {image && <TouchableOpacity onPress={pickImage}>
-                <Image source={{uri: image}} style={{width: width, height: 80}}/>
+                <Image source={{uri: image}} style={{width: width, height: 80,marginTop:60}}/>
             </TouchableOpacity>}
         </View>
     );

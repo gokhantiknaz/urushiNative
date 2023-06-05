@@ -34,9 +34,9 @@ export const ManuelMod = (props) => {
     const [name, setName] = useState("");
     const [showModal, setShowModal] = useState(false);
 
-    function setIntesity() {
-
-    }
+    useEffect(() => {
+        console.log(speed);
+    }, [speed])
 
     useEffect(() => {
         if (allProgress) {
@@ -44,6 +44,11 @@ export const ManuelMod = (props) => {
         }
 
     }, [allProgress])
+
+    const updateComplete = async (value)  => {
+        console.log(speed);  //<----appears to be initial slider value
+    }
+
     const save = async (templateName) => {
         console.log(template);
         let savedTemplates = await getData("manueltemplates");
@@ -80,8 +85,26 @@ export const ManuelMod = (props) => {
                 <View style={{flex: 4, alignItems: 'center'}}>
                     {/*https://www.npmjs.com/package/react-native-radial-slider2*/}
                     {/*https://github.com/SimformSolutionsPvtLtd/react-native-radial-slider*/}
-                    <RadialSlider titleStyle={{color: 'white'}} unit='%' title='Total Intensity' value={speed} min={0} max={100} onChange={setSpeed}
-                                  onComplete={setIntesity}
+                    <RadialSlider titleStyle={{color: 'white'}} unit='%' title='Total Intensity'
+                                  value={speed}
+                                  variant={'radial-circle-slider'}
+                                  min={0}
+                                  max={100}
+                                  onComplete={updateComplete}
+                        // valueStyle={{fontSize:60,color:"black",alignItems:"center",justifyContent:"center", marginTop:20}}
+                                  thumbColor={'#FF7345'}
+                                  unitStyle={{marginLeft: 0, fontWeight: "bold", marginTop: 10}}
+                                  thumbColor={'#FF7345'}
+                                  thumbRadius={11}
+                                  thumbBorderWidth={5}
+                                  sliderWidth={7}
+                                  isHideSubtitle={true}
+                                  linearGradient={[
+                                      {offset: '0%', color: '#FFD76F'},
+                                      {offset: '100%', color: '#FF7345'}
+                                  ]}
+                                  onChange={setSpeed}
+
                     />
                     {/*<Text style={{color: "white"}}>{speed}</Text>*/}
                 </View>
@@ -145,25 +168,6 @@ export const ManuelMod = (props) => {
                     {/*<SpectrumChart></SpectrumChart>*/}
                 </View>
             </View>
-            {/*<Dialog.Container visible={showModal} style={styles.dialog} contentStyle={{height: 150, width: '100%', backgroundColor: '#9BDEE8'}}>*/}
-            {/*    <Dialog.Description>*/}
-            {/*        <View style={{backgroundColor: '#9BDEE8', width: 300}}>*/}
-            {/*            <Text style={{width: '100%'}}>{t("templatename")}</Text>*/}
-            {/*            <TextInput*/}
-            {/*                style={{borderColor: 'gray', borderWidth: 1}}*/}
-            {/*                placeholderTextColor={"black"}*/}
-            {/*                value={name}*/}
-            {/*                onChangeText={setName}*/}
-            {/*            />*/}
-            {/*        </View>*/}
-
-            {/*    </Dialog.Description>*/}
-            {/*    <Dialog.Button label="Cancel" onPress={() => {*/}
-            {/*        setName('');*/}
-            {/*        setShowModal(false);*/}
-            {/*    }}/>*/}
-            {/*    <Dialog.Button label="Ok" onPress={() => { save(); }}/>*/}
-            {/*</Dialog.Container>*/}
         </ImageBackground>
     );
 }

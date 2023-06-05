@@ -1,10 +1,14 @@
-import { useWindowDimensions, View} from "react-native";
+import {useWindowDimensions, View} from "react-native";
 import * as React from "react";
 import {SceneMap, TabView} from "react-native-tab-view";
 import TemplateList from "../components/TemplateList";
 import {ManuelMod} from "../components/ManuelMod";
 import {useTranslation} from "react-i18next";
 import {StatusBar} from "expo-status-bar";
+import {useContext, useEffect, useState} from "react";
+import {BleContext} from "../../store/ble-context";
+import {MythContext} from "../../store/myth-context";
+import Loading from "../../loading";
 
 const renderScene = SceneMap({
                                  manuelMod: ManuelMod,
@@ -30,6 +34,40 @@ export const ManuelModTab = () => {
                                         {key: 'manuelMod', title: 'Manuel Mod'},
                                         {key: 'template', title: t('favs')},
                                     ]);
+
+
+    const [connectedDevices, setConnectedDevices] = useState();
+    const bleCtx = useContext(BleContext);
+    const ctx = useContext(MythContext);
+
+    useEffect(() => {
+        bleCtx.getBleManagerConnectedDevices().then((res) => {
+            console.log(res);// 3 taneden ikisine baglı değil 1ine baglıysa baglı olmayana da baglanmak gerek. kontrolünü ekleyeceğiz.
+            if (res.length == 0) {
+                searchAndConnect();
+                return;
+            }
+        });
+    }, [])
+
+    useEffect(() => {
+        console.log(bleCtx.devices.map(x => {return x.name}));
+    }, [bleCtx.devices]);
+
+    const searchAndConnect = async () => {
+        if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+            // ctx.aquarium.deviceList.map(x => {return x.connected = false});
+            ctx.aquarium.deviceList.forEach(x => {
+                // if (!x.connected) {
+                bleCtx.connectDevice(null, x.id).then(result => {
+                    console.log("I:", x.name + " connected");
+                    // x.connected = true;
+                });
+
+                // }
+            })
+        }
+    }
 
     return (
         <View style={{flex: 1}}>

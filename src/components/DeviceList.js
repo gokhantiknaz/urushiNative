@@ -1,12 +1,10 @@
-import {Dimensions, FlatList, Image, ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Dimensions, FlatList, Image, ImageBackground, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React, {useContext, useEffect, useState} from "react";
 import {Icon} from "react-native-elements";
 import {useTranslation} from "react-i18next";
 import images from "../images/images";
-import colors from "./colors";
 import {BleContext} from "../../store/ble-context";
 
-const numColumns = 2;
 const DeviceList = (props) => {
 
     const bleCtx = useContext(BleContext);
@@ -49,21 +47,6 @@ const DeviceList = (props) => {
         setBluetoothDevices(bleCtx.devices);
     }, [bleCtx.devices]);
 
-
-    const formatData = (data, numColumns) => {
-        const numberOfFullRows = Math.floor(data.length / numColumns);
-
-        let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
-        while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
-            data.push({key: `blank-${numberOfElementsLastRow}`, empty: true, id: "", name: ""});
-            numberOfElementsLastRow++;
-        }
-
-        return data;
-    };
-
-    const [selectedIds, setSelectedIds] = useState([]);
-
     const setSelectedItem = data => {
         let tmpdeviceList = [...bluetoothDevices];
         data.isSelect = !data.isSelect;
@@ -80,79 +63,136 @@ const DeviceList = (props) => {
         props.setDeviceList(selectedAquariums);
     };
 
-    const renderItem = ({item}) => {
-        if (item.empty === true) {
-            return <View style={[styles.item, styles.itemInvisible]}/>;
-        }
-        if (item.name !== "IKIGAI") {
-            return;
-        }
+    const renderHeader = () => {
         return (
-            <TouchableOpacity
-                style={[styles.list, item.selectedClass]}
-                onPress={() => setSelectedItem(item)}>
-                {/*<ImageBackground source={images.deviceIcon}>*/}
-                <Image source={images.deviceIcon} style={{height: 50, width: 50}}></Image>
-                <View style={styles.item}>
-                    <Text style={styles.itemText}>{item.name}</Text>
-                    <Text style={styles.itemText}>{item.id}</Text>
-                </View>
-                {/*</ImageBackground>*/}
-            </TouchableOpacity>
+            <View>
+                <Text style={styles.header}>Found Device</Text>
+            </View>
         );
+    };
+
+    const renderFooter = () => {
+        return (
+            <View>
+                <Text style={styles.footer}>End</Text>
+            </View>
+        );
+    };
+
+    const emptyListView = () => {
+        return (
+            <View>
+                <Text>No records found.</Text>
+            </View>
+        );
+    };
+
+    const renderSeparator = () => {
+        return (
+            <View
+                style={{
+                    height: 1,
+                    width: '100%',
+                    backgroundColor: '#CED0CE',
+                    marginLeft: '5%'
+                }}
+            />
+        )
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{t('deviceList')}</Text>
-            <FlatList
-                data={formatData(bluetoothDevices, numColumns)}
-                ItemSeparatorComponent={FlatListItemSeparator}
-                renderItem={item => renderItem(item)}
-                keyExtractor={item => item?.id.toString()}
-                extraData={selectedIds}
-                numColumns={numColumns}
-            />
+            <StatusBar hidden={true}></StatusBar>
+            <View>
+                {/*{*/}
+                {/*    bluetoothDevices.map((item) => {*/}
+                {/*                             // return (item.name == "IKIGAI" || item.name == "ikigai") &&*/}
+                {/*                             return (1 == 1) &&*/}
+                {/*                                 (*/}
+                {/*                                     <LinearGradient colors={['blue', 'red']} style={styles.card} key={item.id}>*/}
+                {/*                                         <TouchableOpacity style={[styles.list, item.selectedClass]} onPress={() => setSelectedItem(item)}>*/}
+                {/*                                             <View style={{alignItems: 'center'}}>*/}
+                {/*                                                 /!*<Image style={styles.image} source={item.image}/>*!/*/}
+                {/*                                                 <Image source={images.deviceIcon} style={styles.image}></Image>*/}
+                {/*                                                 <Text style={styles.itemText}>{item.name}</Text>*/}
+                {/*                                             </View>*/}
+                {/*                                         </TouchableOpacity>*/}
+                {/*                                     </LinearGradient>*/}
+                {/*                                 );*/}
+                {/*                         }*/}
+                {/*    )*/}
+                {/*}*/}
+
+                <FlatList
+                    data={bluetoothDevices}
+                    keyExtractor={item => item.id}
+                    ListHeaderComponent={renderHeader}
+                    ItemSeparatorComponent={renderSeparator}
+                    ListEmptyComponent={emptyListView}
+                    renderItem={({item}) => {
+                        return (
+                            <TouchableOpacity onPress={() => setSelectedItem(item)}>
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        padding: 16,
+                                        alignItems: 'center'
+                                    }}>
+                                    {/*<Image*/}
+                                    {/*    source={images.mythLight}*/}
+                                    {/*    style={{marginRight: 16,height:20,width:20}}*/}
+                                    {/*/>*/}
+                                    {item.isSelect &&
+                                        <Image
+                                            source={images.checked}
+                                            style={{marginRight: 16, height: 20, width: 20}}
+                                        />}
+                                    <Text
+                                        category='s1'
+                                        style={{
+                                            color: 'white'
+                                        }}>{`${item.name} ${item.id}`}</Text>
+
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    }}
+                />
+            </View>
+
         </View>
     );
 }
 export default DeviceList;
 export const FlatListItemSeparator = () => <View style={styles.line}/>;
-
+const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
                                      container: {
                                          flex: 1,
                                      },
-                                     title: {
-                                         fontSize: 20,
-                                         color: "#fff",
-                                         textAlign: "center",
-                                         marginBottom: 10
+                                     header: {
+                                         fontSize: 15,
+                                         paddingVertical: 15,
+                                         fontWeight: 'bold',
+                                         textAlign: 'center',
+                                         color: "white"
                                      },
-                                     item: {
-                                         alignItems: 'center',
-                                         justifyContent: 'center',
-                                         width: Dimensions.get('window').width / numColumns, // approximate a square
+                                     flatlist: {
+                                         paddingVertical: 30,
+                                         paddingHorizontal: 10,
                                      },
-                                     itemInvisible: {
-                                         backgroundColor: 'transparent',
+                                     heading2: {
+                                         fontSize: 12,
+                                         color: "white"
                                      },
-                                     itemText: {
-                                         color: '#fff',
+                                     subheading: {
+                                         color: "white"
+                                     },
+                                     itemSeparator: {
+                                         backgroundColor: 'green',
+                                         height: 1,
                                      },
                                      selected: {backgroundColor: "#FA7B5F"},
-                                     list: {
-                                         paddingVertical: 3,
-                                         margin: 2,
-                                         alignItems: "center",
-                                         zIndex: -1,
-                                         borderRadius: 10,
-                                     },
-                                     line: {
-                                         height: 0.5,
-                                         width: "100%",
-                                         backgroundColor: "rgba(255,255,255,0.5)"
-                                     },
                                  });
 
 // const styles = StyleSheet.create({

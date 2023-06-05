@@ -95,8 +95,6 @@ const AquarimSettings = (props) => {
         }
     };
 
-   
-
     return (
         <ImageBackground style={{flex: 1}} source={images.background}>
             <StatusBar barStyle={'auto'}></StatusBar>
@@ -109,7 +107,6 @@ const AquarimSettings = (props) => {
                                 <Image source={images.deviceIcon} style={{height: 300, width: Dimensions.get('window').width}}></Image>
                             }
                         </TouchableOpacity>
-
                     </Col>
                 </Row>
                 <View style={{flexDirection: "row", marginTop: 10}}>
@@ -126,7 +123,6 @@ const AquarimSettings = (props) => {
                                    }} placeholder={t('aquariumname')}></TextInput>
                     </View>
                 </View>
-
                 <Row>
                     <Col numRows={2}>
                         <Text style={styles.text}>{t("createddate")} :</Text>

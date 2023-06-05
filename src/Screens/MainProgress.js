@@ -41,24 +41,27 @@ const MainProgress = (props) => {
 
     const createEmptyArray = () => {
         let bytes = [];
-        for (let i = 0; i < 103; i++) {
+        for (let i = 0; i < 10; i++) {
             bytes.push(0);
         }
         bytes[0] = (0x65);
         bytes[1] = (0x06);
+
         bytes[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
-        bytes[102] = (0x66);
+        bytes[9] = (0x66);
         return bytes;
     }
 
     const setByteArrayData = (channel, value) => {
         let data = bytes.slice();
         data[channel + 2] = value; //0.1.2 kanallar dolu oldugundan...
+        data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
         return data;
     }
     const sendData = async (data) => {
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
+
                 ctxBle.sendDatatoDevice(x, data);
             });
         });

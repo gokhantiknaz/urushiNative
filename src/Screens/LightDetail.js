@@ -85,7 +85,7 @@ const LightDetail = (props) => {
             {
                 data.map((item) => {
                              return (
-                                 <LinearGradient colors={['#3696af', '#232f5d']} style={styles.card} key={item.id}>
+                                 <LinearGradient colors={['#83DAE7', '#1B70AB']} style={styles.card} key={item.id}>
                                      <TouchableOpacity onPress={() => clickEventListener(item)}>
                                          <View style={styles.cardContent}>
                                              <Image style={styles.image} source={item.image}/>
@@ -109,8 +109,9 @@ const styles = StyleSheet.create({
                                          flexDirection: 'row',
                                          flexWrap: 'wrap',
                                          alignItems: 'flex-start',
-                                         backgroundColor: colors.black
-
+                                         backgroundColor: colors.black,
+                                         marginHorizontal: "auto",
+                                         marginVertical: "auto"
                                      },
                                      image: {
                                          width: 50,

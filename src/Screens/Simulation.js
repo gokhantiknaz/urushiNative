@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {ImageBackground, StyleSheet, Text, View, Button} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View, Button, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SettingsChartScreen from "../components/SettingsChartScreen";
 import RadioForm from "react-native-simple-radio-button";
@@ -9,7 +9,7 @@ import {getData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
 import {findArrayElementById} from "../utils";
-import { Icon } from '@rneui/themed';
+import {Icon} from '@rneui/themed';
 
 export const Simulation = () => {
 
@@ -32,8 +32,6 @@ export const Simulation = () => {
     const [actions, setActions] = useState([]);
 
     useEffect(() => {
-
-
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
         setChannels(subModel.Channels);
@@ -56,7 +54,7 @@ export const Simulation = () => {
         subModel.Channels.map(x => {
             tmpactions.push({text: x.label, icon: require("../../assets/aibot_one.png"), name: x.label, position: 2, id: x.value});
         });
-
+        setChannelName("Royal");
         setActions(tmpactions);
 
     }, [])
@@ -90,6 +88,32 @@ export const Simulation = () => {
         setAllPoints(tmpallpoints)
     }
 
+    function setActiveChannel(operator) {
+        console.log(selectedChannel);
+        let selected = {...selectedChannel};
+        console.log(selected);
+        if (operator === "next") {
+            if (selected >= 6) {
+                selected = 6;
+            } else {
+                selected = selected + 1;
+            }
+        } else {
+            if (selected <= 1) {
+                selected = 1;
+            } else {
+                selected = selected - 1;
+            }
+        }
+        let tmp = findArrayElementById(actions, selected, "id");
+
+        if (tmp) {
+            setChannelName(tmp.name);
+            setChannel(selected);
+        }
+
+    }
+
     return (
         <View style={styles.container}>
             <StatusBar hidden={true}></StatusBar>
@@ -100,20 +124,24 @@ export const Simulation = () => {
                 <SettingsChartScreen data={data.Point} setPoints={setPoints} channel={channelName}/>
             </ImageBackground>
             <View style={styles.buttonContainer}>
-                <Icon
-                    reverse
-                    name='arrow-back-outline'
-                    type='ionicon'
-                    color='#163dab'
-                    raised={true}
-                />
-                <Icon
-                    reverse
-                    name='arrow-forward-outline'
-                    type='ionicon'
-                    color='#163dab'
-                    raised={true}
-                />
+                <TouchableOpacity onPress={() => {setActiveChannel("prev")}}>
+                    <Icon
+                        reverse
+                        name='arrow-back-outline'
+                        type='ionicon'
+                        color='#163dab'
+                        raised={true}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {setActiveChannel("next")}}>
+                    <Icon
+                        reverse
+                        name='arrow-forward-outline'
+                        type='ionicon'
+                        color='#163dab'
+                        raised={true}
+                    />
+                </TouchableOpacity>
             </View>
             <FloatingAction
                 actions={actions}
@@ -138,17 +166,17 @@ const styles = StyleSheet.create({
                                          paddingHorizontal: 10
                                      },
                                      buttonContainer: {
-                                        position:"absolute",
-                                        display:"flex",
-                                        justifyContent:'flex-end',
-                                        bottom:25,
-                                        left:20,
-                                        width:'70%',
-                                        flexDirection:'row',
+                                         position: "absolute",
+                                         display: "flex",
+                                         justifyContent: 'flex-end',
+                                         bottom: 25,
+                                         left: 20,
+                                         width: '70%',
+                                         flexDirection: 'row',
                                      },
-                                    button: {
-                                        position:'relative',
-                                        marginRight:'20px',
-                                    }
+                                     button: {
+                                         position: 'relative',
+                                         marginRight: '20px',
+                                     }
                                  });
 

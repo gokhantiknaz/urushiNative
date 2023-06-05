@@ -10,3 +10,4 @@ export function removeItemFromArray(array, item, searchBy) {
         return x[searchBy] !== item[searchBy]
     })
 };
+

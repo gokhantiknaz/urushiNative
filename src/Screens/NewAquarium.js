@@ -1,5 +1,5 @@
 import React, {useEffect, useId, useState} from "react";
-import {View, TextInput, Button, StyleSheet, Text, Alert, Dimensions, ImageBackground} from "react-native";
+import {View, TextInput, Button, StyleSheet, Text, Alert, Dimensions, ImageBackground, ScrollView} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 
 import Button_1 from "../components/button1";
@@ -83,6 +83,7 @@ const NewAquarium = () => {
     }
     return (
 
+        // <ImageBackground source={{uri: `data:image/png;base64,${image}`}}  style={{flex: 1}}>
         <ImageBackground source={images.background} style={{flex: 1}}>
             <View style={styles.container}>
                 <StatusBar hidden={true}></StatusBar>
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
                                          flex: 1,
                                          justifyContent: "space-between",
                                          alignItems: "center",
-                                         paddingHorizontal: "10%",
+                                         paddingHorizontal: "10%"
                                      },
                                      newAquarium: {
                                          width: "100%",
@@ -132,7 +133,8 @@ const styles = StyleSheet.create({
                                      },
                                      deviceList: {
                                          flex: 2,
-                                         width: width
+                                         width: width,
+                                         alignItems:"center"
                                      },
                                      savebutton: {
                                          width: width,

@@ -61,9 +61,9 @@ const LightConnections = (props) => {
         // update current list of bluetooth devices when new device is discovered in useBLE hook
         setBluetoothDevices(bleCtx.devices);
 
+
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             ctx.aquarium.deviceList.forEach(x => {
-                console.log(x.id);
                 let device = bleCtx.devices.filter(a => a.id == x.id)[0];
                 if (device) {
                     device.connected = true;
@@ -94,9 +94,9 @@ const LightConnections = (props) => {
 
     }
     const RenderItem = ({peripheral}) => {
-        // if (peripheral.name !== "IKIGAI") {
-        //     return;
-        // }
+        if (peripheral.name !== "IKIGAI" && peripheral.name !== "ikigai") {
+            return;
+        }
         const color = peripheral.connected ? 'green' : 'grey';
         return (
             <>

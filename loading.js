@@ -8,6 +8,7 @@ const Loading_Screen = () => {
         resizeMode="contain"
         source={require("./assets/loading.gif")}
       />
+      <Text>Yükleniyor...</Text>
 
     </View>
   );

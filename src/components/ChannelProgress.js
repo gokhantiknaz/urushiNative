@@ -4,6 +4,7 @@ import {useContext, useEffect, useState} from "react";
 import colors from "./colors";
 import images from "../images/images";
 import {BleContext} from "../../store/ble-context";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 const ChannelProgress = (props) => {
     const bleCtx = useContext(BleContext);
@@ -23,14 +24,11 @@ const ChannelProgress = (props) => {
     }, [returnobj])
 
 
-
     return (
 
         <View style={styles.container}>
             <View style={styles.item}>
-                <Text style={styles.text}>
-                    {props.ChannelName}: {value} %
-                </Text>
+
                 <Slider style={styles.slide}
                         value={value}
                         minimumValue={0}
@@ -47,6 +45,7 @@ const ChannelProgress = (props) => {
                             setSlideCompletionValue(value);
                         }}
                 />
+
             </View>
         </View>
 
@@ -70,6 +69,10 @@ const styles = StyleSheet.create({
 
                                      },
                                      slide: {
-                                         flexGrow: 1,
+                                         flex: 1,
+                                         marginLeft: 10,
+                                         marginRight: 10,
+                                         alignItems: "stretch",
+                                         justifyContent: "center"
                                      }
                                  });

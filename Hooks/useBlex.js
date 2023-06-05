@@ -9,9 +9,6 @@ import * as ExpoDevice from "expo-device";
 const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
-// import BleManager from 'react-native-ble-manager'
-// import { NativeModules, NativeEventEmitter } from 'react-native'
-
 const useBlex = () => {
     const _BleManager = useMemo(() => new BleManager(), []);
     const [devices, setDevices] = useState([]);
@@ -119,7 +116,7 @@ const useBlex = () => {
     };
     const sendDatatoDevice = (device, data, id = null) => { //send data to device
         const deviceID = id ? id : device.id
-        const dataToSend = base64.encode(data);
+        const dataToSend = base64.encodeFromByteArray(data);
         _BleManager.writeCharacteristicWithoutResponseForDevice(deviceID, SERVICE_UUID, CHARACTERISTIC_UUID, dataToSend).then(device => {
                                                                                                                                   console.log("sendDatatoDevice", deviceID, data);
                                                                                                                               }
