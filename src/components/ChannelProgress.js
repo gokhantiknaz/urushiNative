@@ -3,6 +3,7 @@ import Slider from '@react-native-community/slider';
 import {useContext, useEffect, useState} from "react";
 import colors from "./colors";
 import {BleContext} from "../../store/ble-context";
+import images from "../images/images";
 
 const ChannelProgress = (props) => {
     const bleCtx = useContext(BleContext);
@@ -33,6 +34,7 @@ const ChannelProgress = (props) => {
                         value={value}
                         minimumValue={0}
                         maximumValue={100}
+                        thumbImage={images.sliderIcon}
                         step={1}
                         minimumTrackTintColor={colors.test2}
                         maximumTrackTintColor="white"

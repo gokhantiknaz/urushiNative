@@ -76,6 +76,7 @@ export const ManuelModTab = () => {
                 navigationState={{index, routes}}
                 renderScene={renderScene}
                 onIndexChange={setIndex}
+                swipeEnabled={false}
                 initialLayout={{width: layout.width}}
             />
         </View>

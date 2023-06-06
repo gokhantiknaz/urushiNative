@@ -33,9 +33,19 @@ export const ManuelMod = (props) => {
     const [speed, setSpeed] = useState(0);
     const [name, setName] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [allOnOff, setAllOnOff] = useState(0);
 
     useEffect(() => {
-        console.log(speed);
+        let all = [{"channel": 1, "value": speed}, {"channel": 2, "value": speed}, {"channel": 3, "value": speed}, {"channel": 4, "value": speed}, {"channel": 5, "value": speed}, {"channel": 6, "value": speed}];
+        setAllProgress(all);
+        if (speed === 100 || speed === 0) {
+
+        }
+        else
+        {
+
+        }
+        setAllOnOff(speed);
     }, [speed])
 
     useEffect(() => {
@@ -45,12 +55,7 @@ export const ManuelMod = (props) => {
 
     }, [allProgress])
 
-    const updateComplete = async (value)  => {
-        console.log(speed);  //<----appears to be initial slider value
-    }
-
     const save = async (templateName) => {
-        console.log(template);
         let savedTemplates = await getData("manueltemplates");
         if (savedTemplates == null) {
             let newlist = [];
@@ -78,7 +83,7 @@ export const ManuelMod = (props) => {
                         <SwitchSelector
                             options={options}
                             initial={0}
-                            onPress={value => console.log(`Call onPress with value: ${value}`)}
+                            onPress={value => value == 1 ? setSpeed(100) : setSpeed(0)}
                         />
                     </View>
                 </View>
@@ -87,13 +92,14 @@ export const ManuelMod = (props) => {
                     {/*https://github.com/SimformSolutionsPvtLtd/react-native-radial-slider*/}
                     <RadialSlider titleStyle={{color: 'white'}} unit='%' title='Total Intensity'
                                   value={speed}
+                                  valueStyle={{color: "white"}}
                                   variant={'radial-circle-slider'}
                                   min={0}
                                   max={100}
-                                  onComplete={updateComplete}
+                        // onComplete={(value,number)=>{updateComplete(value,number)}}
                         // valueStyle={{fontSize:60,color:"black",alignItems:"center",justifyContent:"center", marginTop:20}}
                                   thumbColor={'#FF7345'}
-                                  unitStyle={{marginLeft: 0, fontWeight: "bold", marginTop: 10}}
+                                  unitStyle={{marginLeft: 0, color: "white", fontWeight: "bold", marginTop: 10}}
                                   thumbColor={'#FF7345'}
                                   thumbRadius={11}
                                   thumbBorderWidth={5}
@@ -104,7 +110,6 @@ export const ManuelMod = (props) => {
                                       {offset: '100%', color: '#FF7345'}
                                   ]}
                                   onChange={setSpeed}
-
                     />
                     {/*<Text style={{color: "white"}}>{speed}</Text>*/}
                 </View>
@@ -147,7 +152,7 @@ export const ManuelMod = (props) => {
                 </View>
 
                 <View style={{flex: 4}}>
-                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay}></MainProgress>
+                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
                 </View>
 
                 <View style={{flex: 1, flexDirection: 'row'}}>
