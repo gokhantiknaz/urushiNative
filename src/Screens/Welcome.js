@@ -82,7 +82,7 @@ const Welcome_screen = ({navigation}) => {
                 <View style={styles.Image}>
                     <Image
                         resizeMode="contain"
-                        source={require("../../assets/iconTrans.png")}
+                        source={images.transparentIcon}
                     />
                 </View>
                 <View style={styles.containerLang}>

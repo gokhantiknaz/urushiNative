@@ -87,7 +87,6 @@ export const Simulation = () => {
         } else {
             tmpallpoints[index] = obj;
         }
-        console.log(tmpallpoints);
         setAllPoints(tmpallpoints)
     }
 
