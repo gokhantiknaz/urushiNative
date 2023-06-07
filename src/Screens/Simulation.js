@@ -55,11 +55,13 @@ export const Simulation = () => {
             tmpactions.push({text: x.label, icon: require("../../assets/aibot_one.png"), name: x.label, position: 2, id: x.value});
         });
         setChannelName("Royal");
+        setChannel(1);
         setActions(tmpactions);
 
     }, [])
 
     useEffect(() => {
+        console.log(selectedChannel);
         let selectedChannelPoint = allPoints.filter(x => x.Channel == selectedChannel);
         if (selectedChannelPoint.length > 0) {
             setData(selectedChannelPoint[0]);
@@ -89,9 +91,8 @@ export const Simulation = () => {
     }
 
     function setActiveChannel(operator) {
-        console.log(selectedChannel);
-        let selected = {...selectedChannel};
-        console.log(selected);
+        let selected = selectedChannel;
+
         if (operator === "next") {
             if (selected >= 6) {
                 selected = 6;
