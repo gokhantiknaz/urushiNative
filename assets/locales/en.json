@@ -21,6 +21,12 @@
     "devicenumber": "Connected Devices",
     "notconnected": "Not Connected",
     "connected": "Connected",
-    "templates": "Templates"
+    "templates": "Templates",
+    "lightdesc": "Add or remove your devices",
+    "simulationdesc": "Set your sunrise and sunset settings",
+    "manueldesc": "Feel the wide spectrum colours",
+    "templatedesc": "Use the placed simulation datas",
+    "settingsdesc": "Set the device options",
+    "deletedesc": "Delete the saved datas"
   }
 }

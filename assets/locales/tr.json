@@ -8,10 +8,10 @@
     "manuel": "Manuel",
     "auto": "Otomatik",
     "connections": "Bağlantılar",
-    "imageselect": "Akvaryum fotosu seçiniz",
+    "imageselect": "Akvaryum Fotosu Seçiniz",
     "deviceList":"Cihaz Listesi",
     "Success": "Kayıt İşlemi Başarılı",
-    "templatename": "Template Adı",
+    "templatename": "Şablon Adı",
     "delete": "Sil",
     "favs": "Favoriler",
     "aquariumsettings": "Ayarlar",
@@ -21,6 +21,15 @@
     "devicenumber": "Bağlı Cihazlar",
     "notconnected": "Bağlı Değil",
     "connected": "Bağlı",
-    "templates": "Şablonlar"
+    "templates": "Şablonlar",
+    "lightdesc": "Cihazları Ekle ya da Kaldır",
+    "simulationdesc": "Simulasyon Ayarlarını Yap",
+    "manueldesc": "Geniş Renkleri Hisset",
+    "templatedesc": "Kaydedilmiş Şablonları Kullan",
+    "settingsdesc": "Cihaz Ayarlarını Değiştir",
+    "deletedesc": "Kaydedilmiş Şablonları Sil"
+
+
+
   }
 }

@@ -1,81 +1,69 @@
 export const listData = [
     {
         key: '1',
-        time: '7:04pm',
         place: 'connections',
         navigate:'lightConnections',
         icon: {
-            iconName: 'ios-sunny-outline',
+            iconName: 'bluetooth-outline',
             iconFont: 'ionicon',
-            iconColor: '#FFCF17'
+            iconColor: '#FF7345'
         },
-        currentTemp: '62',
-        description: 'Sunny'
+        description: 'lightdesc'
     },
     {
         key: '2',
-        time: '7:04pm',
         place: 'auto',
         navigate: "simulation",
         icon: {
             iconName: 'ios-sunny-outline',
             iconFont: 'ionicon',
-            iconColor: '#FFCF17'
+            iconColor: '#FF7345'
         },
-        currentTemp: '60',
-        description: 'Sunny',
+        description: 'simulationdesc',
     },
     {
         key: '3',
-        time: '7:04pm',
         place: 'manuel',
         navigate: "manuelModTab",
         icon: {
-            iconName: 'ios-sunny-outline',
+            iconName: 'logo-stackoverflow',
             iconFont: 'ionicon',
-            iconColor: '#FFCF17'
+            iconColor: '#FF7345'
         },
-        currentTemp: '66',
-        description: 'Sunny',
+        description: 'manueldesc',
 
     },
     {
         key: '4',
-        time: '7:04pm',
         place: 'templates',
         navigate: "UnderCons",
         icon: {
-            iconName: 'ios-sunny-outline',
+            iconName: 'cloud-download-outline',
             iconFont: 'ionicon',
-            iconColor: '#FFCF17'
+            iconColor: '#FF7345'
         },
-        currentTemp: '66',
-        description: 'sunny',
+        description: 'templatedesc',
     },
     {
         key: '5',
-        time: '3:04am',
         place: 'settings',
         navigate: "UnderCons",
         icon: {
-            iconName: 'ios-cloudy-night-outline',
+            iconName: 'settings',
             iconFont: 'ionicon',
-            iconColor: '#464646'
+            iconColor: '#FF7345'
         },
-        currentTemp: '50',
-        description: 'Cloudy',
+        description: 'settingsdesc',
     },
     {
         key: '6',
-        time: '3:04am',
         place: 'delete',
         icon: {
-            iconName: 'ios-cloudy-night-outline',
+            iconName: 'trash-outline',
             iconFont: 'ionicon',
-            iconColor: '#464646'
+            iconColor: 'red'
         },
-        currentTemp: '50',
-        description: 'Cloudy',
+        description: 'deletedesc',
     },
 
 ];

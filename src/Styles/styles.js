@@ -40,6 +40,7 @@ export const addDegreesToEnd = (temp) => {
     return `${temp}${String.fromCharCode(176)}`
 };
 
+//https://github.com/nazmulidris/react-native-weather/blob/531f25099536e1337d0267029eb8975d66288271/app/HomeScreen.js
 export const home_screen_list = StyleSheet.create(
     {
         container: {

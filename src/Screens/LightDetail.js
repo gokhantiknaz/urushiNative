@@ -18,46 +18,7 @@ const LightDetail = (props) => {
     const ctx = useContext(MythContext);
     const {navigation} = props;
     const {t, i18n} = useTranslation();
-    const data = [
-        {
-            id: 1,
-            name: t('connections'),
-            image: images.connection,
-            navigate: "lightConnections"
-        },
-        {
-            id: 2,
-            name: t('auto'),
-            image: images.auto,
-            navigate: "simulation"
-        },
-        {
-            id: 3,
-            name: t('manuel'),
-            image: images.manuel,
-            navigate: "manuelModTab"
-        },
-        {
-            id: 4,
-            name: t('settings'),
-            image: images.settings,
-            navigate: "UnderCons",
-        }
-        ,
-        {
-            id: 5,
-            name: t('templates'),
-            image: images.template,
-            navigate: "UnderCons",
-            icon: ''
-        },
-        {
-            id: 6,
-            name: t('delete'),
-            image: images.delete,
-            icon: ''
-        }
-    ]
+
     const deleteAquarium = async () => {
 
         let allAquariums = await getData("aquariumList");
@@ -78,25 +39,25 @@ const LightDetail = (props) => {
         }
         if (item.id === 6) {
             return showConfirmDialog(() => {deleteAquarium()});
-
         }
     }
 
     const renderRow = ({item}) => {
-        const time = item.time;
+        const desc = item.description;
         const place = t(item.place);
-        const temp = css.addDegreesToEnd(item.currentTemp);
+       // const temp = css.addDegreesToEnd(item.currentTemp);
         const {iconName, iconFont, iconColor} = item.icon;
 
         let actualRowComponent =
             <View style={css.home_screen_list.row}>
                 <View style={css.home_screen_list.row_cell_timeplace}>
-                    {/*<Text style={css.home_screen_list.row_time}>{time}</Text>*/}
                     <Text style={css.home_screen_list.row_place}>{place}</Text>
+                    <Text style={css.home_screen_list.row_time}>{t(desc)}</Text>
+
                 </View>
                 <Icon color={iconColor} size={css.values.small_icon_size} name={iconName}
                       type={iconFont}/>
-                <Text style={css.home_screen_list.row_cell_temp}>{temp}</Text>
+                {/*<Text style={css.home_screen_list.row_cell_temp}>{temp}</Text>*/}
             </View>;
 
         let touchableWrapperIos =
@@ -105,7 +66,8 @@ const LightDetail = (props) => {
                 underlayColor={css.colors.transparent_white}
                 onPress={
                     () => {
-                        navigation.navigate("DetailsRoute", {...item});
+                        clickEventListener(item);
+
                     }
                 }
             >
@@ -118,7 +80,7 @@ const LightDetail = (props) => {
                 background={TouchableNativeFeedback.SelectableBackgroundBorderless()}
                 onPress={
                     () => {
-                        navigation.navigate("DetailsRoute", {...item});
+                        clickEventListener(item);
                     }
                 }
             >
