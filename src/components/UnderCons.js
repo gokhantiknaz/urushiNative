@@ -1,4 +1,4 @@
-import {Image, Text, View, StyleSheet} from "react-native";
+import {Image, Text, View, StyleSheet, StatusBar} from "react-native";
 import {useAssets} from "expo-asset";
 import images from "../images/images";
 import colors from "./colors";
@@ -8,6 +8,7 @@ const UnderCons = () => {
 
     return (
         <View style={styles.container}>
+            <StatusBar hidden={true}></StatusBar>
             <Image
                 style={styles.stretch}
                 source={images.undercons}
@@ -19,9 +20,9 @@ export default UnderCons;
 
 const styles = StyleSheet.create({
                                      container: {
-                                         flex:1,
+                                         flex: 1,
                                          paddingTop: 50,
-                                         backgroundColor:colors.black,
+                                         backgroundColor: colors.black,
 
                                      },
                                      stretch: {

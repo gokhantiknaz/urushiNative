@@ -47,7 +47,7 @@ export const listData = [
     {
         key: '5',
         place: 'settings',
-        navigate: "UnderCons",
+        navigate: "aquariumsettings",
         icon: {
             iconName: 'settings',
             iconFont: 'ionicon',

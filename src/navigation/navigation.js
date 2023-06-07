@@ -67,13 +67,17 @@ function AuthScreens() {
             }}/>
 
             <Stack.Screen name="lightConnections" component={LightConnections} options={{
-                title: t('lightConnections'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                title: t('connections'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
 
 
-            <Stack.Screen name="UnderCons" component={UnderCons}/>
+            <Stack.Screen name="UnderCons" component={UnderCons} options={{
+                title: t('undercons'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
             <Stack.Screen name="spiralMenu" component={SprialMenu}/>
             <Stack.Screen name="BleDevices" component={BLEDevices}/>
         </Stack.Navigator>
