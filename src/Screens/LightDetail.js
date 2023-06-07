@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import {Text, TouchableOpacity, View, Dimensions} from "react-native";
+import {Text, TouchableOpacity, View, Dimensions, TouchableNativeFeedback, TouchableHighlight, ImageBackground} from "react-native";
 import {StyleSheet, Image, FlatList, Alert, useWindowDimensions} from 'react-native';
 import {useTranslation} from "react-i18next";
 import colors from "../components/colors";
@@ -9,7 +9,9 @@ import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {showConfirmDialog} from "../components/Confirm";
 import {StatusBar} from "expo-status-bar";
-
+import {Icon} from "react-native-elements";
+import * as css from "../Styles/styles";
+import {listData} from "../../data/data";
 
 const LightDetail = (props) => {
 
@@ -39,19 +41,21 @@ const LightDetail = (props) => {
             id: 4,
             name: t('settings'),
             image: images.settings,
-            navigate: "UnderCons"
+            navigate: "UnderCons",
         }
         ,
         {
             id: 5,
             name: t('templates'),
             image: images.template,
-            navigate: "UnderCons"
+            navigate: "UnderCons",
+            icon: ''
         },
         {
             id: 6,
             name: t('delete'),
             image: images.delete,
+            icon: ''
         }
     ]
     const deleteAquarium = async () => {
@@ -65,10 +69,9 @@ const LightDetail = (props) => {
         await saveData("aquariumList", newArray);
 
         navigation.navigate("home");
-        Alert.alert(t("success"),"Deleted Successfully");
+        Alert.alert(t("success"), "Deleted Successfully");
     }
 
-    const [options, setOptions] = useState(data)
     const clickEventListener = item => {
         if (item.navigate) {
             navigation.navigate(item.navigate);
@@ -79,25 +82,76 @@ const LightDetail = (props) => {
         }
     }
 
+    const renderRow = ({item}) => {
+        const time = item.time;
+        const place = t(item.place);
+        const temp = css.addDegreesToEnd(item.currentTemp);
+        const {iconName, iconFont, iconColor} = item.icon;
+
+        let actualRowComponent =
+            <View style={css.home_screen_list.row}>
+                <View style={css.home_screen_list.row_cell_timeplace}>
+                    {/*<Text style={css.home_screen_list.row_time}>{time}</Text>*/}
+                    <Text style={css.home_screen_list.row_place}>{place}</Text>
+                </View>
+                <Icon color={iconColor} size={css.values.small_icon_size} name={iconName}
+                      type={iconFont}/>
+                <Text style={css.home_screen_list.row_cell_temp}>{temp}</Text>
+            </View>;
+
+        let touchableWrapperIos =
+            <TouchableHighlight
+                activeOpacity={0.5}
+                underlayColor={css.colors.transparent_white}
+                onPress={
+                    () => {
+                        navigation.navigate("DetailsRoute", {...item});
+                    }
+                }
+            >
+                {actualRowComponent}
+            </TouchableHighlight>;
+
+        let touchableWrapperAndroid =
+            <TouchableNativeFeedback
+                useForeground={true}
+                background={TouchableNativeFeedback.SelectableBackgroundBorderless()}
+                onPress={
+                    () => {
+                        navigation.navigate("DetailsRoute", {...item});
+                    }
+                }
+            >
+                {actualRowComponent}
+            </TouchableNativeFeedback>;
+
+        if (require('react-native').Platform.OS === 'ios') {
+            return touchableWrapperIos;
+        } else {
+            return touchableWrapperAndroid;
+        }
+
+    };
+
     return (
-        <View style={styles.container}>
-            <StatusBar hidden={true}></StatusBar>
-            {
-                data.map((item) => {
-                             return (
-                                 <LinearGradient colors={['#3696af', '#232f5d']} style={styles.card} key={item.id}>
-                                     <TouchableOpacity onPress={() => clickEventListener(item)}>
-                                         <View style={styles.cardContent}>
-                                             <Image style={styles.image} source={item.image}/>
-                                             <Text style={styles.name}>{item.name}</Text>
-                                         </View>
-                                     </TouchableOpacity>
-                                 </LinearGradient>
-                             );
-                         }
-                )
-            }
-        </View>
+        <ImageBackground source={images.background} style={{flex: 1}}>
+
+            <View style={css.home_screen.v_container}>
+                <StatusBar
+                    hidden={true}
+                    translucent={false}
+                    animated={true}
+                    barStyle={'light-content'}
+                    backgroundColor={css.colors.secondary}
+                />
+                <FlatList
+                    style={css.home_screen_list.container}
+                    data={listData}
+                    renderItem={renderRow}
+                />
+
+            </View>
+        </ImageBackground>
     );
 }
 

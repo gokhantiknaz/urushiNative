@@ -20,6 +20,7 @@
     "shareinsta": "Share",
     "devicenumber": "Connected Devices",
     "notconnected": "Not Connected",
-    "connected": "Connected"
+    "connected": "Connected",
+    "templates": "Templates"
   }
 }
