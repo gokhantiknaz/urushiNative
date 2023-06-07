@@ -39,13 +39,13 @@ export const ManuelMod = (props) => {
         let all = [{"channel": 1, "value": speed}, {"channel": 2, "value": speed}, {"channel": 3, "value": speed}, {"channel": 4, "value": speed}, {"channel": 5, "value": speed}, {"channel": 6, "value": speed}];
         setAllProgress(all);
         if (speed === 100 || speed === 0) {
-
+            setAllOnOff(speed);
         }
-        else
-        {
 
-        }
-        setAllOnOff(speed);
+        const stopTimer = setTimeout(() => {
+
+            clearTimeout(stopTimer);
+        }, 2000);
     }, [speed])
 
     useEffect(() => {
