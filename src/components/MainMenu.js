@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Image, ImageBackground, SafeAreaView, StyleSheet, Text, Dimensions, Button, View} from 'react-native';
+import {ImageBackground, SafeAreaView, StyleSheet, Text, Dimensions, Button, View} from 'react-native';
 import WebView from "react-native-webview";
 import {useNavigation} from "@react-navigation/native";
 import images from "../images/images";
@@ -7,6 +7,7 @@ import {BackgroundImage} from "@rneui/base";
 import {getAllKeys, getData} from "../../data/useAsyncStorage";
 import {BleContext} from "../../store/ble-context";
 import {MythContext} from "../../store/myth-context";
+import Svg, {Image, Defs, ClipPath, Path, G} from 'react-native-svg';
 
 let menuHtml =
     `<html lang="en">
@@ -225,14 +226,44 @@ export default function MainMenu(props) {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <Image source={images.background} style={styles.backgroundImage}/>
             <View style={{flex: 1, alignItems: "center"}}>
-                <Text style={{color: "white", marginTop: 10, marginBottom: 20}}>{ctx.aquarium.name}</Text>
-                {ctx.aquarium.image ?
+                <ImageBackground
+                    source={images.background} // Görselin yolunu belirtin
+                    style={styles.imageBackground}
+                >
+                <Text style={{color: "white", marginTop: 10, marginBottom: 20, textAlign:'center'}}>{ctx.aquarium.name}asfngpıodfaghnpıornpgıadn</Text>
+                {/* {ctx.aquarium.image ?
                     <Image source={{uri: `data:image/png;base64,${ctx.aquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image> :
                     <Image source={images.deviceIcon} style={{height: 300, width: Dimensions.get('window').width}}></Image>
-                }
+                } */}
+                <Svg width="500" height="300">
+                    <Defs>
+                    <ClipPath id="clip">
+                        <Path
+                        fill="#000000"
+                        d="M250,0H0V300H168.22s40.8,0,40.8-32.72c0-22.63,18.35-40.98,40.98-40.98s40.98,18.35,40.98,40.98c0,32.72,40.8,32.72,40.8,32.72h168.22V0H250Z"
+                        />
+                    </ClipPath>
+                    </Defs>
+                    <G x="0" y="0" scale={1} clipPath="url(#clip)">
+                    {ctx.aquarium.image ?
+                    <Image 
+                        href={{uri: `data:image/png;base64,${ctx.aquarium.image}`}} 
+                        width="100%"
+                        height="300"
+                        preserveAspectRatio="xMidYMid slice"
+                    /> :
+                    <Image 
+                        href={images.deviceIcon}
+                        width="100%"
+                        height="300"
+                        preserveAspectRatio="xMidYMid slice"
+                    />
+                    }
+                    </G>
+                </Svg>
                 {/*<Image source={{uri: `${selectedAquarium.imageUri ?? ''}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}
+                </ImageBackground>
             </View>
             <View style={{flex: 5}}>
                 <WebView
@@ -258,14 +289,9 @@ const styles = StyleSheet.create({
                                          marginTop: 0,
                                          backgroundColor: 'transparent'
                                      },
-                                     backgroundImage: {
-                                         flex: 1,
-                                         resizeMode: 'cover',
-                                         position: 'absolute',
-                                         top: 0,
-                                         left: 0,
-                                         width: '100%',
-                                         height: '100%',
-                                         zIndex: 0
-                                     },
+                                     imageBackground: {
+                                        flex: 1,
+                                        resizeMode: 'cover',
+                                        height:Dimensions.get('window').height,
+                                      },
                                  });
