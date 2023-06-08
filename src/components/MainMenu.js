@@ -231,7 +231,7 @@ export default function MainMenu(props) {
                     source={images.background} // Görselin yolunu belirtin
                     style={styles.imageBackground}
                 >
-                <Text style={{color: "white", marginTop: 10, marginBottom: 20, textAlign:'center'}}>{ctx.aquarium.name}asfngpıodfaghnpıornpgıadn</Text>
+                <Text style={{color: "white", marginTop: 10, marginBottom: 50, textAlign:'center'}}>{ctx.aquarium.name}</Text>
                 {/* {ctx.aquarium.image ?
                     <Image source={{uri: `data:image/png;base64,${ctx.aquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image> :
                     <Image source={images.deviceIcon} style={{height: 300, width: Dimensions.get('window').width}}></Image>
@@ -247,13 +247,13 @@ export default function MainMenu(props) {
                     </Defs>
                     <G x="0" y="0" scale={1} clipPath="url(#clip)">
                     {ctx.aquarium.image ?
-                    <Image 
-                        href={{uri: `data:image/png;base64,${ctx.aquarium.image}`}} 
+                    <Image
+                        href={{uri: `data:image/png;base64,${ctx.aquarium.image}`}}
                         width="100%"
                         height="300"
                         preserveAspectRatio="xMidYMid slice"
                     /> :
-                    <Image 
+                    <Image
                         href={images.deviceIcon}
                         width="100%"
                         height="300"
