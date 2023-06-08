@@ -29,6 +29,10 @@
     "settingsdesc": "Set the device options",
     "deletedesc": "Delete the saved datas",
     "undercons": "Soon...",
-    "Ttotalintensity": "Total Intensity"
+    "totalintensity": "Total Intensity",
+    "alllights": "All Lights",
+    "off":"Off",
+    "on": "On"
+
   }
 }

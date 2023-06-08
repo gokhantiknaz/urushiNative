@@ -5,15 +5,17 @@ import SwitchSelector from "react-native-switch-selector";
 import images from "../images/images";
 import colors from "./colors";
 import {RadialSlider} from "react-native-radial-slider";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import Dialog from "react-native-dialog";
 import {useTranslation} from "react-i18next";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 import {SheetManager} from "react-native-actions-sheet";
+import {MythContext} from "../../store/myth-context";
 
 export const ManuelMod = (props) => {
 
+    const ctx = useContext(MythContext);
     const [template, setTemplate] = useState(null);
     const [allProgress, setAllProgress] = useState([]);
     const [delay, setDelay] = useState(1);
@@ -21,12 +23,11 @@ export const ManuelMod = (props) => {
     var delays = [
         {label: '1Min', value: 1}, {label: '10Min', value: 10}, {label: '30Min', value: 30},
     ]
-
+    const [t] = useTranslation();
     const options = [
-        {label: "ON", value: "1"}, {label: "OFF", value: "0"}
+        {label: t("on"), value: "1"}, {label: t("off"), value: "0"}
     ];
 
-    const [t] = useTranslation();
     const [speed, setSpeed] = useState(0);
     const [name, setName] = useState("");
     const [showModal, setShowModal] = useState(false);
@@ -47,6 +48,8 @@ export const ManuelMod = (props) => {
     }, [allProgress])
 
     const complete = (value) => {
+        let all = [{"channel": 1, "value": value}, {"channel": 2, "value": value}, {"channel": 3, "value": value}, {"channel": 4, "value": value}, {"channel": 5, "value": value}, {"channel": 6, "value": value}];
+        setAllProgress(all);
         setAllOnOff(value);
     }
     const save = async (templateName) => {
@@ -70,7 +73,7 @@ export const ManuelMod = (props) => {
         <View style={{flex: 1, marginTop: 30}}>
             <View style={{flex: 1, flexDirection: 'row'}}>
                 <View style={{flex: 2, marginTop: 5}}>
-                    <Text style={{color: 'white', marginLeft: 20}}>All Lights:</Text>
+                    <Text style={{color: 'white', marginLeft: 20}}>{t("alllights")}</Text>
                 </View>
                 <View style={{flex: 3, marginRight: 20}}>
                     <SwitchSelector

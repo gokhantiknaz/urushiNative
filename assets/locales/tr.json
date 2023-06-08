@@ -29,6 +29,9 @@
     "settingsdesc": "Cihaz Ayarlarını Değiştir",
     "deletedesc": "Kaydedilmiş Şablonları Sil",
     "undercons": "Yakında...",
-    "totalintensity": "Güç"
+    "totalintensity": "Güç",
+    "alllights": "Tüm Işıklar",
+    "off":"Kapalı",
+    "on": "Açık"
   }
 }
