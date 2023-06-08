@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
                                          alignSelf: 'stretch',
                                          paddingVertical: "3%",
                                          borderRadius: 10,
-                                         backgroundColor: "#5D92C4",
+                                         backgroundColor: "#5D92C4",//BCB6AE
+
                                          alignItems: 'center',
                                          justifyContent: 'center',
                                      }

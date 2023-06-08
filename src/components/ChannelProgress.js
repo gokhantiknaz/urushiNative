@@ -52,13 +52,16 @@ const ChannelProgress = (props) => {
                 <MotionSlider
                     min={0}
                     max={100}
+
                     height={45}
                     width={250}
+                    // valueBackgroundColor={'rgb(188,182,174)'}
+                    // valueColor='white'
                     value={value}
                     // decimalPlaces={1}
                     borderRadius={20}
                     units={'%'}
-                    backgroundColor={['rgb(3, 169, 244)', 'rgb(255, 152, 0)', 'rgb(255, 87, 34)']}
+                    backgroundColor={['rgb(253,192,41)', 'rgb(223,135,29)', 'rgb(170,61,1)']}
                     onValueChanged={(value) => setValue(value)}
                     onPressOut={() => setReturnObj({channel: props.Channel, value: value})}
                     // onDrag={() => console.log('Dragging')}

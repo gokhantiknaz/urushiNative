@@ -1,6 +1,6 @@
 import {useWindowDimensions, View} from "react-native";
 import * as React from "react";
-import {SceneMap, TabView} from "react-native-tab-view";
+import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import TemplateList from "../components/TemplateList";
 import {ManuelMod} from "../components/ManuelMod";
 import {useTranslation} from "react-i18next";
@@ -62,6 +62,14 @@ export const ManuelModTab = () => {
         }
     }
 
+    const renderTabBar = props => (
+        <TabBar
+            {...props}
+            activeColor={'white'}
+            inactiveColor={'black'}
+            style={{marginTop:0,backgroundColor:'#5D92C4'}}
+        />
+    );
     return (
         <View style={{flex: 1}}>
             <StatusBar hidden={true}></StatusBar>
@@ -74,6 +82,7 @@ export const ManuelModTab = () => {
             {/*/>*/}
             <TabView
                 navigationState={{index, routes}}
+                renderTabBar={renderTabBar}
                 renderScene={renderScene}
                 onIndexChange={setIndex}
                 swipeEnabled={false}

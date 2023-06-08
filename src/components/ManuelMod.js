@@ -12,6 +12,7 @@ import {useTranslation} from "react-i18next";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 import {SheetManager} from "react-native-actions-sheet";
 import {MythContext} from "../../store/myth-context";
+import {Button_1} from "./export";
 
 export const ManuelMod = (props) => {
 
@@ -78,6 +79,8 @@ export const ManuelMod = (props) => {
                 <View style={{flex: 3, marginRight: 20}}>
                     <SwitchSelector
                         options={options}
+                        //textStyle={{backgroundColor:'#AA3D0' }}
+                        buttonColor='#AA3D01'
                         initial={1}
                         onPress={value => value == 1 ? setSpeed(100) : setSpeed(0)}
                     />
@@ -147,7 +150,7 @@ export const ManuelMod = (props) => {
                     {/*<Button title="Load"></Button>*/}
                 </View>
                 <View style={{flex: 1, padding: 10}}>
-                    <Button title={t("Save")} onPress={async () => {
+                    <Button_1 title={t("Save")} onPress={async () => {
                         // https://rnas.vercel.app/guides/getdata
                         const templateName = await SheetManager.show("GetName-Sheet", {
                             payload: {value: t("templatename")},
@@ -155,7 +158,7 @@ export const ManuelMod = (props) => {
                         if (templateName && templateName.length > 0) {
                             save(templateName);
                         }
-                    }}></Button>
+                    }}></Button_1>
                 </View>
                 {/*<SpectrumChart></SpectrumChart>*/}
             </View>
