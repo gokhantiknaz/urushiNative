@@ -51,6 +51,7 @@
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-gifted-chat": "^2.0.1",
+    "react-native-motion-slider": "^1.0.3",
     "react-native-pager-view": "6.0.1",
     "react-native-progress": "^5.0.0",
     "react-native-qrcode-svg": "^6.2.0",

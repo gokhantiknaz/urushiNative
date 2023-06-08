@@ -78,7 +78,7 @@ export const ManuelMod = (props) => {
                 <View style={{flex: 3, marginRight: 20}}>
                     <SwitchSelector
                         options={options}
-                        initial={0}
+                        initial={1}
                         onPress={value => value == 1 ? setSpeed(100) : setSpeed(0)}
                     />
                 </View>
@@ -96,10 +96,9 @@ export const ManuelMod = (props) => {
                     // valueStyle={{fontSize:60,color:"black",alignItems:"center",justifyContent:"center", marginTop:20}}
                               thumbColor={'#FF7345'}
                               unitStyle={{marginLeft: 0, color: "white", fontWeight: "bold", marginTop: 10}}
-                              thumbColor={'#FF7345'}
-                              thumbRadius={11}
-                              thumbBorderWidth={5}
-                              sliderWidth={7}
+                              thumbRadius={20}
+                              thumbBorderWidth={3}
+                              sliderWidth={5}
                               isHideSubtitle={true}
                               linearGradient={[
                                   {offset: '0%', color: '#FFD76F'}, {offset: '100%', color: '#FF7345'}

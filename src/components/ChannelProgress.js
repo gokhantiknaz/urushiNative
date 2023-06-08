@@ -4,6 +4,7 @@ import {useContext, useEffect, useState} from "react";
 import colors from "./colors";
 import {BleContext} from "../../store/ble-context";
 import images from "../images/images";
+import MotionSlider from 'react-native-motion-slider';
 
 const ChannelProgress = (props) => {
     const bleCtx = useContext(BleContext);
@@ -30,24 +31,38 @@ const ChannelProgress = (props) => {
                 <Text style={styles.text}>
                     {props.ChannelName}: {value} %
                 </Text>
-                <Slider style={styles.slide}
-                        value={value}
-                        minimumValue={0}
-                        maximumValue={100}
-                        thumbImage={images.sliderIcon}
-                        step={1}
-                        minimumTrackTintColor={colors.test2}
-                        maximumTrackTintColor="white"
-                        onValueChange={setValue}
-                        onSlidingStart={value => {
-                            setSlideStartingValue(value);
-                        }}
-                        onSlidingComplete={e => {
-                            setReturnObj({channel: props.Channel, value: e});
-                            setSlideCompletionValue(value);
-                        }}
-                />
+                {/*<Slider style={styles.slide}*/}
+                {/*        value={value}*/}
+                {/*        minimumValue={0}*/}
+                {/*        maximumValue={100}*/}
+                {/*        thumbImage={images.sliderIcon}*/}
+                {/*        step={1}*/}
+                {/*        minimumTrackTintColor={colors.test2}*/}
+                {/*        maximumTrackTintColor="white"*/}
+                {/*        onValueChange={setValue}*/}
+                {/*        onSlidingStart={value => {*/}
+                {/*            setSlideStartingValue(value);*/}
+                {/*        }}*/}
+                {/*        onSlidingComplete={e => {*/}
+                {/*            setReturnObj({channel: props.Channel, value: e});*/}
+                {/*            setSlideCompletionValue(value);*/}
+                {/*        }}*/}
+                {/*/>*/}
 
+                <MotionSlider
+                    min={0}
+                    max={100}
+                    height={45}
+                    width={250}
+                    value={value}
+                    // decimalPlaces={1}
+                    borderRadius={20}
+                    units={'%'}
+                    backgroundColor={['rgb(3, 169, 244)', 'rgb(255, 152, 0)', 'rgb(255, 87, 34)']}
+                    onValueChanged={(value) => setValue(value)}
+                    onPressOut={() => setReturnObj({channel: props.Channel, value: value})}
+                    // onDrag={() => console.log('Dragging')}
+                />
             </View>
         </View>
 
@@ -56,18 +71,19 @@ const ChannelProgress = (props) => {
 export default ChannelProgress;
 const styles = StyleSheet.create({
                                      container: {
-                                         padding: 10,
+                                         padding: 0,
 
                                      },
                                      item: {
                                          display: "flex",
                                          flexDirection: "row",
-
+                                         justifyContent:"center",
+                                         alignItems: 'center'
                                      },
                                      text: {
-                                         marginEnd: 10,
+                                         // marginTop:10,
                                          color: 'white',
-                                         width: 120,
+                                         width: 120
 
                                      },
                                      slide: {
