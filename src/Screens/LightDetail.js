@@ -37,7 +37,8 @@ const LightDetail = (props) => {
         if (item.navigate) {
             navigation.navigate(item.navigate);
         }
-        if (item.id === 6) {
+        console.log(item);
+        if (item.key === 6) {
             return showConfirmDialog(() => {deleteAquarium()});
         }
     }

@@ -19,14 +19,11 @@ export const ManuelMod = (props) => {
     const [delay, setDelay] = useState(1);
 
     var delays = [
-        {label: '1Min', value: 1},
-        {label: '10Min', value: 10},
-        {label: '30Min', value: 30},
+        {label: '1Min', value: 1}, {label: '10Min', value: 10}, {label: '30Min', value: 30},
     ]
 
     const options = [
-        {label: "ON", value: "1"},
-        {label: "OFF", value: "0"}
+        {label: "ON", value: "1"}, {label: "OFF", value: "0"}
     ];
 
     const [t] = useTranslation();
@@ -41,20 +38,17 @@ export const ManuelMod = (props) => {
         if (speed === 100 || speed === 0) {
             setAllOnOff(speed);
         }
-
-        const stopTimer = setTimeout(() => {
-
-            clearTimeout(stopTimer);
-        }, 2000);
     }, [speed])
 
     useEffect(() => {
         if (allProgress) {
             setTemplate(allProgress);
         }
-
     }, [allProgress])
 
+    const complete = (value) => {
+        setAllOnOff(value);
+    }
     const save = async (templateName) => {
         let savedTemplates = await getData("manueltemplates");
         if (savedTemplates == null) {
@@ -72,116 +66,103 @@ export const ManuelMod = (props) => {
         setShowModal(false);
     }
 
-    return (
-        <ImageBackground source={images.background} style={{flex: 1}}>
-            <View style={{flex: 1, marginTop: 30}}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={{flex: 2, marginTop: 5}}>
-                        <Text style={{color: 'white', marginLeft: 20}}>All Lights:</Text>
-                    </View>
-                    <View style={{flex: 3, marginRight: 20}}>
-                        <SwitchSelector
-                            options={options}
-                            initial={0}
-                            onPress={value => value == 1 ? setSpeed(100) : setSpeed(0)}
-                        />
-                    </View>
+    return (<ImageBackground source={images.background} style={{flex: 1}}>
+        <View style={{flex: 1, marginTop: 30}}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{flex: 2, marginTop: 5}}>
+                    <Text style={{color: 'white', marginLeft: 20}}>All Lights:</Text>
                 </View>
-                <View style={{flex: 4, alignItems: 'center'}}>
-                    {/*https://www.npmjs.com/package/react-native-radial-slider2*/}
-                    {/*https://github.com/SimformSolutionsPvtLtd/react-native-radial-slider*/}
-                    <RadialSlider titleStyle={{color: 'white'}} unit='%' title='Total Intensity'
-                                  value={speed}
-                                  valueStyle={{color: "white"}}
-                                  variant={'radial-circle-slider'}
-                                  min={0}
-                                  max={100}
-                        // onComplete={(value,number)=>{updateComplete(value,number)}}
-                        // valueStyle={{fontSize:60,color:"black",alignItems:"center",justifyContent:"center", marginTop:20}}
-                                  thumbColor={'#FF7345'}
-                                  unitStyle={{marginLeft: 0, color: "white", fontWeight: "bold", marginTop: 10}}
-                                  thumbColor={'#FF7345'}
-                                  thumbRadius={11}
-                                  thumbBorderWidth={5}
-                                  sliderWidth={7}
-                                  isHideSubtitle={true}
-                                  linearGradient={[
-                                      {offset: '0%', color: '#FFD76F'},
-                                      {offset: '100%', color: '#FF7345'}
-                                  ]}
-                                  onChange={setSpeed}
+                <View style={{flex: 3, marginRight: 20}}>
+                    <SwitchSelector
+                        options={options}
+                        initial={0}
+                        onPress={value => value == 1 ? setSpeed(100) : setSpeed(0)}
                     />
-                    {/*<Text style={{color: "white"}}>{speed}</Text>*/}
-                </View>
-
-                <View style={{flex: 1, alignItems: 'center'}}>
-                    <RadioForm
-                        formHorizontal={true}
-                        animation={true}
-                    >
-                        {
-                            delays.map((obj, i) => (
-                                <RadioButton labelHorizontal={true} key={obj.value}>
-                                    {/*  You can set RadioButtonLabel before RadioButtonInput */}
-
-                                    <RadioButtonInput
-                                        obj={obj}
-                                        index={obj.value}
-                                        isSelected={delay === obj.value}
-                                        onPress={(value) => {setDelay(value)}}
-                                        borderWidth={1}
-                                        buttonInnerColor={'#e74c3c'}
-                                        buttonOuterColor={delay === obj.value ? '#2196f3' : '#000'}
-                                        buttonSize={30}
-                                        buttonOuterSize={40}
-                                        buttonStyle={{}}
-                                        buttonWrapStyle={{marginLeft: 10}}
-                                    />
-                                    <RadioButtonLabel
-                                        obj={obj}
-                                        index={obj.value}
-                                        labelHorizontal={true}
-                                        onPress={(value) => {setDelay(value)}}
-                                        labelStyle={{fontSize: 10, color: 'white'}}
-                                        labelWrapStyle={{}}
-                                    />
-                                </RadioButton>
-                            ))
-                        }
-                    </RadioForm>
-                </View>
-
-                <View style={{flex: 4}}>
-                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
-                </View>
-
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={{flex: 1, padding: 10}}>
-                        {/*<Button title="Load"></Button>*/}
-                    </View>
-                    <View style={{flex: 1, padding: 10}}>
-                        <Button title={t("Save")} onPress={async () => {
-                            // https://rnas.vercel.app/guides/getdata
-                            const templateName = await SheetManager.show("GetName-Sheet", {
-                                payload: {value: t("templatename")},
-                            });
-                            if (templateName && templateName.length > 0) {
-                                save(templateName);
-                            }
-                        }}></Button>
-                    </View>
-                    {/*<SpectrumChart></SpectrumChart>*/}
                 </View>
             </View>
-        </ImageBackground>
-    );
+            <View style={{flex: 4, alignItems: 'center'}}>
+                {/*https://www.npmjs.com/package/react-native-radial-slider2*/}
+                {/*https://github.com/SimformSolutionsPvtLtd/react-native-radial-slider*/}
+                <RadialSlider titleStyle={{color: 'white'}} unit='%' title={t('totalintensity')}
+                              value={speed}
+                              valueStyle={{color: "white"}}
+                              variant={'radial-circle-slider'}
+                              min={0}
+                              max={100}
+                              onComplete={(value) => {complete(value)}}
+                    // valueStyle={{fontSize:60,color:"black",alignItems:"center",justifyContent:"center", marginTop:20}}
+                              thumbColor={'#FF7345'}
+                              unitStyle={{marginLeft: 0, color: "white", fontWeight: "bold", marginTop: 10}}
+                              thumbColor={'#FF7345'}
+                              thumbRadius={11}
+                              thumbBorderWidth={5}
+                              sliderWidth={7}
+                              isHideSubtitle={true}
+                              linearGradient={[
+                                  {offset: '0%', color: '#FFD76F'}, {offset: '100%', color: '#FF7345'}
+                              ]}
+                              onChange={setSpeed}
+                />
+                {/*<Text style={{color: "white"}}>{speed}</Text>*/}
+            </View>
+
+            <View style={{flex: 1, alignItems: 'center'}}>
+                <RadioForm formHorizontal={true} animation={true}>
+                    {delays.map((obj, i) => (<RadioButton labelHorizontal={true} key={obj.value}>
+                        {/*  You can set RadioButtonLabel before RadioButtonInput */}
+
+                        <RadioButtonInput
+                            obj={obj}
+                            index={obj.value}
+                            isSelected={delay === obj.value}
+                            onPress={(value) => {setDelay(value)}}
+                            borderWidth={1}
+                            buttonInnerColor={'#e74c3c'}
+                            buttonOuterColor={delay === obj.value ? '#2196f3' : '#000'}
+                            buttonSize={30}
+                            buttonOuterSize={40}
+                            buttonStyle={{}}
+                            buttonWrapStyle={{marginLeft: 10}}
+                        />
+                        <RadioButtonLabel
+                            obj={obj}
+                            index={obj.value}
+                            labelHorizontal={true}
+                            onPress={(value) => {setDelay(value)}}
+                            labelStyle={{fontSize: 10, color: 'white'}}
+                            labelWrapStyle={{}}
+                        />
+                    </RadioButton>))}
+                </RadioForm>
+            </View>
+
+            <View style={{flex: 4}}>
+                <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
+            </View>
+
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{flex: 1, padding: 10}}>
+                    {/*<Button title="Load"></Button>*/}
+                </View>
+                <View style={{flex: 1, padding: 10}}>
+                    <Button title={t("Save")} onPress={async () => {
+                        // https://rnas.vercel.app/guides/getdata
+                        const templateName = await SheetManager.show("GetName-Sheet", {
+                            payload: {value: t("templatename")},
+                        });
+                        if (templateName && templateName.length > 0) {
+                            save(templateName);
+                        }
+                    }}></Button>
+                </View>
+                {/*<SpectrumChart></SpectrumChart>*/}
+            </View>
+        </View>
+    </ImageBackground>);
 }
 
 const styles = StyleSheet.create({
                                      dialog: {
-                                         flex: 1,
-                                         backgroundColor: "#fff",
-                                         alignItems: "center",
-                                         justifyContent: "center",
+                                         flex: 1, backgroundColor: "#fff", alignItems: "center", justifyContent: "center",
                                      }
                                  });

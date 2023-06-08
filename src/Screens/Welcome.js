@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
 import {StatusBar} from "expo-status-bar";
+import {setSelectedLog} from "react-native/Libraries/LogBox/Data/LogBoxData";
 
 const Welcome_screen = ({navigation}) => {
 
@@ -43,7 +44,6 @@ const Welcome_screen = ({navigation}) => {
             const keys = await AsyncStorage.getAllKeys();
             const list = await getData("aquariumList");
             setAquarimList(list);
-
         } catch (error) {
             console.log(error);
         }

@@ -1,6 +1,6 @@
 export const listData = [
     {
-        key: '1',
+        key: 1,
         place: 'connections',
         navigate:'lightConnections',
         icon: {
@@ -11,7 +11,7 @@ export const listData = [
         description: 'lightdesc'
     },
     {
-        key: '2',
+        key: 2,
         place: 'auto',
         navigate: "simulation",
         icon: {
@@ -22,7 +22,7 @@ export const listData = [
         description: 'simulationdesc',
     },
     {
-        key: '3',
+        key: 3,
         place: 'manuel',
         navigate: "manuelModTab",
         icon: {
@@ -34,7 +34,7 @@ export const listData = [
 
     },
     {
-        key: '4',
+        key: 4,
         place: 'templates',
         navigate: "UnderCons",
         icon: {
@@ -45,7 +45,7 @@ export const listData = [
         description: 'templatedesc',
     },
     {
-        key: '5',
+        key: 5,
         place: 'settings',
         navigate: "aquariumsettings",
         icon: {
@@ -56,7 +56,7 @@ export const listData = [
         description: 'settingsdesc',
     },
     {
-        key: '6',
+        key: 6,
         place: 'delete',
         icon: {
             iconName: 'trash-outline',

@@ -28,6 +28,7 @@
     "templatedesc": "Use the placed simulation datas",
     "settingsdesc": "Set the device options",
     "deletedesc": "Delete the saved datas",
-    "undercons": "Soon..."
+    "undercons": "Soon...",
+    "Ttotalintensity": "Total Intensity"
   }
 }
