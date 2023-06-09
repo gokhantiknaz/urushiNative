@@ -95,7 +95,8 @@ let menuHtml =
         height: 280px;
         display: flex;
         justify-content: center;
-        align-items: center;        
+        align-items: center;
+        padding:0;
     }
     .menu .toggle
     {

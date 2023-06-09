@@ -55,15 +55,15 @@ export const listData = [
         },
         description: 'settingsdesc',
     },
-    {
-        key: 6,
-        place: 'delete',
-        icon: {
-            iconName: 'trash-outline',
-            iconFont: 'ionicon',
-            iconColor: 'red'
-        },
-        description: 'deletedesc',
-    },
+    // {
+    //     key: 6,
+    //     place: 'delete',
+    //     icon: {
+    //         iconName: 'trash-outline',
+    //         iconFont: 'ionicon',
+    //         iconColor: 'red'
+    //     },
+    //     description: 'deletedesc',
+    // },
 
 ];
