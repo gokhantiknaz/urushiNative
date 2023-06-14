@@ -8,8 +8,9 @@ import {FloatingAction} from "react-native-floating-action";
 import {getData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
-import {findArrayElementById} from "../utils";
+import {findArrayElementById, getDateFromHours, minToTime} from "../utils";
 import {Icon} from '@rneui/themed';
+import {BleContext} from "../../store/ble-context";
 
 export const Simulation = () => {
 
@@ -30,10 +31,30 @@ export const Simulation = () => {
     const [allPoints, setAllPoints] = useState([]);
     const [data, setData] = useState({Channel: 1, Point: DUMMY_DATA});
     const [actions, setActions] = useState([]);
+    const [allProgress, setAllProgress] = useState([{channel: 1, value: 0}, {channel: 2, value: 0}, {channel: 3, value: 0}, {channel: 4, value: 0}, {channel: 5, value: 0}, {channel: 6, value: 0}]);
+    const [bytes, setBytes] = useState([]);
+
+    let ctxBle = useContext(BleContext);
 
     useEffect(() => {
+
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+
+        let tmpallpoints = [...allPoints];
+        subModel.Channels.forEach(ch => {
+            const index = tmpallpoints.findIndex(
+                x => ch.Channel === x.Channel
+            );
+
+            if (index === -1) {
+                tmpallpoints.push({Channel: ch.Channel, Point: DUMMY_DATA});
+            }
+        })
+
+        setPoints(tmpallpoints[0].Point);
+        setAllPoints(tmpallpoints);
+
         setChannels(subModel.Channels);
         let tmpactions = [];
         tmpactions.push({
@@ -57,12 +78,12 @@ export const Simulation = () => {
         setChannelName("Royal");
         setChannel(1);
         setActions(tmpactions);
-
+        createEmptyArray();
     }, [])
 
     useEffect(() => {
-        console.log(selectedChannel);
         let selectedChannelPoint = allPoints.filter(x => x.Channel == selectedChannel);
+
         if (selectedChannelPoint.length > 0) {
             setData(selectedChannelPoint[0]);
         }
@@ -74,11 +95,12 @@ export const Simulation = () => {
     useEffect(() => {
         if (points != null) {
             let obj = {Channel: selectedChannel, Point: points};
-            saveSimulation(obj);
+            sendSimulation(obj);
         }
     }, [points])
-    const saveSimulation = (obj) => {
+    const sendSimulation = (obj) => {
         let tmpallpoints = [...allPoints];
+
         const index = tmpallpoints.findIndex(
             x => obj.Channel === x.Channel
         );
@@ -87,7 +109,45 @@ export const Simulation = () => {
         } else {
             tmpallpoints[index] = obj;
         }
-        setAllPoints(tmpallpoints)
+        setAllPoints(tmpallpoints);
+        let data = [...bytes];
+
+        let byteSira = 1;
+        tmpallpoints.forEach(ch => {
+            data[++byteSira] = (0x01);
+            ch.Point.forEach(point => {
+                let power = point.power;
+                let time2 = minToTime(point.time);
+                let date = getDateFromHours(time2);
+                data[++byteSira] = power; // güç
+                data[++byteSira] = date.getHours(); // gün dogum hour
+                data[++byteSira] = date.getMinutes(); // gün dogum min
+            });
+        });
+
+        setBytes(data);
+    }
+
+    const createEmptyArray = () => {
+        let bytes = [];
+
+        for (let i = 0; i < 83; i++) {
+            bytes.push(0);
+        }
+        bytes[0] = (0x65);
+        bytes[1] = (0x01);
+
+        // 1.Kanal 2
+        // 2.Kanal 15
+        // 3.Kanal 28
+        // 4.Kanal 41
+        // 5.Kanal 54
+        // 6.Kanal 67
+
+
+        bytes[82] = (0x66);
+        setBytes(bytes);
+        return bytes;
     }
 
     function setActiveChannel(operator) {
@@ -108,7 +168,7 @@ export const Simulation = () => {
         }
         let tmp = findArrayElementById(actions, selected, "id");
 
-        if (tmp) {
+        if (tmp && tmp.id <= 90) {
             setChannelName(tmp.name);
             setChannel(selected);
         }
@@ -126,22 +186,10 @@ export const Simulation = () => {
             </ImageBackground>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => {setActiveChannel("prev")}}>
-                    <Icon
-                        reverse
-                        name='arrow-back-outline'
-                        type='ionicon'
-                        color='#163dab'
-                        raised={true}
-                    />
+                    <Icon reverse name='arrow-back-outline' type='ionicon' color='#163dab' raised={true}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {setActiveChannel("next")}}>
-                    <Icon
-                        reverse
-                        name='arrow-forward-outline'
-                        type='ionicon'
-                        color='#163dab'
-                        raised={true}
-                    />
+                    <Icon reverse name='arrow-forward-outline' type='ionicon' color='#163dab' raised={true}/>
                 </TouchableOpacity>
             </View>
             <FloatingAction
@@ -149,8 +197,10 @@ export const Simulation = () => {
                 position='right'
                 onPressItem={name => {
                     let tmp = findArrayElementById(actions, name, "name");
-                    setChannelName(name);
-                    setChannel(tmp.id);
+                    if (tmp.id <= 90) {
+                        setChannel(tmp.id);
+                        setChannelName(name);
+                    }
                 }}
             />
         </View>

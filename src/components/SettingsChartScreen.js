@@ -41,6 +41,7 @@ const SettingsChartScreen = (props) => {
                 return {power, time, color};
             });
             setPoints((prev) => ({values: newPoints}));
+
         }
     }, [props.data]);
 
@@ -55,6 +56,7 @@ const SettingsChartScreen = (props) => {
             return {min, max};
         });
         setLimits((prev) => [...newlimits]);
+
     }, [points]);
     const pointsUpdateCallBack = (pointData, index) => {
         //update point data
