@@ -52,7 +52,7 @@ export const Simulation = () => {
             }
         })
 
-        setPoints(tmpallpoints[0].Point);
+        //setPoints(tmpallpoints[0].Point);
         setAllPoints(tmpallpoints);
 
         setChannels(subModel.Channels);
@@ -79,6 +79,14 @@ export const Simulation = () => {
         setChannel(1);
         setActions(tmpactions);
         createEmptyArray();
+
+        ctxBle.getBleManagerConnectedDevices().then((res) => {
+            console.log(res);// 3 taneden ikisine baglı değil 1ine baglıysa baglı olmayana da baglanmak gerek. kontrolünü ekleyeceğiz.
+            if (res.length != ctx.aquarium.deviceList.length) {
+                searchAndConnect();
+                return;
+            }
+        });
     }, [])
 
     useEffect(() => {
@@ -126,6 +134,26 @@ export const Simulation = () => {
         });
 
         setBytes(data);
+        sendData(data);
+    }
+
+    const searchAndConnect = async () => {
+        if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+            ctx.aquarium.deviceList.forEach(x => {
+                ctxBle.connectDevice(null, x.id).then(result => {
+                    console.log("I:", x.name + " connected");
+                });
+            })
+        }
+    }
+
+    const sendData = async (data) => {
+        console.log("sendingdata:", data);
+        ctxBle.getBleManagerConnectedDevices().then(devices => {
+            devices.forEach(x => {
+                ctxBle.sendDatatoDevice(x, data);
+            });
+        });
     }
 
     const createEmptyArray = () => {

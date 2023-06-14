@@ -182,12 +182,11 @@ let menuHtml =
 export default function MainMenu(props) {
 
     const ctx = useContext(MythContext);
-    const bleCtx = useContext(BleContext); //get ble context
+    // const bleCtx = useContext(BleContext); //get ble context
     const navigation = useNavigation();
 
-
-    const [devices, setDevices] = useState([]);
-    const [connectedDevices, setConnectedDevices] = useState([]);
+    // const [devices, setDevices] = useState([]);
+    // const [connectedDevices, setConnectedDevices] = useState([]);
 
     function onMessage(data) {
         if (!data) {
@@ -207,27 +206,27 @@ export default function MainMenu(props) {
         }
     }
 
-    const checkDevice = async () => { //get connected devices and saved devices
-        const _cDevices = await bleCtx.getBleManagerConnectedDevices();
-        if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
-
-            ctx.aquarium.deviceList?.forEach(async (x) => {
-                let devices = bleCtx.devices.filter(a => a.id === x.id);
-                if (devices.length > 0) {
-                    await bleCtx.connectDevice(devices[0], x.id);
-                }
-            });
-        }
-
-        setConnectedDevices(_cDevices)
-    }
-
-    useEffect(() => {
-        checkDevice();
-        return () => {
-        }
-
-    }, [])
+    // const checkDevice = async () => { //get connected devices and saved devices
+    //     const _cDevices = await bleCtx.getBleManagerConnectedDevices();
+    //     if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+    //
+    //         ctx.aquarium.deviceList?.forEach(async (x) => {
+    //             let devices = bleCtx.devices.filter(a => a.id === x.id);
+    //             if (devices.length > 0) {
+    //                 await bleCtx.connectDevice(devices[0], x.id);
+    //             }
+    //         });
+    //     }
+    //
+    //     setConnectedDevices(_cDevices)
+    // }
+    //
+    // useEffect(() => {
+    //     checkDevice();
+    //     return () => {
+    //     }
+    //
+    // }, [])
 
     return (
         <SafeAreaView style={{flex: 1}}>
