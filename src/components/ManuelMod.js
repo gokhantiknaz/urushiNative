@@ -48,6 +48,10 @@ export const ManuelMod = (props) => {
         }
     }, [allProgress])
 
+    useEffect(() => {
+        setAllProgress(ctx.manuelTemplate);
+    }, [ctx.manuelTemplate])
+
     const complete = (value) => {
         let all = [{"channel": 1, "value": value}, {"channel": 2, "value": value}, {"channel": 3, "value": value}, {"channel": 4, "value": value}, {"channel": 5, "value": value}, {"channel": 6, "value": value}];
         setAllProgress(all);
@@ -111,7 +115,7 @@ export const ManuelMod = (props) => {
                 {/*<Text style={{color: "white"}}>{speed}</Text>*/}
             </View>
 
-            <View style={{flex: 1, alignItems: 'center'}}>
+            <View style={{flex: 2, alignItems: 'center'}}>
                 <RadioForm formHorizontal={true} animation={true}>
                     {delays.map((obj, i) => (<RadioButton labelHorizontal={true} key={obj.value}>
                         {/*  You can set RadioButtonLabel before RadioButtonInput */}
@@ -165,9 +169,3 @@ export const ManuelMod = (props) => {
         </View>
     </ImageBackground>);
 }
-
-const styles = StyleSheet.create({
-                                     dialog: {
-                                         flex: 1, backgroundColor: "#fff", alignItems: "center", justifyContent: "center",
-                                     }
-                                 });

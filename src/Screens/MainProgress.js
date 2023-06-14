@@ -39,7 +39,7 @@ const MainProgress = (props) => {
         }
     }, [progressObject])
 
-    useEffect(() => {
+    function sendAllProgress() {
         let tmpArray = [...props.allProgress];
         if (props.allProgress.length > 0) {
             let data = createEmptyArray();
@@ -48,8 +48,14 @@ const MainProgress = (props) => {
                 data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
                 getValue(x.channel, false);
             });
+
             sendData(data);
         }
+    }
+
+
+    useEffect(() => {
+        sendAllProgress();
     }, [props.allOnOff])
     const createEmptyArray = () => {
         let bytes = [];
@@ -71,6 +77,7 @@ const MainProgress = (props) => {
         return data;
     }
     const sendData = async (data) => {
+        console.log("sendingdata:", data);
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
 
@@ -87,48 +94,37 @@ const MainProgress = (props) => {
         }
     }, [ctx.manuelTemplate])
 
-    const getValue = (channel, fromTemplate) => {
-        // if (fromTemplate)
-        {
-            let filtered = ctx.manuelTemplate?.filter(x => {
-                return x.channel === channel;
-            })
-            if (filtered?.length > 0) {
-                return filtered[0].value;
-            }
+    const getValue = (channel) => {
+        let val = 0;
+        let filtered = props.allProgress?.filter(x => {
+            return x.channel === channel;
+        })
+        if (filtered?.length > 0) {
+            val = filtered[0].value;
         }
-        // else {
-        //     let filtered = props.allProgress?.filter(x => {
-        //         return x.channel === channel;
-        //     })
-        //     if (filtered?.length > 0) {
-        //         return filtered[0].value;
-        //     }
-        // }
-
-        return 0;
+        return val;
     }
 
     return (
         <View style={{flex: 1, padding: 5}}>
             <StatusBar hidden={true}></StatusBar>
             <View style={styles.progressContainer}>
-                <View>
+                <View style={{marginBottom: 1}}>
                     <ChannelProgress value={getValue(1)} ChannelName='Royal' Channel={1} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
                 </View>
-                <View>
+                <View style={{marginBottom: 1}}>
                     <ChannelProgress value={getValue(2)} ChannelName='Blue' Channel={2} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
                 </View>
-                <View>
+                <View style={{marginBottom: 1}}>
                     <ChannelProgress value={getValue(3)} ChannelName='Cyan+' Channel={3} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
                 </View>
-                <View>
+                <View style={{marginBottom: 1}}>
                     <ChannelProgress value={getValue(4)} ChannelName='Actinic+' Channel={4} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
                 </View>
-                <View>
+                <View style={{marginBottom: 1}}>
                     <ChannelProgress value={getValue(5)} ChannelName='He White' Channel={5} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
                 </View>
-                <View>
+                <View style={{marginBottom: 1}}>
                     <ChannelProgress value={getValue(6)} ChannelName='Magenta+' Channel={6} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
                 </View>
             </View>
@@ -140,7 +136,8 @@ const MainProgress = (props) => {
 export default MainProgress;
 const styles = StyleSheet.create({
                                      progressContainer: {
-                                         flex: 2,
+                                         flex: 1,
+                                         paddingBottom: 10,
                                          display: "flex",
                                          justifyContent: "flex-end",
                                      },

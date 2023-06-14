@@ -17,9 +17,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.gokhantiknaz.MythLights",
-      "runtimeVersion": {
-        "policy": "sdkVersion"
-      }
     },
     "android": {
       "adaptiveIcon": {
@@ -34,7 +31,6 @@
         "android.permission.BLUETOOTH_SCAN",
         "android.permission.RECORD_AUDIO"
       ],
-      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/icon.png"
