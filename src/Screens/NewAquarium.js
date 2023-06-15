@@ -25,7 +25,7 @@ const NewAquarium = () => {
     const [imageUri, setImageUri] = useState('');
     const [t] = useTranslation();
 
-    const [showModal, setShowModal] = useState(false);
+    // const [showModal, setShowModal] = useState(false);
 
     const navigation = useNavigation();
 
@@ -43,7 +43,6 @@ const NewAquarium = () => {
                 createdDate: new Date()
             };
             myAquarium.deviceList = deviceList;
-
             getData("aquariumList").then(list => {
                 if (list == null) {
                     let newlist = [];
@@ -58,34 +57,18 @@ const NewAquarium = () => {
                     });
                 }
             });
-
-            setShowModal(true);
+            Alert.alert(t("Success"), t("Success"));
         } catch (e) {
             console.log(e);
             alert('Failed to save the data to the storage')
         }
     }
-    if (showModal) {
-        return (<View style={styles.dialog}>
 
-            <Dialog.Container visible={showModal}>
-                <Dialog.Title></Dialog.Title>
-                <Dialog.Description>
-                    {t("Success")}
-                </Dialog.Description>
-                <Dialog.Button label="Ok" onPress={() => {
-                    setShowModal(false);
-                    navigation.goBack();
-                }}/>
-            </Dialog.Container>
-        </View>);
-    }
     return (
-
         // <ImageBackground source={{uri: `data:image/png;base64,${image}`}}  style={{flex: 1}}>
         <ImageBackground source={images.background} style={{flex: 1}}>
+            <StatusBar hidden={false}></StatusBar>
             <View style={styles.container}>
-                <StatusBar hidden={true}></StatusBar>
                 <View style={styles.newAquarium}>
                     <Text style={styles.SignUpLabel}>{t("newAquarium")}</Text>
                     <TextInput
@@ -123,7 +106,7 @@ const styles = StyleSheet.create({
                                          justifyContent: "center",
                                          alignItems: "center",
                                          alignSelf: "center",
-                                         top: '10%',
+                                         top: '5%',
                                          // backgroundColor: "red",
                                      },
                                      imagepicker: {
@@ -133,7 +116,7 @@ const styles = StyleSheet.create({
                                      deviceList: {
                                          flex: 2,
                                          width: width,
-                                         marginLeft:50
+                                         marginLeft: 50
                                      },
                                      savebutton: {
                                          width: width,
@@ -154,19 +137,14 @@ const styles = StyleSheet.create({
                                          borderRadius: 10,
                                          paddingHorizontal: 16,
                                          paddingVertical: 12,
-                                         marginBottom: 10,
+                                         marginBottom: 30,
                                          // borderRadius: 12,
                                          backgroundColor: "black",
                                          fontSize: 15,
                                          fontFamily: 'OpenSans_400Regular',
                                          color: "#ffffff",
                                      },
-                                     dialog: {
-                                         flex: 1,
-                                         backgroundColor: "#fff",
-                                         alignItems: "center",
-                                         justifyContent: "center",
-                                     },
+
                                  });
 
 export default NewAquarium;
