@@ -17,6 +17,7 @@ import TemplateList from "../components/TemplateList";
 import {Simulation} from "../Screens/Simulation";
 import AquarimSettings from "../components/AquarimSettings";
 import LightConnections from "../Screens/LightConnections";
+import SimulationMainScreen from "../Screens/SimulationMainScreen";
 
 
 const Stack = createStackNavigator();
@@ -55,7 +56,7 @@ function AuthScreens() {
                 }
             }}/>
 
-            <Stack.Screen name="simulation" component={Simulation} options={{
+            <Stack.Screen name="simulation" component={SimulationMainScreen} options={{
                 title: t('simulation'), headerShown: false, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
@@ -78,6 +79,15 @@ function AuthScreens() {
                     backgroundColor: colors.black,
                 }
             }}/>
+
+
+            {/*<Stack.Screen name="UnderCons" component={SimulationMainScreen} options={{*/}
+            {/*    title: t('undercons'), headerShown: true, headerTintColor: '#fff', headerStyle: {*/}
+            {/*        backgroundColor: colors.black,*/}
+            {/*    }*/}
+            {/*}}/>*/}
+
+
             <Stack.Screen name="spiralMenu" component={SprialMenu}/>
             <Stack.Screen name="BleDevices" component={BLEDevices}/>
         </Stack.Navigator>

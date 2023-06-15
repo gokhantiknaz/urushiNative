@@ -18,6 +18,7 @@ export default {
     checked: require('../../assets/blue-check.png'),
     sliderIcon: require('../../assets/iconLight.png'),
     chatbot: require('../../assets/aibot_one.png'),
-    transparentIcon: require('../../assets/iconTrans.png')
+    transparentIcon: require('../../assets/iconTrans.png'),
+    simulation:require('../../assets/simulation.png'),
 
 }
