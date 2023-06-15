@@ -231,55 +231,56 @@ export default function MainMenu(props) {
     return (
         <SafeAreaView style={{flex: 1}}>
             <View style={{flex: 1, alignItems: "center"}}>
+                <View style={{backgroundColor:'black',width:'100%', height:50}}>
+                    <Text style={{color: "white", textAlign:'center'}}>{ctx.aquarium.name}</Text>
+                </View>
                 <ImageBackground
                     source={images.background} // Görselin yolunu belirtin
                     style={styles.imageBackground}
                 >
-                    <Text style={{color: "white", marginTop: 10, marginBottom: 50, textAlign:'center'}}>{ctx.aquarium.name}</Text>
-                    {/* {ctx.aquarium.image ?
-                        <Image source={{uri: `data:image/png;base64,${ctx.aquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image> :
-                        <Image source={images.deviceIcon} style={{height: 300, width: Dimensions.get('window').width}}></Image>
-                    } */}
-                    <Svg width="500" height="300">
-                        <Defs>
-                        <ClipPath id="clip">
-                            <Path
-                            fill="#000000"
-                            d="M250,0H0V300H168.22s40.8,0,40.8-32.72c0-22.63,18.35-40.98,40.98-40.98s40.98,18.35,40.98,40.98c0,32.72,40.8,32.72,40.8,32.72h168.22V0H250Z"
+                    <View style={{flex: 2, position:'relative', overflow:'hidden', display:'flex', justifyContent:'flex-end'}}>
+                        <Svg width="500" height="300" style={{bottom:0, display:'flex'}}>
+                            <Defs>
+                            <ClipPath id="clip">
+                                <Path
+                                fill="#000000"
+                                d="M250,0H0V300H168.22s40.8,0,40.8-32.72c0-22.63,18.35-40.98,40.98-40.98s40.98,18.35,40.98,40.98c0,32.72,40.8,32.72,40.8,32.72h168.22V0H250Z"
+                                />
+                            </ClipPath>
+                            </Defs>
+                            <G x="0" y="0" scale={1} clipPath="url(#clip)">
+                            {ctx.aquarium.image ?
+                            <Image
+                                href={{uri: `data:image/png;base64,${ctx.aquarium.image}`}}
+                                width="100%"
+                                height="300"
+                                preserveAspectRatio="xMidYMid slice"
+                            /> :
+                            <Image
+                                href={images.deviceIcon}
+                                width="100%"
+                                height="300"
+                                preserveAspectRatio="xMidYMid slice"
                             />
-                        </ClipPath>
-                        </Defs>
-                        <G x="0" y="0" scale={1} clipPath="url(#clip)">
-                        {ctx.aquarium.image ?
-                        <Image
-                            href={{uri: `data:image/png;base64,${ctx.aquarium.image}`}}
-                            width="100%"
-                            height="300"
-                            preserveAspectRatio="xMidYMid slice"
-                        /> :
-                        <Image
-                            href={images.deviceIcon}
-                            width="100%"
-                            height="300"
-                            preserveAspectRatio="xMidYMid slice"
+                            }
+                            </G>
+                        </Svg>
+                    </View>
+
+                    <View style={{flex: 3, marginTop:-60}}>
+                        <WebView
+                            style={styles.WebViewStyle}
+                            //Loading html file from project folder
+                            source={{html: menuHtml}}
+                            //Enable Javascript support
+                            javaScriptEnabled={true}
+                            //For the Cache
+                            domStorageEnabled={true}
+                            onMessage={onMessage}
                         />
-                        }
-                        </G>
-                    </Svg>
+                    </View>
                     {/*<Image source={{uri: `${selectedAquarium.imageUri ?? ''}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image>*/}
                 </ImageBackground>
-            </View>
-            <View style={{flex: 1, marginTop:-110}}>
-                <WebView
-                    style={styles.WebViewStyle}
-                    //Loading html file from project folder
-                    source={{html: menuHtml}}
-                    //Enable Javascript support
-                    javaScriptEnabled={true}
-                    //For the Cache
-                    domStorageEnabled={true}
-                    onMessage={onMessage}
-                />
             </View>
         </SafeAreaView>
     );
