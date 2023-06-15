@@ -13,11 +13,11 @@ import SprialMenu from "../components/spiralMenu/SprialMenu";
 
 import BLEDevices from "../Screens/BLEDevices";
 import {ManuelModTab} from "../Screens/ManuelModTab";
-import TemplateList from "../components/TemplateList";
 import {Simulation} from "../Screens/Simulation";
-import AquarimSettings from "../components/AquarimSettings";
+import LightSettings from "../components/LightSettings";
 import LightConnections from "../Screens/LightConnections";
 import SimulationMainScreen from "../Screens/SimulationMainScreen";
+import AquariumSettings from "../components/AquariumSettings";
 
 
 const Stack = createStackNavigator();
@@ -57,11 +57,22 @@ function AuthScreens() {
             }}/>
 
             <Stack.Screen name="simulation" component={SimulationMainScreen} options={{
+                title: t('simulation'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
+            <Stack.Screen name="simulationdetail" component={Simulation} options={{
                 title: t('simulation'), headerShown: false, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
-            <Stack.Screen name="aquariumsettings" component={AquarimSettings} options={{
+            <Stack.Screen name="lightsettings" component={LightSettings} options={{
+                title: t('aquariumsettings'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
+
+            <Stack.Screen name="aquariumsettings" component={AquariumSettings} options={{
                 title: t('aquariumsettings'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }

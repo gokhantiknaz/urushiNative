@@ -31,23 +31,22 @@ export const listData = [
             iconColor: '#FF7345'
         },
         description: 'manueldesc',
-
     },
-    {
-        key: 4,
-        place: 'templates',
-        navigate: "UnderCons",
-        icon: {
-            iconName: 'cloud-download-outline',
-            iconFont: 'ionicon',
-            iconColor: '#FF7345'
-        },
-        description: 'templatedesc',
-    },
+    // {
+    //     key: 4,
+    //     place: 'templates',
+    //     navigate: "UnderCons",
+    //     icon: {
+    //         iconName: 'cloud-download-outline',
+    //         iconFont: 'ionicon',
+    //         iconColor: '#FF7345'
+    //     },
+    //     description: 'templatedesc',
+    // },
     {
         key: 5,
         place: 'settings',
-        navigate: "aquariumsettings",
+        navigate: "lightsettings",
         icon: {
             iconName: 'settings',
             iconFont: 'ionicon',

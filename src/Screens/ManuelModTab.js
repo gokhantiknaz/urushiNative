@@ -12,7 +12,7 @@ import Loading from "../../loading";
 
 const renderScene = SceneMap({
                                  manuelMod: ManuelMod,
-                                 template: TemplateList,
+                                 template:  () => <TemplateList mod={'manuel'}/>
                              });
 
 // const renderScene = ({route}) => {
@@ -67,7 +67,7 @@ export const ManuelModTab = () => {
             {...props}
             activeColor={'white'}
             inactiveColor={'black'}
-            style={{marginTop:0,backgroundColor:'#5D92C4'}}
+            style={{marginTop: 0, backgroundColor: '#5D92C4'}}
         />
     );
     return (

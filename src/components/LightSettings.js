@@ -9,7 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 import {findArrayElementById} from "../utils";
 
 const width = Dimensions.get('window').width;
-const AquarimSettings = (props) => {
+const LightSettings = (props) => {
 
     const ctx = useContext(MythContext);
     const [name, setName] = useState("");
@@ -160,4 +160,4 @@ const AquarimSettings = (props) => {
         </ImageBackground>
     );
 }
-export default AquarimSettings;
+export default LightSettings;

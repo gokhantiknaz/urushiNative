@@ -32,7 +32,15 @@
     "totalintensity": "Total Intensity",
     "alllights": "All Lights",
     "off":"Off",
-    "on": "On"
-
+    "on": "On",
+    "lunaar": "Lunaar",
+    "activechannel": "Active Channels",
+    "totalpar": "Total Par",
+    "sunrise": "Sun Rise",
+    "night": "Night",
+    "activehours": "Active Hours",
+    "maxlumen": "Max Lumen",
+    "maxpar": " Max Par",
+    "simulation": "Simulation"
   }
 }

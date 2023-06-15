@@ -17,8 +17,23 @@ const TemplateList = (props) => {
         setTemplateList(list);
     }
 
+    const getAutoTemplates = async () => {
+        let list = await getData("autotemplates");
+        setTemplateList(list);
+    }
+
     useEffect(() => {
-        getTemplates();
+
+        if(props.mod=="auto")
+        {
+            getAutoTemplates();
+        }
+        else
+        {
+            getTemplates();
+        }
+
+
     }, [])
     const loadTemplate = item => {
         ctx.setTemplate(item.value);
