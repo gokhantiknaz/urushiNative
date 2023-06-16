@@ -58,6 +58,7 @@ const NewAquarium = () => {
                 }
             });
             Alert.alert(t("Success"), t("Success"));
+            navigation.goBack();
         } catch (e) {
             console.log(e);
             alert('Failed to save the data to the storage')
