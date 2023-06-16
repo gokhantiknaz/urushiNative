@@ -36,6 +36,7 @@ const TemplateList = (props) => {
 
     }, [])
     const loadTemplate = item => {
+        console.log("selecteditem:",item);
         ctx.setTemplate(item.value);
         props.jumpTo("manuelMod");
     }

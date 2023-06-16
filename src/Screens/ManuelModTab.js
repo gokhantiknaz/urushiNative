@@ -12,7 +12,8 @@ import Loading from "../../loading";
 
 const renderScene = SceneMap({
                                  manuelMod: ManuelMod,
-                                 template:  () => <TemplateList mod={'manuel'}/>
+                                 template:  (props) => <TemplateList {...props} mod={'manuel'} />
+
                              });
 
 // const renderScene = ({route}) => {

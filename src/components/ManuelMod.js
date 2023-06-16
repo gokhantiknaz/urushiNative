@@ -49,7 +49,10 @@ export const ManuelMod = (props) => {
     }, [allProgress])
 
     useEffect(() => {
-        setAllProgress(ctx.manuelTemplate);
+        console.log("manuelmod:", ctx.manuelTemplate);
+        if (ctx.manuelTemplate) {
+            setAllProgress(ctx.manuelTemplate);
+        }
     }, [ctx.manuelTemplate])
 
     const complete = (value) => {
@@ -116,7 +119,7 @@ export const ManuelMod = (props) => {
                 {/*<Text style={{color: "white"}}>{speed}</Text>*/}
             </View>
 
-            <View style={{flex: 2, alignItems: 'center',marginTop:70}}>
+            <View style={{flex: 2, alignItems: 'center', marginTop: 70}}>
                 <RadioForm formHorizontal={true} animation={true}>
                     {delays.map((obj, i) => (<RadioButton labelHorizontal={true} key={obj.value}>
                         {/*  You can set RadioButtonLabel before RadioButtonInput */}
@@ -145,9 +148,9 @@ export const ManuelMod = (props) => {
             </View>
 
             <View style={{flex: 4}}>
-            <ScrollView style={{marginTop:-40}}>
+                <ScrollView style={{marginTop: -40}}>
                     <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
-            </ScrollView>
+                </ScrollView>
 
             </View>
 
