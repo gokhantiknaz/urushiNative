@@ -14,18 +14,9 @@ const DeviceList = (props) => {
     const [bluetoothDevices, setBluetoothDevices] = useState([]);
     const [t] = useTranslation();
 
-    // const [deviceList, setDeviceList] = useState([
-    //                                                  {key: 1, id: "01-12-112", name: "IKIGAI 01 adasdas"},
-    //                                                  {key: 2, id: "01-12-113", name: "IKIGAI 02"},
-    //                                                  {key: 3, id: "01-12-143", name: "IKIGAI 03"},
-    //                                                  {key: 4, id: "01-12-134", name: "IKIGAI 04"},
-    //                                                  {key: 5, id: "01-12-144", name: "IKIGAI 05"}
-    //                                              ]);
-
     useEffect(() => {
         startsScan();
     }, [])
-
     const startsScan = async () => { // start scanning for bluetooth devices
         if (isScanning) {
             setIsScanning(false);
@@ -64,9 +55,6 @@ const DeviceList = (props) => {
         console.log(selectedAquariums);
         props.setDeviceList(selectedAquariums);
     };
-
-
-
     const renderHeader = () => {
         return (
             <View>
@@ -74,7 +62,6 @@ const DeviceList = (props) => {
             </View>
         );
     };
-
     const renderFooter = () => {
         return (
             <View>

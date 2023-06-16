@@ -34,7 +34,6 @@ const LightConnections = (props) => {
                     bleCtx.disconnectDeviceByDevice(peripheral);
                 }
             }
-            search();
         });
     };
     const search = async () => {
