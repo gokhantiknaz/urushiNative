@@ -75,7 +75,7 @@ export const ManuelMod = (props) => {
     }
 
     return (<ImageBackground source={images.background} style={{flex: 1}}>
-        <View style={{flex: 1, marginTop: 30}}>
+        <View style={{flex: 1, marginTop: 20}}>
             <View style={{flex: 1, flexDirection: 'row'}}>
                 <View style={{flex: 2, marginTop: 5}}>
                     <Text style={{color: 'white', marginLeft: 20}}>{t("alllights")}</Text>
@@ -90,6 +90,7 @@ export const ManuelMod = (props) => {
                     />
                 </View>
             </View>
+
             <View style={{flex: 4, alignItems: 'center'}}>
                 {/*https://www.npmjs.com/package/react-native-radial-slider2*/}
                 {/*https://github.com/SimformSolutionsPvtLtd/react-native-radial-slider*/}
@@ -115,11 +116,10 @@ export const ManuelMod = (props) => {
                 {/*<Text style={{color: "white"}}>{speed}</Text>*/}
             </View>
 
-            <View style={{flex: 2, alignItems: 'center'}}>
+            <View style={{flex: 2, alignItems: 'center',marginTop:70}}>
                 <RadioForm formHorizontal={true} animation={true}>
                     {delays.map((obj, i) => (<RadioButton labelHorizontal={true} key={obj.value}>
                         {/*  You can set RadioButtonLabel before RadioButtonInput */}
-
                         <RadioButtonInput
                             obj={obj}
                             index={obj.value}
@@ -127,11 +127,10 @@ export const ManuelMod = (props) => {
                             onPress={(value) => {setDelay(value)}}
                             borderWidth={1}
                             buttonInnerColor={'#e74c3c'}
-                            buttonOuterColor={delay === obj.value ? '#2196f3' : '#000'}
-                            buttonSize={30}
-                            buttonOuterSize={40}
-                            buttonStyle={{}}
-                            buttonWrapStyle={{marginLeft: 10}}
+                            buttonOuterColor={delay === obj.value ? '#2196f3' : 'white'}
+                            buttonSize={20}
+                            buttonOuterSize={30}
+                            buttonWrapStyle={{marginLeft: 5}}
                         />
                         <RadioButtonLabel
                             obj={obj}
@@ -146,10 +145,10 @@ export const ManuelMod = (props) => {
             </View>
 
             <View style={{flex: 4}}>
-            <ScrollView>
+            <ScrollView style={{marginTop:-40}}>
                     <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
             </ScrollView>
-                
+
             </View>
 
             <View style={{flex: 1, flexDirection: 'row'}}>
