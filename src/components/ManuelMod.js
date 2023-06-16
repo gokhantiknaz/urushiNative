@@ -1,6 +1,6 @@
 import * as React from "react";
 import MainProgress from "../Screens/MainProgress";
-import {View, Text, ImageBackground, Image, Button, useWindowDimensions, TextInput, StyleSheet, Alert} from "react-native";
+import {View, Text, ImageBackground, Image, Button, useWindowDimensions, TextInput, StyleSheet, Alert, ScrollView} from "react-native";
 import SwitchSelector from "react-native-switch-selector";
 import images from "../images/images";
 import colors from "./colors";
@@ -146,7 +146,10 @@ export const ManuelMod = (props) => {
             </View>
 
             <View style={{flex: 4}}>
-                <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
+            <ScrollView>
+                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
+            </ScrollView>
+                
             </View>
 
             <View style={{flex: 1, flexDirection: 'row'}}>
