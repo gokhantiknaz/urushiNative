@@ -30,19 +30,16 @@ export const ManuelMod = (props) => {
     ];
 
     const [speed, setSpeed] = useState(0);
-    const [name, setName] = useState("");
-    const [showModal, setShowModal] = useState(false);
     const [allOnOff, setAllOnOff] = useState(0);
 
-    useEffect(() => {
-        let all = [{"channel": 1, "value": speed}, {"channel": 2, "value": speed}, {"channel": 3, "value": speed}, {"channel": 4, "value": speed}, {"channel": 5, "value": speed}, {"channel": 6, "value": speed}];
-        setAllProgress(all);
-        if (speed === 100 || speed === 0) {
-            setAllOnOff(speed);
-        }
-    }, [speed])
+    // let all = [{"channel": 1, "value": speed}, {"channel": 2, "value": speed}, {"channel": 3, "value": speed}, {"channel": 4, "value": speed}, {"channel": 5, "value": speed}, {"channel": 6, "value": speed}];
+    // setAllProgress(all);
+    // if (speed === 100 || speed === 0) {
+    //     setAllOnOff(speed);
+    // }
 
     useEffect(() => {
+
         if (allProgress) {
             setTemplate(allProgress);
         }
@@ -73,8 +70,8 @@ export const ManuelMod = (props) => {
             await removeItem("manueltemplates");
             await saveData("manueltemplates", savedTemplates);
         }
-        Alert.alert(t("success"));
-        setShowModal(false);
+        Alert.alert(t("success"),t("success"));
+
     }
 
     return (<ImageBackground source={images.background} style={{flex: 1}}>
