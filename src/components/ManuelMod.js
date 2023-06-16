@@ -46,7 +46,6 @@ export const ManuelMod = (props) => {
     }, [allProgress])
 
     useEffect(() => {
-        console.log("manuelmod:", ctx.manuelTemplate);
         if (ctx.manuelTemplate) {
             setAllProgress(ctx.manuelTemplate);
         }
@@ -104,16 +103,15 @@ export const ManuelMod = (props) => {
                     // valueStyle={{fontSize:60,color:"black",alignItems:"center",justifyContent:"center", marginTop:20}}
                               thumbColor={'#FF7345'}
                               unitStyle={{marginLeft: 0, color: "white", fontWeight: "bold", marginTop: 10}}
-                              thumbRadius={20}
+                              thumbRadius={15}
                               thumbBorderWidth={3}
-                              sliderWidth={5}
+                              sliderWidth={1}
                               isHideSubtitle={true}
                               linearGradient={[
                                   {offset: '0%', color: '#FFD76F'}, {offset: '100%', color: '#FF7345'}
                               ]}
                               onChange={setSpeed}
                 />
-                {/*<Text style={{color: "white"}}>{speed}</Text>*/}
             </View>
 
             <View style={{flex: 2, alignItems: 'center', marginTop: 70}}>
