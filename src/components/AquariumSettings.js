@@ -1,11 +1,14 @@
-import {ImageBackground} from "react-native";
+import {ImageBackground, Text} from "react-native";
 import images from "../images/images";
+import UnderCons from "./UnderCons";
 
 const AquariumSettings = () => {
 
     return (
-        <ImageBackground source={images.background} style={{flex:1}}>
+        <ImageBackground source={images.background} style={{flex: 1}}>
 
+            <UnderCons></UnderCons>
+           
         </ImageBackground>
     );
 }

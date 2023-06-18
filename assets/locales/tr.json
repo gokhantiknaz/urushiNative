@@ -33,7 +33,7 @@
     "alllights": "Tüm Işıklar",
     "off":"Kapalı",
     "on": "Açık",
-    "lunaar": "Ay Işığı",
+    "lunar": "Ay Işığı",
     "activechannel": "Aktif Kanallar",
     "totalpar": "Toplam Par Gücü",
     "sunrise": "Gün Doğumu",
@@ -41,6 +41,8 @@
     "activehurs": "Aktif Saatler",
     "maxlumen": "Max Lümen",
     "maxpar": "Max Par",
-    "simulation": "Simülasyon Ayarları"
+    "simulation": "Simülasyon Ayarları",
+    "scanning": "Aranıyor...",
+    "scanBluetooth": "Cihazları Ara"
   }
 }

@@ -35,7 +35,6 @@ const DeviceList = (props) => {
     };
 
     useEffect(() => {
-        // update current list of bluetooth devices when new device is discovered in useBLE hook
         setBluetoothDevices(bleCtx.devices);
     }, [bleCtx.devices]);
 
@@ -52,7 +51,6 @@ const DeviceList = (props) => {
 
         let selectedAquariums = tmpdeviceList.filter(x => x.isSelect === true).map(a => ({name: a.name, id: a.id}));
 
-        console.log(selectedAquariums);
         props.setDeviceList(selectedAquariums);
     };
     const renderHeader = () => {

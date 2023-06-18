@@ -6,36 +6,30 @@ import {useTranslation} from "react-i18next";
 import images from "../images/images";
 import {MythContext} from "../../store/myth-context";
 import {removeItemFromArray} from "../utils";
+import Loading from "../../loading";
 
 const LightConnections = (props) => {
 
+    const [t] = useTranslation();
     const bleCtx = useContext(BleContext);
     const ctx = useContext(MythContext);
+    const [loading, setLoading] = useState(false);
 
-    const [t] = useTranslation();
     const [isScanning, setIsScanning] = useState(false);
     const [bluetoothDevices, setBluetoothDevices] = useState([]);
-    const [connectedDevices, setConnectedDevices] = useState([]);
 
-    const peripherals = new Map();
     useEffect(() => {
-        GetConnectedDevices();
-        search();
+        //disconnect from connected devices
+        setLoading(true);
+        bleCtx.getBleManagerConnectedDevices().then(results => {
+            for (let i = 0; i < results.length; i++) {
+                let peripheral = results[i];
+                bleCtx.disconnectDeviceByDevice(peripheral);
+            }
+            setLoading(false);
+        });
     }, []);
 
-    const GetConnectedDevices = () => {
-        bleCtx.getBleManagerConnectedDevices().then(results => {
-            if (results.length == 0) {
-                console.log('No connected bluetooth devices');
-            } else {
-
-                for (let i = 0; i < results.length; i++) {
-                    let peripheral = results[i];
-                    bleCtx.disconnectDeviceByDevice(peripheral);
-                }
-            }
-        });
-    };
     const search = async () => {
         if (isScanning) {
             setIsScanning(false);
@@ -55,18 +49,21 @@ const LightConnections = (props) => {
 
     useEffect(() => {
         // update current list of bluetooth devices when new device is discovered in useBLE hook
-        let tmpArray =  connectedDevices.concat(bleCtx.devices);
-        setBluetoothDevices(tmpArray);
-        //
-        if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
-            ctx.aquarium.deviceList.forEach(x => {
-                let device = bleCtx.devices.filter(a => a.id == x.id)[0];
-                if (device) {
-                    device.connected = true;
-                }
-            })
-        }
+        console.log("bleDevices:", bleCtx.devices);
+        if (bleCtx.devices) {
+            setBluetoothDevices(bleCtx.devices);
 
+            if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+                ctx.aquarium.deviceList.forEach(x => {
+                    let device = bleCtx.devices.filter(a => a.id == x.id);
+                    x.connected = false;
+                    if (device.length > 0) {
+                        device[0].connected = true;
+                        x.connected = true;
+                    }
+                })
+            }
+        }
     }, [bleCtx.devices]);
 
     const removeFromDeviceList = (peripheral) => {
@@ -74,6 +71,7 @@ const LightConnections = (props) => {
         peripheral.connected = false;
         let newAq = {...ctx.aquarium};
         newAq.deviceList = newArray;
+        console.log("removed new deviceList:", newArray);
         ctx.setAquarium(newAq);
     }
 
@@ -82,7 +80,7 @@ const LightConnections = (props) => {
         peripheral.connected = true;
         let newArray = ctx.aquarium.deviceList.slice();
         newArray.push(peripheral);
-        console.log(newArray);
+        console.log("added new deviceList:", newArray);
 
         let newAq = {...ctx.aquarium};
         newAq.deviceList = newArray;
@@ -90,7 +88,7 @@ const LightConnections = (props) => {
 
     }
     const RenderItem = ({peripheral}) => {
-        if (peripheral.name !== "IKIGAI" && peripheral.name !== "ikigai") {
+        if (peripheral.name.toUpperCase() !== "myth".toUpperCase()) {
             return;
         }
         const color = peripheral.connected ? 'green' : 'grey';
@@ -155,6 +153,10 @@ const LightConnections = (props) => {
             </>
         );
     };
+
+    if (loading) {
+        return <Loading>{<Text>Connecting to saved devices</Text>}</Loading>
+    }
     return (
         <ImageBackground source={images.background} style={{flex: 1}}>
             <StatusBar hidden={true}></StatusBar>
@@ -165,7 +167,7 @@ const LightConnections = (props) => {
                         style={styles.buttonStyle}
                         onPress={search}>
                         <Text style={styles.buttonTextStyle}>
-                            {isScanning ? 'Scanning...' : 'Scan Bluetooth Devices'}
+                            {isScanning ? t("scaning") : t('scanBluetooth')}
                         </Text>
                     </TouchableOpacity>
                 </View>

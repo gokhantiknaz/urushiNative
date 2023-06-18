@@ -33,7 +33,7 @@
     "alllights": "All Lights",
     "off":"Off",
     "on": "On",
-    "lunaar": "Lunaar",
+    "lunar": "Lunar",
     "activechannel": "Active Channels",
     "totalpar": "Total Par",
     "sunrise": "Sun Rise",
@@ -41,6 +41,8 @@
     "activehours": "Active Hours",
     "maxlumen": "Max Lumen",
     "maxpar": " Max Par",
-    "simulation": "Simulation"
+    "simulation": "Simulation",
+    "scanning": "Scanning...",
+    "scanBluetooth": "Scan Bluetooth Devices"
   }
 }

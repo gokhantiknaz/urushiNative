@@ -65,14 +65,16 @@ const LightSettings = (props) => {
     const save = async () => {
         getData("aquariumList").then(result => {
             let selected = findArrayElementById(result, ctx.aquarium.name, "name");
-            const index = result.findIndex(emp => emp.id === selected.id);
+            console.log("selected:",selected);
+            const index = result.find(emp => emp.id === selected.id);
+            console.log("index:",index);
 
             let tempList = [...result];
             tempList[index] = selectedAquarium;
 
             removeItem("aquariumList").then(res => {
                 saveData("aquariumList", tempList).then(resX => {
-                    Alert.alert("Başarıyla güncellendi");
+                    Alert.alert(t('success'),t('success'));
                     ctx.setAquarium(selectedAquarium);
                 });
             });
