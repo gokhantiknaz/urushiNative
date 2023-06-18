@@ -135,11 +135,11 @@ export const Simulation = () => {
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             ctx.aquarium.deviceList.forEach(x => {
                 //baglı değilse.
-                bleCtx.getBleManagerConnectedDevices().then(result => {
+                ctxBle.getBleManagerConnectedDevices().then(result => {
                     if (result.find(d => d.id == x.id)) {
                         console.log("I:", x.name + " already connected");
                     } else {
-                        bleCtx.connectDevice(null, x.id).then(result => {
+                        ctxBle.connectDevice(null, x.id).then(result => {
                             console.log("I:", x.name + " connected");
                         });
                     }
@@ -149,10 +149,11 @@ export const Simulation = () => {
     }
 
     const sendData = async (data) => {
-        console.log("sendingdata:", data);
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
-                ctxBle.sendDatatoDevice(x, data);
+                if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
+                    ctxBle.sendDatatoDevice(x, data, null);
+                }
             });
         });
     }
