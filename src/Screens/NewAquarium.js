@@ -19,16 +19,10 @@ import {StatusBar} from "expo-status-bar";
 const width = Dimensions.get('window').width;
 const NewAquarium = () => {
     const [name, setName] = useState("");
-
     const [deviceList, setDeviceList] = useState([]);
-
-
     const [image, setImage] = useState(null);
     const [imageUri, setImageUri] = useState('');
     const [t] = useTranslation();
-
-    // const [showModal, setShowModal] = useState(false);
-
     const navigation = useNavigation();
 
     const id = useId();

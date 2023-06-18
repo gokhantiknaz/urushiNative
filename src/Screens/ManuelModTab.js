@@ -11,7 +11,6 @@ import {MythContext} from "../../store/myth-context";
 import Loading from "../../loading";
 
 
-
 // const renderScene = ({route}) => {
 //     switch (route.key) {
 //         case 'manuelMod':
@@ -26,12 +25,12 @@ import Loading from "../../loading";
 export const ManuelModTab = () => {
 
     const renderScene = SceneMap({
-                                     manuelMod: (props) => <ManuelMod {...props}  setRefresh={setRefresh}/>,
+                                     manuelMod: (props) => <ManuelMod {...props} setRefresh={setRefresh}/>,
                                      template: (props) => <TemplateList {...props} mod={'manuel'} refresh={refresh}/>
 
                                  });
 
-    const [refresh,setRefresh] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [t] = useTranslation();
@@ -44,29 +43,22 @@ export const ManuelModTab = () => {
     const ctx = useContext(MythContext);
 
     useEffect(() => {
-        console.log("index:", index);
-    }, [index])
-
-    useEffect(() => {
-        bleCtx.getBleManagerConnectedDevices().then((res) => {
-            console.log(res);// 3 taneden ikisine baglı değil 1ine baglıysa baglı olmayana da baglanmak gerek. kontrolünü ekleyeceğiz.
-            if (res.length != ctx.aquarium.deviceList.length) {
-                searchAndConnect();
-                return;
-            }
-        });
+        searchAndConnect();
     }, [])
-
-    useEffect(() => {
-        console.log(bleCtx.devices.map(x => {return x.name}));
-    }, [bleCtx.devices]);
 
     const searchAndConnect = async () => {
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             ctx.aquarium.deviceList.forEach(x => {
-                bleCtx.connectDevice(null, x.id).then(result => {
-                    console.log("I:", x.name + " connected");
-                });
+                //baglı değilse.
+                bleCtx.getBleManagerConnectedDevices().then(result => {
+                    if (result.find(d => d.id == x.id)) {
+                        console.log("I:", x.name + " already connected");
+                    } else {
+                        bleCtx.connectDevice(null, x.id).then(result => {
+                            console.log("I:", x.name + " connected");
+                        });
+                    }
+                })
             })
         }
     }

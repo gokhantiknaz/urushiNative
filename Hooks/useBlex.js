@@ -1,7 +1,6 @@
 import {BleManager} from "react-native-ble-plx";
-
 import {View, Text, PermissionsAndroid, Platform} from 'react-native'
-import React, {memo, useEffect, useMemo, useState} from 'react'
+import React, {memo, useContext, useEffect, useMemo, useState} from 'react'
 import {LogBox} from 'react-native';
 import base64 from "react-native-base64";
 import * as ExpoDevice from "expo-device";
@@ -10,6 +9,7 @@ const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
 const useBlex = () => {
+
     const _BleManager = useMemo(() => new BleManager(), []);
     const [devices, setDevices] = useState([]);
     const [connectedDevice, setConnectedDevice] = useState(null);
@@ -20,7 +20,6 @@ const useBlex = () => {
             _BleManager.destroy(); //clean up BleManager
         }
     }, [])
-
     const requestAndroidPermissions = async () => { //request permissions for android
         const bluetoothScanPermission = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN, {
             title: "Location Permission",
@@ -40,7 +39,6 @@ const useBlex = () => {
 
         return bluetoothScanPermission === "granted" && bluetoothConnectPermission === "granted" && fineLocationPermission === "granted";
     };
-
     const requestPermissions = async () => { //request permissions for ios and android
         console.log(Platform.OS);
         if (Platform.OS === "android") {
@@ -80,11 +78,10 @@ const useBlex = () => {
                                             console.log("Scan", error);
                                         }
                                         if (device && device.name) {
-
                                             setDevices((prevState) => {
                                                 if (!isDuplicteDevice(prevState, device)) {
-                                                    console.log("Device", device.id, device.name);
-                                                    console.log("uuid:", device.serviceUUIDs);
+                                                    // console.log("Device", device.id, device.name);
+                                                    // console.log("uuid:", device.serviceUUIDs);
                                                     return [...prevState, device];
                                                 }
                                                 return prevState;
@@ -120,6 +117,7 @@ const useBlex = () => {
     };
     const sendDatatoDevice = (device, data, id = null) => { //send data to device
         const deviceID = id ? id : device.id
+        // device secili akv.a ait değilse disconnect all devam et.
         const dataToSend = base64.encodeFromByteArray(data);
         _BleManager.writeCharacteristicWithoutResponseForDevice(deviceID, SERVICE_UUID, CHARACTERISTIC_UUID, dataToSend).then(device => {
                                                                                                                                   console.log("sendDatatoDevice", deviceID, data);
@@ -134,14 +132,14 @@ const useBlex = () => {
             const connectedDevices = await _BleManager.connectedDevices([SERVICE_UUID]);
             return connectedDevices;
         } catch (err) {
-            console.log("getBleManagerConnectedDevices Error", err)
+            console.log("Error: getBleManagerConnectedDevices Error", err)
         }
 
     }
     const disconnectDevice = () => { //disconnect from device
         connectedDevice.cancelConnection();
     };
-    const disconnectDeviceByDevice = (device) => { //disconnect from device
+    const disconnectDeviceByDevice = async (device) => { //disconnect from device
         console.log("disconnected from:" + device.name);
         device.cancelConnection();
     };

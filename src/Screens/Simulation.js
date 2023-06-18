@@ -80,13 +80,7 @@ export const Simulation = () => {
         setActions(tmpactions);
         createEmptyArray();
 
-        ctxBle.getBleManagerConnectedDevices().then((res) => {
-            console.log(res);// 3 taneden ikisine baglı değil 1ine baglıysa baglı olmayana da baglanmak gerek. kontrolünü ekleyeceğiz.
-            if (res.length != ctx.aquarium.deviceList.length) {
-                searchAndConnect();
-                return;
-            }
-        });
+        searchAndConnect();
     }, [])
 
     useEffect(() => {
@@ -140,9 +134,16 @@ export const Simulation = () => {
     const searchAndConnect = async () => {
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             ctx.aquarium.deviceList.forEach(x => {
-                ctxBle.connectDevice(null, x.id).then(result => {
-                    console.log("I:", x.name + " connected");
-                });
+                //baglı değilse.
+                bleCtx.getBleManagerConnectedDevices().then(result => {
+                    if (result.find(d => d.id == x.id)) {
+                        console.log("I:", x.name + " already connected");
+                    } else {
+                        bleCtx.connectDevice(null, x.id).then(result => {
+                            console.log("I:", x.name + " connected");
+                        });
+                    }
+                })
             })
         }
     }

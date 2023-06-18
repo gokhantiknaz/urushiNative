@@ -11,7 +11,7 @@ const MainProgress = (props) => {
     const [bytes, setBytes] = useState([]);
     const [progressObject, setProgressObject] = useState(null);
     const [allProgress, setAllProgress] = useState([{channel: 1, value: 0}, {channel: 2, value: 0}, {channel: 3, value: 0}, {channel: 4, value: 0}, {channel: 5, value: 0}, {channel: 6, value: 0}]);
-    let ctxBle = useContext(BleContext);
+    const ctxBle = useContext(BleContext);
 
 
     useEffect(() => {
@@ -77,11 +77,11 @@ const MainProgress = (props) => {
         return data;
     }
     const sendData = async (data) => {
-        console.log("sendingdata:", data);
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
-
-                ctxBle.sendDatatoDevice(x, data);
+                if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
+                    ctxBle.sendDatatoDevice(x, data, null);
+                }
             });
         });
     }
