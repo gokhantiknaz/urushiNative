@@ -12,31 +12,25 @@ const TemplateList = (props) => {
     const [t] = useTranslation();
     const [templateList, setTemplateList] = useState([]);
     const ctx = useContext(MythContext);
+
     const getTemplates = async () => {
         let list = await getData("manueltemplates");
         setTemplateList(list);
     }
-
     const getAutoTemplates = async () => {
         let list = await getData("autotemplates");
         setTemplateList(list);
     }
 
     useEffect(() => {
-
-        if(props.mod=="auto")
-        {
+        if (props.mod === "auto") {
             getAutoTemplates();
-        }
-        else
-        {
+        } else {
             getTemplates();
         }
-
-
-    }, [])
+    }, [props.refresh])
     const loadTemplate = item => {
-        console.log("selecteditem:",item);
+        console.log("selecteditem:", item);
         ctx.setTemplate(item.value);
         props.jumpTo("manuelMod");
     }

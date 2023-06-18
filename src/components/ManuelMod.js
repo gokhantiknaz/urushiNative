@@ -70,7 +70,7 @@ export const ManuelMod = (props) => {
             await saveData("manueltemplates", savedTemplates);
         }
         Alert.alert(t("success"),t("success"));
-
+        props.setRefresh(true);
     }
 
     return (<ImageBackground source={images.background} style={{flex: 1}}>

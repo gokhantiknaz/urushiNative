@@ -7,7 +7,7 @@ import firebaseConfig from "../firebase/firebaseConfig";
 import {db, collection, addDoc} from "../firebase/firebase-utilities";
 import DeviceList from "../components/DeviceList";
 import ImageSelect from "../components/ImagePicker";
-import {clearStorage, getData, removeItem, saveData} from "../../data/useAsyncStorage";
+import {clearStorage, getAllKeys, getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {mergeData} from "../../data/useAsyncStorage/useAsyncStorage";
 import images from "../images/images";
 import colors from "../components/colors";
@@ -21,6 +21,8 @@ const NewAquarium = () => {
     const [name, setName] = useState("");
 
     const [deviceList, setDeviceList] = useState([]);
+
+
     const [image, setImage] = useState(null);
     const [imageUri, setImageUri] = useState('');
     const [t] = useTranslation();
@@ -32,6 +34,7 @@ const NewAquarium = () => {
     const id = useId();
 
     const save = () => {
+
         try {
             let myAquarium = {
                 id: id,
@@ -43,22 +46,24 @@ const NewAquarium = () => {
                 createdDate: new Date()
             };
             myAquarium.deviceList = deviceList;
+
             getData("aquariumList").then(list => {
                 if (list == null) {
                     let newlist = [];
                     newlist.push(myAquarium);
                     saveData("aquariumList", newlist).then(res => {
-
+                        Alert.alert(t("Success"), t("Success"));
+                        navigation.goBack();
                     });
                 } else {
                     list.push(myAquarium);
                     removeItem("aquariumList").then(res => {
                         saveData("aquariumList", list);
+                        navigation.goBack();
                     });
                 }
             });
-            Alert.alert(t("Success"), t("Success"));
-            navigation.goBack();
+
         } catch (e) {
             console.log(e);
             alert('Failed to save the data to the storage')

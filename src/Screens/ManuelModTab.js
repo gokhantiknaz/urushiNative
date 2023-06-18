@@ -10,11 +10,7 @@ import {BleContext} from "../../store/ble-context";
 import {MythContext} from "../../store/myth-context";
 import Loading from "../../loading";
 
-const renderScene = SceneMap({
-                                 manuelMod: ManuelMod,
-                                 template:  (props) => <TemplateList {...props} mod={'manuel'} />
 
-                             });
 
 // const renderScene = ({route}) => {
 //     switch (route.key) {
@@ -28,6 +24,14 @@ const renderScene = SceneMap({
 // };
 
 export const ManuelModTab = () => {
+
+    const renderScene = SceneMap({
+                                     manuelMod: (props) => <ManuelMod {...props}  setRefresh={setRefresh}/>,
+                                     template: (props) => <TemplateList {...props} mod={'manuel'} refresh={refresh}/>
+
+                                 });
+
+    const [refresh,setRefresh] = useState(false);
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [t] = useTranslation();
@@ -38,6 +42,10 @@ export const ManuelModTab = () => {
 
     const bleCtx = useContext(BleContext);
     const ctx = useContext(MythContext);
+
+    useEffect(() => {
+        console.log("index:", index);
+    }, [index])
 
     useEffect(() => {
         bleCtx.getBleManagerConnectedDevices().then((res) => {

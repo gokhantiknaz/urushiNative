@@ -72,7 +72,7 @@ const useBlex = () => {
         setDevices([]);
 
 
-        _BleManager.startDeviceScan(null, {
+        _BleManager.startDeviceScan([SERVICE_UUID], {
                                         allowDuplicates: false,
                                     },
                                     async (error, device) => {
@@ -80,9 +80,11 @@ const useBlex = () => {
                                             console.log("Scan", error);
                                         }
                                         if (device && device.name) {
+
                                             setDevices((prevState) => {
                                                 if (!isDuplicteDevice(prevState, device)) {
                                                     console.log("Device", device.id, device.name);
+                                                    console.log("uuid:", device.serviceUUIDs);
                                                     return [...prevState, device];
                                                 }
                                                 return prevState;

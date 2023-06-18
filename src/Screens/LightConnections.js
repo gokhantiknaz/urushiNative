@@ -20,14 +20,17 @@ const LightConnections = (props) => {
 
     useEffect(() => {
         //disconnect from connected devices
+
         setLoading(true);
         bleCtx.getBleManagerConnectedDevices().then(results => {
+            console.log(results);
             for (let i = 0; i < results.length; i++) {
                 let peripheral = results[i];
                 bleCtx.disconnectDeviceByDevice(peripheral);
             }
             setLoading(false);
         });
+        search();
     }, []);
 
     const search = async () => {
@@ -49,8 +52,7 @@ const LightConnections = (props) => {
 
     useEffect(() => {
         // update current list of bluetooth devices when new device is discovered in useBLE hook
-        console.log("bleDevices:", bleCtx.devices);
-        if (bleCtx.devices) {
+
             setBluetoothDevices(bleCtx.devices);
 
             if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
@@ -63,7 +65,7 @@ const LightConnections = (props) => {
                     }
                 })
             }
-        }
+
     }, [bleCtx.devices]);
 
     const removeFromDeviceList = (peripheral) => {
@@ -167,7 +169,7 @@ const LightConnections = (props) => {
                         style={styles.buttonStyle}
                         onPress={search}>
                         <Text style={styles.buttonTextStyle}>
-                            {isScanning ? t("scaning") : t('scanBluetooth')}
+                            {isScanning ? t("scanning") : t('scanBluetooth')}
                         </Text>
                     </TouchableOpacity>
                 </View>
