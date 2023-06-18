@@ -182,11 +182,7 @@ let menuHtml =
 export default function MainMenu(props) {
 
     const ctx = useContext(MythContext);
-    // const bleCtx = useContext(BleContext); //get ble context
     const navigation = useNavigation();
-
-    // const [devices, setDevices] = useState([]);
-    // const [connectedDevices, setConnectedDevices] = useState([]);
 
     function onMessage(data) {
         if (!data) {
