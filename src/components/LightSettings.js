@@ -74,7 +74,6 @@ const LightSettings = (props) => {
                     Alert.alert(t('success'), t('success'));
                     ctx.setAquarium(selectedAquarium);
                     props.navigation.goBack();
-
                 });
             });
         });
