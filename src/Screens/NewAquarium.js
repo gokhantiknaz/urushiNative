@@ -15,6 +15,9 @@ import {useTranslation} from "react-i18next";
 
 import Dialog from "react-native-dialog";
 import {StatusBar} from "expo-status-bar";
+import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
+import {findArrayElementById} from "../utils";
+import {Models} from "../../data/Model";
 
 const width = Dimensions.get('window').width;
 const NewAquarium = () => {
@@ -35,10 +38,41 @@ const NewAquarium = () => {
                 name: name,
                 image: image,
                 imageUri: imageUri,
-                modelId: 1,
-                submodelId: 1,
+                modelId: -1,
+                submodelId: -1,
                 createdDate: new Date()
             };
+
+
+            let unique_values = deviceList
+                .map((item) => item.serviceUUId).filter(
+                    (value, index, current_value) => current_value.indexOf(value) === index
+                );
+
+            console.log("uniq:", unique_values);
+
+            if (unique_values.length > 0) {
+                showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
+                return;
+            }
+
+            let subModels = deviceList
+                .map((item) => item.subModel).filter(
+                    (value, index, current_value) => current_value.indexOf(value) === index
+                );
+
+
+            console.log("submodels:", subModels);
+
+            if (subModels.length > 0) {
+                showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
+                return;
+            }
+
+            let model = findArrayElementById(Models, unique_values[0].serviceUUId, "serviceUUId");
+
+            myAquarium.modelId = model.id;
+            myAquarium.submodelId = subModels[0].subModel;
             myAquarium.deviceList = deviceList;
 
             getData("aquariumList").then(list => {

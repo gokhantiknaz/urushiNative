@@ -89,9 +89,9 @@ const LightConnections = (props) => {
 
     }
     const RenderItem = ({peripheral}) => {
-        if (peripheral.name.toUpperCase() !== "myth".toUpperCase()) {
-            return;
-        }
+        // if (peripheral.name.toUpperCase() !== "myth".toUpperCase()) {
+        //     return;
+        // }
         const color = peripheral.connected ? 'green' : 'grey';
         return (
             <>

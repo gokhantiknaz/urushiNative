@@ -6,6 +6,10 @@ import base64 from "react-native-base64";
 import * as ExpoDevice from "expo-device";
 
 const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+const SERVICE_UUID2 = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+const SERVICE_UUID3 = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+const SERVICE_UUID4 = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+
 const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
 const useBlex = () => {
@@ -13,6 +17,8 @@ const useBlex = () => {
     const _BleManager = useMemo(() => new BleManager(), []);
     const [devices, setDevices] = useState([]);
     const [connectedDevice, setConnectedDevice] = useState(null);
+
+    const ModelIdArray = [SERVICE_UUID,SERVICE_UUID2,SERVICE_UUID3,SERVICE_UUID4];
 
     useEffect(() => {
         LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -70,7 +76,7 @@ const useBlex = () => {
         setDevices([]);
 
 
-        _BleManager.startDeviceScan([SERVICE_UUID], {
+        _BleManager.startDeviceScan(ModelIdArray, {
                                         allowDuplicates: false,
                                     },
                                     async (error, device) => {
@@ -82,6 +88,7 @@ const useBlex = () => {
                                                 if (!isDuplicteDevice(prevState, device)) {
                                                     // console.log("Device", device.id, device.name);
                                                     // console.log("uuid:", device.serviceUUIDs);
+                                                    //MYTH IKG MIA111230001
                                                     return [...prevState, device];
                                                 }
                                                 return prevState;
@@ -129,7 +136,7 @@ const useBlex = () => {
     }
     const getBleManagerConnectedDevices = async () => { //get connected devices
         try {
-            const connectedDevices = await _BleManager.connectedDevices([SERVICE_UUID]);
+            const connectedDevices = await _BleManager.connectedDevices(ModelIdArray);
             return connectedDevices;
         } catch (err) {
             console.log("Error: getBleManagerConnectedDevices Error", err)
