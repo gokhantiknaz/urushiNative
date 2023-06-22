@@ -156,7 +156,7 @@ export const ManuelMod = (props) => {
                 <View style={{flex: 1, padding: 10}}>
                     <Button_1 title={t("Save")} onPress={async () => {
                         // https://rnas.vercel.app/guides/getdata
-                        const templateName = await SheetManager.show("GetName-Sheet", {
+                        const templateName = await SheetManager.show("savetemplate", {
                             payload: {value: t("templatename")},
                         });
                         if (templateName && templateName.length > 0) {

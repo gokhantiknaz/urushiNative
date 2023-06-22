@@ -5,7 +5,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import SettingsChartScreen from "../components/SettingsChartScreen";
 import RadioForm from "react-native-simple-radio-button";
 import {FloatingAction} from "react-native-floating-action";
-import {getData} from "../../data/useAsyncStorage";
+import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
 import {findArrayElementById, getDateFromHours, minToTime} from "../utils";
@@ -13,8 +13,9 @@ import {Icon} from '@rneui/themed';
 import {BleContext} from "../../store/ble-context";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 import {useTranslation} from "react-i18next";
+import {SheetManager} from "react-native-actions-sheet";
 
-export const Simulation = () => {
+export const Simulation = (props) => {
 
     const ctx = useContext(MythContext);
 
@@ -65,13 +66,13 @@ export const Simulation = () => {
 
         setChannels(subModel.Channels);
         let tmpactions = [];
-        tmpactions.push({
-                            text: "Load",
-                            icon: require("../../assets/loadIcon.png"),
-                            name: "bt_load",
-                            position: 2,
-                            id: 98
-                        });
+        // tmpactions.push({
+        //                     text: "Load",
+        //                     icon: require("../../assets/loadIcon.png"),
+        //                     name: "bt_load",
+        //                     position: 2,
+        //                     id: 98
+        //                 });
         tmpactions.push({
                             text: "Save",
                             icon: require("../../assets/saveIcon.png"),
@@ -79,6 +80,15 @@ export const Simulation = () => {
                             position: 1,
                             id: 99
                         });
+
+        tmpactions.push({
+                            text: "Back",
+                            icon: require("../../assets/back.png"),
+                            name: "bt_back",
+                            position: 20,
+                            id: 100
+                        });
+
 
         subModel.Channels.map(x => {
             tmpactions.push({text: x.label, icon: require("../../assets/aibot_one.png"), name: x.label, position: 2, id: x.value});
@@ -191,6 +201,7 @@ export const Simulation = () => {
     function setActiveChannel(operator) {
         let selected = selectedChannel;
 
+
         if (operator === "next") {
             if (selected >= 6) {
                 selected = 6;
@@ -205,11 +216,27 @@ export const Simulation = () => {
             }
         }
         let tmp = findArrayElementById(actions, selected, "id");
-
         if (tmp && tmp.id <= 90) {
             setChannelName(tmp.name);
             setChannel(selected);
         }
+    }
+
+    const saveTemplate = async (templateName) => {
+        let savedTemplates = await getData("autotemplates");
+        if (savedTemplates == null) {
+            let newlist = [];
+            let obj = {name: templateName, value: allPoints};
+            newlist.push(obj);
+            await saveData("autotemplates", newlist);
+        } else {
+            let obj = {name: templateName, value: allPoints};
+            savedTemplates.push(obj);
+            await removeItem("autotemplates");
+            await saveData("autotemplates", savedTemplates);
+        }
+        Alert.alert(t("success"),t("success"));
+        props.setRefresh(true);
 
     }
 
@@ -238,6 +265,23 @@ export const Simulation = () => {
                     if (tmp.id <= 90) {
                         setChannel(tmp.id);
                         setChannelName(name);
+                    }
+
+                    if (tmp.id > 90) {
+                        if (tmp.id == 99) {
+                           SheetManager.show("savetemplate", {
+                                payload: {value: t("templatename")},
+                            }).then(result => {
+                                console.log(result);
+                                if (result && result.length > 0) {
+                                    saveTemplate(result);
+                                }
+                            });
+                        } else {
+                            if (tmp.id == 100) {
+                                props.navigation.goBack();
+                            }
+                        }
                     }
                 }}
             />

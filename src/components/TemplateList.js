@@ -35,16 +35,16 @@ const TemplateList = (props) => {
         props.jumpTo("manuelMod");
     }
     const deleteTemplate = async (item) => {
-        let savedTemplates = await getData("manueltemplates");
+        let savedTemplates = await getData(props.mod == "auto" ? "autotemplates" : "manueltemplates");
         let newArray = (savedTemplates.filter(function (t) {
             return t.name !== item.name
         }));
 
-        await removeItem("manueltemplates");
-        await saveData("manueltemplates", newArray);
+        await removeItem(props.mod == "auto" ? "autotemplates" : "manueltemplates");
+        await saveData(props.mod == "auto" ? "autotemplates" : "manueltemplates", newArray);
 
         setTemplateList(newArray);
-        Alert.alert(t("success"));
+        Alert.alert(t("success"),"Başarıyla Silindi");
     }
 
     return (
