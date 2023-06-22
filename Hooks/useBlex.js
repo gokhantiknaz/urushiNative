@@ -125,7 +125,6 @@ const useBlex = () => {
     const sendDatatoDevice = (device, data, id = null,serviceUUID=null) => { //send data to device
         const deviceID = id ? id : device.id
         // device secili akv.a ait değilse disconnect all devam et.
-        console.log("data will send to device:", device);
         console.log("data will send to serviceiid:", serviceUUID);
         const dataToSend = base64.encodeFromByteArray(data);
         _BleManager.writeCharacteristicWithoutResponseForDevice(deviceID,(serviceUUID?? SERVICE_UUID), CHARACTERISTIC_UUID, dataToSend).then(device => {

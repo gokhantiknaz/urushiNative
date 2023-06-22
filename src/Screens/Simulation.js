@@ -42,9 +42,8 @@ export const Simulation = () => {
     useEffect(() => {
 
 
-        if(ctx.aquarium.deviceList.length==0)
-        {
-            Alert.alert(t("warn"),t("noDevice"));
+        if (ctx.aquarium.deviceList.length == 0) {
+            Alert.alert(t("warn"), t("noDevice"));
             return;
         }
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
@@ -161,12 +160,12 @@ export const Simulation = () => {
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
-                    ctxBle.sendDatatoDevice(x, data, null);
+                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUId;
+                    ctxBle.sendDatatoDevice(x, data, null, serviceid);
                 }
             });
         });
     }
-
     const createEmptyArray = () => {
         let bytes = [];
 
