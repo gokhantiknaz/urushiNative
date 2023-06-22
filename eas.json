@@ -21,7 +21,6 @@
         "buildType": "apk"
       }
     },
-
     "production": {
       "ios": {
         "resourceClass": "m1-medium"

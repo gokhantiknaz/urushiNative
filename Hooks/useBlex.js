@@ -18,7 +18,7 @@ const useBlex = () => {
     const [devices, setDevices] = useState([]);
     const [connectedDevice, setConnectedDevice] = useState(null);
 
-    const ModelIdArray = [SERVICE_UUID,SERVICE_UUID2,SERVICE_UUID3,SERVICE_UUID4];
+    const ModelIdArray = [SERVICE_UUID, SERVICE_UUID2, SERVICE_UUID3, SERVICE_UUID4];
 
     useEffect(() => {
         LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -122,11 +122,13 @@ const useBlex = () => {
             console.log("Connect", err)
         });
     };
-    const sendDatatoDevice = (device, data, id = null) => { //send data to device
+    const sendDatatoDevice = (device, data, id = null,serviceUUID=null) => { //send data to device
         const deviceID = id ? id : device.id
         // device secili akv.a ait değilse disconnect all devam et.
+        console.log("data will send to device:", device);
+        console.log("data will send to serviceiid:", serviceUUID);
         const dataToSend = base64.encodeFromByteArray(data);
-        _BleManager.writeCharacteristicWithoutResponseForDevice(deviceID, SERVICE_UUID, CHARACTERISTIC_UUID, dataToSend).then(device => {
+        _BleManager.writeCharacteristicWithoutResponseForDevice(deviceID,(serviceUUID?? SERVICE_UUID), CHARACTERISTIC_UUID, dataToSend).then(device => {
                                                                                                                                   console.log("sendDatatoDevice", deviceID, data);
                                                                                                                               }
         ).catch(err => {

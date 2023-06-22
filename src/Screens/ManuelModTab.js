@@ -1,4 +1,4 @@
-import {useWindowDimensions, View} from "react-native";
+import {Alert, useWindowDimensions, View} from "react-native";
 import * as React from "react";
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import TemplateList from "../components/TemplateList";
@@ -43,6 +43,11 @@ export const ManuelModTab = () => {
     const ctx = useContext(MythContext);
 
     useEffect(() => {
+        if(ctx.aquarium.deviceList.length==0)
+        {
+            Alert.alert(t("warn"),t("noDevice"));
+            return;
+        }
         searchAndConnect();
     }, [])
 

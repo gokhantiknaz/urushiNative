@@ -52,7 +52,6 @@ const DeviceList = (props) => {
         console.log("selected UUID:", data.serviceUUIDs);
         let serviceId = data.serviceUUIDs[0];
 
-
         let selectedAquariums = tmpdeviceList.filter(x => x.isSelect === true).map(a => ({name: a.name, id: a.id, serviceUUId: serviceId, subModel: a.name.slice(-1)}));
 
         props.setDeviceList(selectedAquariums);

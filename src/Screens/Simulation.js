@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useDebugValue, useEffect, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {ImageBackground, StyleSheet, Text, View, Button, TouchableOpacity} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View, Button, TouchableOpacity, Alert} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SettingsChartScreen from "../components/SettingsChartScreen";
 import RadioForm from "react-native-simple-radio-button";
@@ -11,6 +11,8 @@ import {Models} from "../../data/Model";
 import {findArrayElementById, getDateFromHours, minToTime} from "../utils";
 import {Icon} from '@rneui/themed';
 import {BleContext} from "../../store/ble-context";
+import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
+import {useTranslation} from "react-i18next";
 
 export const Simulation = () => {
 
@@ -34,10 +36,17 @@ export const Simulation = () => {
     const [allProgress, setAllProgress] = useState([{channel: 1, value: 0}, {channel: 2, value: 0}, {channel: 3, value: 0}, {channel: 4, value: 0}, {channel: 5, value: 0}, {channel: 6, value: 0}]);
     const [bytes, setBytes] = useState([]);
 
+    const [t] = useTranslation();
     let ctxBle = useContext(BleContext);
 
     useEffect(() => {
 
+
+        if(ctx.aquarium.deviceList.length==0)
+        {
+            Alert.alert(t("warn"),t("noDevice"));
+            return;
+        }
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
 

@@ -1,4 +1,4 @@
-import {Image, View, StyleSheet, ImageBackground, useWindowDimensions, Text, TouchableOpacity, TextInput} from "react-native";
+import {Image, View, StyleSheet, ImageBackground, useWindowDimensions, Text, TouchableOpacity, TextInput, Alert} from "react-native";
 import images from "../images/images";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
@@ -8,7 +8,7 @@ import {ManuelMod} from "../components/ManuelMod";
 import TemplateList from "../components/TemplateList";
 import {Simulation} from "./Simulation";
 import SwitchSelector from "react-native-switch-selector";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useDebugValue, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
 import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
@@ -16,10 +16,17 @@ import {Models} from "../../data/Model";
 
 const SimulationMainScreen = ({navigation}) => {
 
+    const [t] = useTranslation();
     const [lightDetail, setlightdetail] = useState({activeChannels: 0, sunRise: "08:00", night: "24:00", activeHours: 0, maxPar: 0, maxLumen: 0});
 
     const ctx = useContext(MythContext);
+    useDebugValue(ctx.aquarium.deviceList);
     useEffect(() => {
+        if(ctx.aquarium.deviceList.length==0)
+        {
+            Alert.alert(t("warn"),t("noDevice"));
+            return;
+        }
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
 
@@ -112,7 +119,7 @@ const SimulationMainScreen = ({navigation}) => {
 
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
-    const [t] = useTranslation();
+
     const [routes] = React.useState([
                                         {key: 'auto', title: 'Auto'},
                                         {key: 'templates', title: t('templates')},

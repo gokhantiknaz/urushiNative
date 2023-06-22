@@ -49,9 +49,7 @@ const NewAquarium = () => {
                     (value, index, current_value) => current_value.indexOf(value) === index
                 );
 
-            console.log("uniq:", unique_values);
-
-            if (unique_values.length > 0) {
+            if (unique_values && unique_values.length > 1) {
                 showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
                 return;
             }
@@ -60,19 +58,21 @@ const NewAquarium = () => {
                 .map((item) => item.subModel).filter(
                     (value, index, current_value) => current_value.indexOf(value) === index
                 );
-
-
             console.log("submodels:", subModels);
-
-            if (subModels.length > 0) {
+            if (subModels && subModels.length > 1) {
                 showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
                 return;
             }
 
-            let model = findArrayElementById(Models, unique_values[0].serviceUUId, "serviceUUId");
+            if (unique_values.length > 0 && subModels.length > 0) {
+                let model = findArrayElementById(Models, unique_values[0], "serviceUUId");
+                if (!model) {
+                    return;
+                }
+                myAquarium.modelId = model.id;
+                myAquarium.submodelId = subModels[0].subModel;
+            }
 
-            myAquarium.modelId = model.id;
-            myAquarium.submodelId = subModels[0].subModel;
             myAquarium.deviceList = deviceList;
 
             getData("aquariumList").then(list => {

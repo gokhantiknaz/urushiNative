@@ -80,7 +80,8 @@ const MainProgress = (props) => {
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
-                    ctxBle.sendDatatoDevice(x, data, null);
+                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUId;
+                    ctxBle.sendDatatoDevice(x, data, null, serviceid);
                 }
             });
         });

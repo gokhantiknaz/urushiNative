@@ -43,6 +43,8 @@
     "maxpar": "Max Par",
     "simulation": "Simülasyon Ayarları",
     "scanning": "Aranıyor...",
-    "scanBluetooth": "Cihazları Ara"
+    "scanBluetooth": "Cihazları Ara",
+    "warn": "Uyarı",
+    "noDevicel": "Kayıtlı cihaz bulunamadı. Lütfen Bağlantılar bölümünden cihazları seçiniz."
   }
 }

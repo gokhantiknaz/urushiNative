@@ -43,6 +43,8 @@
     "maxpar": " Max Par",
     "simulation": "Simulation",
     "scanning": "Scanning...",
-    "scanBluetooth": "Scan Bluetooth Devices"
+    "scanBluetooth": "Scan Bluetooth Devices",
+    "warn": "Warning",
+    "noDevicel": "No recorded device founded. Please save devices from connections section first!"
   }
 }

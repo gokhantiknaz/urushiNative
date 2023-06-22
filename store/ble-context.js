@@ -12,7 +12,7 @@ export const BleContext = React.createContext({ //create context for ble manager
                                                   disconnectDevice: () => { },
                                                   devices: [],
                                                   connectedDevice: null,
-                                                  sendDatatoDevice: (device, data, id = null) => { },
+                                                  sendDatatoDevice: (device, data, id = null,serviceUUID=null) => { },
                                                   getBleManagerConnectedDevices: async () => [],
                                                   stopScan: () => { },
                                                   disconnectDeviceByDevice: (device) => { },
