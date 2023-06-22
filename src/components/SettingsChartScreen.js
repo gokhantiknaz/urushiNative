@@ -136,7 +136,7 @@ const SettingsChartScreen = (props) => {
                     mode={"time"}
                     is24Hour={true}
                     onChange={onTimeChange}
-                    style={{width: 320, backgroundColor: "white"}}
+                    style={{width: '100%', backgroundColor: "white"}}
                 />
             )}
         </>
