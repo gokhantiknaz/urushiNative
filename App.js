@@ -54,18 +54,20 @@ export default function App() {
                                  });
 
 
+
     if (!fontsLoaded) {
         return < Loading_Screen/>;
     } else {
         return (
-          <BleContextProvider>
+          // <BleContextProvider>
                 <SheetProvider>
                     <MythContextProvider>
                         <Home/>
                     </MythContextProvider>
                 </SheetProvider>
-          </BleContextProvider>
+          // </BleContextProvider>
         );
+
     }
 
 }

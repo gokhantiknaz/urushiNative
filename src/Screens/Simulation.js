@@ -41,38 +41,8 @@ export const Simulation = (props) => {
     let ctxBle = useContext(BleContext);
 
     useEffect(() => {
-
-
-        if (ctx.aquarium.deviceList.length == 0) {
-            Alert.alert(t("warn"), t("noDevice"));
-            return;
-        }
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
-        let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
-
-        let tmpallpoints = [...allPoints];
-        subModel.Channels.forEach(ch => {
-            const index = tmpallpoints.findIndex(
-                x => ch.Channel === x.Channel
-            );
-
-            if (index === -1) {
-                tmpallpoints.push({Channel: ch.Channel, Point: DUMMY_DATA});
-            }
-        })
-
-        //setPoints(tmpallpoints[0].Point);
-        setAllPoints(tmpallpoints);
-
-        setChannels(subModel.Channels);
         let tmpactions = [];
-        // tmpactions.push({
-        //                     text: "Load",
-        //                     icon: require("../../assets/loadIcon.png"),
-        //                     name: "bt_load",
-        //                     position: 2,
-        //                     id: 98
-        //                 });
         tmpactions.push({
                             text: "Save",
                             icon: require("../../assets/saveIcon.png"),
@@ -88,11 +58,30 @@ export const Simulation = (props) => {
                             position: 20,
                             id: 100
                         });
+        if (model && model.SubModels) {
+            console.log("model", model.SubModels);
+            let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+            let tmpallpoints = [...allPoints];
+            subModel?.Channels.forEach(ch => {
+                const index = tmpallpoints.findIndex(
+                    x => ch.Channel === x.Channel
+                );
 
+                if (index === -1) {
+                    tmpallpoints.push({Channel: ch.Channel, Point: DUMMY_DATA});
+                }
+            })
 
-        subModel.Channels.map(x => {
-            tmpactions.push({text: x.label, icon: require("../../assets/aibot_one.png"), name: x.label, position: 2, id: x.value});
-        });
+            //setPoints(tmpallpoints[0].Point);
+            setAllPoints(tmpallpoints);
+
+            setChannels(subModel.Channels);
+
+            subModel.Channels.map(x => {
+                tmpactions.push({text: x.label, icon: require("../../assets/aibot_one.png"), name: x.label, position: 2, id: x.value});
+            });
+        }
+
         setChannelName("Royal");
         setChannel(1);
         setActions(tmpactions);
@@ -235,7 +224,7 @@ export const Simulation = (props) => {
             await removeItem("autotemplates");
             await saveData("autotemplates", savedTemplates);
         }
-        Alert.alert(t("success"),t("success"));
+        Alert.alert(t("success"), t("success"));
         props.setRefresh(true);
 
     }
@@ -269,7 +258,7 @@ export const Simulation = (props) => {
 
                     if (tmp.id > 90) {
                         if (tmp.id == 99) {
-                           SheetManager.show("savetemplate", {
+                            SheetManager.show("savetemplate", {
                                 payload: {value: t("templatename")},
                             }).then(result => {
                                 console.log(result);

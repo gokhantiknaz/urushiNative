@@ -38,42 +38,43 @@ const NewAquarium = () => {
                 name: name,
                 image: image,
                 imageUri: imageUri,
-                modelId: -1,
-                submodelId: -1,
+                modelId: 1,
+                submodelId: 1,
                 createdDate: new Date()
             };
 
+            if (deviceList.length > 0) {
+                let unique_values = deviceList
+                    .map((item) => item.serviceUUId).filter(
+                        (value, index, current_value) => current_value.indexOf(value) === index
+                    );
 
-            let unique_values = deviceList
-                .map((item) => item.serviceUUId).filter(
-                    (value, index, current_value) => current_value.indexOf(value) === index
-                );
-
-            if (unique_values && unique_values.length > 1) {
-                showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
-                return;
-            }
-
-            let subModels = deviceList
-                .map((item) => item.subModel).filter(
-                    (value, index, current_value) => current_value.indexOf(value) === index
-                );
-            console.log("submodels:", subModels);
-            if (subModels && subModels.length > 1) {
-                showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
-                return;
-            }
-
-            if (unique_values.length > 0 && subModels.length > 0) {
-                let model = findArrayElementById(Models, unique_values[0], "serviceUUId");
-                if (!model) {
+                if (unique_values && unique_values.length > 1) {
+                    showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
                     return;
                 }
-                myAquarium.modelId = model.id;
-                myAquarium.submodelId = subModels[0].subModel;
-            }
 
+                let subModels = deviceList
+                    .map((item) => item.subModel).filter(
+                        (value, index, current_value) => current_value.indexOf(value) === index
+                    );
+
+                if (subModels && subModels.length > 1) {
+                    showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
+                    return;
+                }
+
+                if (unique_values.length > 0 && subModels.length > 0) {
+                    let model = findArrayElementById(Models, unique_values[0], "serviceUUId");
+                    if (!model) {
+                        return;
+                    }
+                    myAquarium.modelId = model.id;
+                    myAquarium.submodelId = subModels[0].subModel;
+                }
+            }
             myAquarium.deviceList = deviceList;
+
 
             getData("aquariumList").then(list => {
                 if (list == null) {

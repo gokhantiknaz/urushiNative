@@ -22,19 +22,17 @@ const SimulationMainScreen = ({navigation}) => {
     const ctx = useContext(MythContext);
     useDebugValue(ctx.aquarium.deviceList);
     useEffect(() => {
-        if(ctx.aquarium.deviceList.length==0)
-        {
-            Alert.alert(t("warn"),t("noDevice"));
-            return;
+        if (ctx.aquarium.deviceList.length == 0) {
+            Alert.alert(t("warn"), t("noDevice"));
         }
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
-        let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
 
-        let tmp = {...lightDetail};
-        tmp.activeChannels = subModel.Channels.length;
-
-        setlightdetail(tmp);
-
+        if (model && model.SubModels) {
+            let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+            let tmp = {...lightDetail};
+            tmp.activeChannels = subModel.Channels.length;
+            setlightdetail(tmp);
+        }
     }, [])
     const MainScreen = () => {
         return <>
