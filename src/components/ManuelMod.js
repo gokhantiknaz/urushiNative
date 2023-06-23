@@ -52,6 +52,7 @@ export const ManuelMod = (props) => {
     }, [ctx.manuelTemplate])
 
     const complete = (value) => {
+        console.log(value);
         let all = [{"channel": 1, "value": value}, {"channel": 2, "value": value}, {"channel": 3, "value": value}, {"channel": 4, "value": value}, {"channel": 5, "value": value}, {"channel": 6, "value": value}];
         setAllProgress(all);
         setAllOnOff(value);
@@ -69,7 +70,7 @@ export const ManuelMod = (props) => {
             await removeItem("manueltemplates");
             await saveData("manueltemplates", savedTemplates);
         }
-        Alert.alert(t("success"),t("success"));
+        Alert.alert(t("success"), t("success"));
         props.setRefresh(true);
     }
 

@@ -125,19 +125,22 @@ const SettingsChartScreen = (props) => {
                         );
                     })}
 
-                    <Text style={{color:'red'}}>{props.channel}</Text>
+                    <Text style={{color: 'red'}}>{props.channel}</Text>
                 </View>
             </GestureHandlerRootView>
 
             {showTimePicker && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={currentDate.date}
-                    mode={"time"}
-                    is24Hour={true}
-                    onChange={onTimeChange}
-                    style={{width: '100%', backgroundColor: "white"}}
-                />
+                <View>
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={currentDate.date}
+                        locale="en_GB"
+                        mode={"time"}
+                        // is24Hour={true}
+                        onChange={onTimeChange}
+                        style={{width: '100%', backgroundColor: "white"}}
+                    />
+                </View>
             )}
         </>
     );

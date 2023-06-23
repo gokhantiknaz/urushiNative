@@ -35,7 +35,7 @@ export const ManuelModTab = () => {
     const [index, setIndex] = React.useState(0);
     const [t] = useTranslation();
     const [routes] = React.useState([
-                                        {key: 'manuelMod', title: 'Manuel Mod'},
+                                        {key: 'manuelMod', title: t('manuel')},
                                         {key: 'template', title: t('favs')},
                                     ]);
 

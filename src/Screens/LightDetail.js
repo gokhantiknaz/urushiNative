@@ -18,29 +18,10 @@ const LightDetail = (props) => {
     const ctx = useContext(MythContext);
     const {navigation} = props;
     const {t, i18n} = useTranslation();
-
-    const deleteAquarium = async () => {
-
-        let allAquariums = await getData("aquariumList");
-        let newArray = (allAquariums.filter(function (t) {
-            return t.name !== ctx.aquarium.name
-        }));
-
-        await removeItem("aquariumList");
-        await saveData("aquariumList", newArray);
-
-        navigation.navigate("home");
-        Alert.alert(t("success"), "Deleted Successfully");
-    }
-
     const clickEventListener = item => {
         if (item.navigate) {
             navigation.navigate(item.navigate);
         }
-
-        // if (item.key === 6) {
-        //     return showConfirmDialog(() => {deleteAquarium()});
-        // }
     }
 
     const renderRow = ({item}) => {
@@ -117,7 +98,6 @@ const LightDetail = (props) => {
         </ImageBackground>
     );
 }
-
 
 const styles = StyleSheet.create({
 

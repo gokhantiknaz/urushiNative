@@ -63,6 +63,7 @@ const LightSettings = (props) => {
         <View style={styles.row}>{children}</View>
     )
     const save = async () => {
+
         getData("aquariumList").then(result => {
             let selected = findArrayElementById(result, ctx.aquarium.name, "name");
             let index = result.findIndex(x => x.id == selected.id);

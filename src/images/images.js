@@ -20,5 +20,7 @@ export default {
     chatbot: require('../../assets/aibot_one.png'),
     transparentIcon: require('../../assets/iconTrans.png'),
     simulation:require('../../assets/simulation.png'),
+    tr:require('../../assets/tr.png'),
+    en:require('../../assets/en.png'),
 
 }

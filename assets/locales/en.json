@@ -9,7 +9,7 @@
     "auto": "Auto",
     "connections": "Connections",
     "imageselect": "Photo",
-    "deviceList":"Device List",
+    "deviceList": "Device List",
     "Success": "Saved Successfully",
     "templatename": "Template Name",
     "delete": "Delete",
@@ -31,7 +31,7 @@
     "undercons": "Soon...",
     "totalintensity": "Total Intensity",
     "alllights": "All Lights",
-    "off":"Off",
+    "off": "Off",
     "on": "On",
     "lunar": "Lunar",
     "activechannel": "Active Channels",
@@ -45,6 +45,12 @@
     "scanning": "Scanning...",
     "scanBluetooth": "Scan Bluetooth Devices",
     "warn": "Warning",
-    "noDevicel": "No recorded device founded. Please save devices from connections section first!"
+    "noDevicel": "No recorded device founded. Please save devices from connections section first!",
+    "deletestorage": "This Will Delete all saved data.(aquariums,templates...)",
+    "deletestoragesummary": "Clear All Saved Data Include Aquarium",
+    "deleteaquariumsummary": "Delete Saved Aquarium",
+    "deleteaquarium": "Delete Aquarium",
+    "clearStorage": "Reset",
+    "chosoLanguage": "Choose Language"
   }
 }

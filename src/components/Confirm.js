@@ -2,11 +2,11 @@ import {Alert} from "react-native";
 import {useTranslation} from "react-i18next";
 
 
-export const showConfirmDialog = (confirm: () => {}) => {
+export const showConfirmDialog = (detailMessage:null, confirm: () => {}) => {
 
     return Alert.alert(
         "Are your sure?",
-        "Are you sure you want to delete?",
+        detailMessage??"Are you sure you want to delete?",
         [
             // The "Yes" button
             {

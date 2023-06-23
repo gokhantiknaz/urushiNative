@@ -45,6 +45,12 @@
     "scanning": "Aranıyor...",
     "scanBluetooth": "Cihazları Ara",
     "warn": "Uyarı",
-    "noDevicel": "Kayıtlı cihaz bulunamadı. Lütfen Bağlantılar bölümünden cihazları seçiniz."
+    "noDevice": "Kayıtlı cihaz bulunamadı. Lütfen Bağlantılar bölümünden cihazları seçiniz.",
+    "deletestorage": "Bu işlem tüm kayıtlı verinizi silecektir.(Kayıtlı Akvaryumlar, templateler)",
+    "deletestoragesummary": "Tüm Kayıtlı Verileri Sil",
+    "deleteaquariumsummary": "Akvaryum Sil",
+    "deleteaquarium": "Akvaryum Sil",
+    "clearStorage": "Sıfırla",
+    "chosoLanguage": "Dil Seçimi"
   }
 }

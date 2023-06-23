@@ -17,7 +17,7 @@ import {Simulation} from "../Screens/Simulation";
 import LightSettings from "../components/LightSettings";
 import LightConnections from "../Screens/LightConnections";
 import SimulationMainScreen from "../Screens/SimulationMainScreen";
-import AquariumSettings from "../components/AquariumSettings";
+import MainSettings from "../components/MainSettings";
 
 
 const Stack = createStackNavigator();
@@ -72,7 +72,7 @@ function AuthScreens() {
                 }
             }}/>
 
-            <Stack.Screen name="aquariumsettings" component={AquariumSettings} options={{
+            <Stack.Screen name="aquariumsettings" component={MainSettings} options={{
                 title: t('aquariumsettings'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
