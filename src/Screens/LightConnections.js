@@ -77,12 +77,9 @@ const LightConnections = (props) => {
     }
 
     const additemtoDeviceList = (peripheral) => {
-
         peripheral.connected = true;
         let newArray = ctx.aquarium.deviceList.slice();
         newArray.push(peripheral);
-        console.log("added new deviceList:", newArray);
-
         let newAq = {...ctx.aquarium};
         newAq.deviceList = newArray;
         ctx.setAquarium(newAq);

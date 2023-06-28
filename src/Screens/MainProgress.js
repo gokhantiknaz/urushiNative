@@ -80,11 +80,10 @@ const MainProgress = (props) => {
         return data;
     }
     const sendData = async (data) => {
-        console.log(data);
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
-                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUId;
+                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
                     ctxBle.sendDatatoDevice(x, data, null, serviceid);
                 }
             });

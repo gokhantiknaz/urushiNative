@@ -86,8 +86,8 @@ const useBlex = () => {
                                         if (device && device.name) {
                                             setDevices((prevState) => {
                                                 if (!isDuplicteDevice(prevState, device)) {
-                                                    // console.log("Device", device.id, device.name);
-                                                    // console.log("uuid:", device.serviceUUIDs);
+                                                     // console.log("Device", device.id, device.name);
+                                                     // console.log("uuid:", device.serviceUUIDs);
                                                     //MYTH IKG MIA111230001
                                                     return [...prevState, device];
                                                 }
