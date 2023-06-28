@@ -51,6 +51,9 @@
     "deleteaquariumsummary": "Delete Saved Aquarium",
     "deleteaquarium": "Delete Aquarium",
     "clearStorage": "Reset",
-    "chosoLanguage": "Choose Language"
+    "chosoLanguage": "Choose Language",
+    "aquariumDetail": "Aquarium Detail",
+    "lights": "Lights"
+
   }
 }

@@ -36,22 +36,22 @@ function AuthScreens() {
                 }
             }}/>
             <Stack.Screen name="manuelModTab" component={ManuelModTab} options={{
-                title: t('ManuelMod'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                title: t('manuel'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium} options={{
-                title: t('NewAquarium'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                title: t('newAquarium'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
             <Stack.Screen name="detail" component={MainMenu} options={{
-                title: t('AquariumDetail'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                title: t('aquariumDetail'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
             <Stack.Screen name="lights" component={LightDetail} options={{
-                title: t('Lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
+                title: t('lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>

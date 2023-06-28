@@ -45,6 +45,7 @@ export const ManuelMod = (props) => {
         }
     }, [allProgress])
 
+
     useEffect(() => {
         if (ctx.manuelTemplate) {
             setAllProgress(ctx.manuelTemplate);
@@ -52,7 +53,6 @@ export const ManuelMod = (props) => {
     }, [ctx.manuelTemplate])
 
     const complete = (value) => {
-        console.log(value);
         let all = [{"channel": 1, "value": value}, {"channel": 2, "value": value}, {"channel": 3, "value": value}, {"channel": 4, "value": value}, {"channel": 5, "value": value}, {"channel": 6, "value": value}];
         setAllProgress(all);
         setAllOnOff(value);
@@ -86,7 +86,16 @@ export const ManuelMod = (props) => {
                         //textStyle={{backgroundColor:'#AA3D0' }}
                         buttonColor='#AA3D01'
                         initial={1}
-                        onPress={value => value == 1 ? setSpeed(100) : setSpeed(0)}
+                        onPress={(value) => {
+                            console.log(value);
+                            if (value == 1) {
+                                complete(100);
+                                setSpeed(100)
+                            } else {
+                                setSpeed(0);
+                                complete(0);
+                            }
+                        }}
                     />
                 </View>
             </View>

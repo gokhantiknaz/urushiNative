@@ -5,6 +5,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
 import bleContext, {BleContext} from "../../store/ble-context";
 import {StatusBar} from "expo-status-bar";
+import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 
 const MainProgress = (props) => {
     const ctx = useContext(MythContext);
@@ -35,6 +36,7 @@ const MainProgress = (props) => {
             props.setAllProgress(newState);
             let data = setByteArrayData(progressObject.channel, progressObject.value);
             setBytes(data);
+
             sendData(data);
         }
     }, [progressObject])
@@ -55,6 +57,7 @@ const MainProgress = (props) => {
 
 
     useEffect(() => {
+
         sendAllProgress();
     }, [props.allOnOff])
     const createEmptyArray = () => {
@@ -77,6 +80,7 @@ const MainProgress = (props) => {
         return data;
     }
     const sendData = async (data) => {
+        console.log(data);
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {

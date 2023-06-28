@@ -51,6 +51,8 @@
     "deleteaquariumsummary": "Akvaryum Sil",
     "deleteaquarium": "Akvaryum Sil",
     "clearStorage": "Sıfırla",
-    "chosoLanguage": "Dil Seçimi"
+    "chosoLanguage": "Dil Seçimi",
+    "aquariumDetail": "Akvaryum Detayı",
+    "lights": "Işıklar"
   }
 }
