@@ -74,7 +74,6 @@ export const Simulation = (props) => {
                     x => ch.Channel === x.Channel
                 );
                 if (index === -1) {
-                    alert(index);
                     tmpallpoints.push({Channel: ch.Channel, Point: DUMMY_DATA});
                 }
             })
