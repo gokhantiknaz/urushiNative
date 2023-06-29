@@ -18,9 +18,9 @@ const SimulationMainScreen = ({navigation}) => {
 
     const [t] = useTranslation();
     const [lightDetail, setlightdetail] = useState({activeChannels: 0, sunRise: "08:00", night: "24:00", activeHours: 0, maxPar: 0, maxLumen: 0});
-
+    const [refresh, setRefresh] = useState(false);
     const ctx = useContext(MythContext);
-    useDebugValue(ctx.aquarium.deviceList);
+
     useEffect(() => {
         if (ctx.aquarium.deviceList.length == 0) {
             Alert.alert(t("warn"), t("noDevice"));
@@ -111,8 +111,10 @@ const SimulationMainScreen = ({navigation}) => {
             </View></>
     }
     const renderScene = SceneMap({
-                                     auto: MainScreen,
-                                     templates: () => <TemplateList mod={'auto'}/>,
+                                     // auto: MainScreen,
+                                     // templates: () => <TemplateList mod={'auto'}/>,
+                                     auto: (props) => <MainScreen {...props} setRefresh={setRefresh}/>,
+                                     templates: (props) => <TemplateList {...props} mod={'auto'} refresh={refresh}/>
                                  });
 
     const layout = useWindowDimensions();

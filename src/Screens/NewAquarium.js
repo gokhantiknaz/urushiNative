@@ -75,7 +75,6 @@ const NewAquarium = () => {
             }
             myAquarium.deviceList = deviceList;
 
-
             getData("aquariumList").then(list => {
                 if (list == null) {
                     let newlist = [];

@@ -72,7 +72,6 @@ const LightConnections = (props) => {
         peripheral.connected = false;
         let newAq = {...ctx.aquarium};
         newAq.deviceList = newArray;
-        console.log("removed new deviceList:", newArray);
         ctx.setAquarium(newAq);
     }
 

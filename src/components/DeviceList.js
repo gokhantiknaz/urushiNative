@@ -48,13 +48,21 @@ const DeviceList = (props) => {
         const index = tmpdeviceList.findIndex(item => data.id === item.id);
         tmpdeviceList[index] = data;
         setBluetoothDevices(tmpdeviceList);
-
-        console.log("selected UUID:", data.serviceUUIDs);
         let serviceId = data.serviceUUIDs[0];
 
-        let selectedAquariums = tmpdeviceList.filter(x => x.isSelect === true).map(a => ({name: a.name, id: a.id, serviceUUId: serviceId, subModel: a.name.slice(-1)}));
+        // let selectedAquariums = tmpdeviceList.filter(x => x.isSelect === true).map(
+        //     a => ({name: a.name, id: a.id, serviceUUId: serviceId, subModel: a.name.slice(-1)}));
 
-        props.setDeviceList(selectedAquariums);
+        let newList = tmpdeviceList.filter(x => x.isSelect === true).map((device, index) => {
+            return {
+                ...device,
+                subModel: device.name.slice(-1),
+                serviceUUId: serviceId
+            };
+        });
+
+        console.log(newList);
+        props.setDeviceList(newList);
     };
     const renderHeader = () => {
         return (<View>
@@ -85,25 +93,6 @@ const DeviceList = (props) => {
     return (<View style={styles.container}>
         <StatusBar hidden={true}></StatusBar>
         <View>
-            {/*{*/}
-            {/*    bluetoothDevices.map((item) => {*/}
-            {/*                             // return (item.name == "IKIGAI" || item.name == "ikigai") &&*/}
-            {/*                             return (1 == 1) &&*/}
-            {/*                                 (*/}
-            {/*                                     <LinearGradient colors={['blue', 'red']} style={styles.card} key={item.id}>*/}
-            {/*                                         <TouchableOpacity style={[styles.list, item.selectedClass]} onPress={() => setSelectedItem(item)}>*/}
-            {/*                                             <View style={{alignItems: 'center'}}>*/}
-            {/*                                                 /!*<Image style={styles.image} source={item.image}/>*!/*/}
-            {/*                                                 <Image source={images.deviceIcon} style={styles.image}></Image>*/}
-            {/*                                                 <Text style={styles.itemText}>{item.name}</Text>*/}
-            {/*                                             </View>*/}
-            {/*                                         </TouchableOpacity>*/}
-            {/*                                     </LinearGradient>*/}
-            {/*                                 );*/}
-            {/*                         }*/}
-            {/*    )*/}
-            {/*}*/}
-
             <FlatList
                 data={bluetoothDevices}
                 keyExtractor={item => item.id}
