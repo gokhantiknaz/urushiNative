@@ -6,6 +6,8 @@ import {MythContext} from "../../store/myth-context";
 import bleContext, {BleContext} from "../../store/ble-context";
 import {StatusBar} from "expo-status-bar";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
+import {findArrayElementById} from "../utils";
+import {Models} from "../../data/Model";
 
 const MainProgress = (props) => {
     const ctx = useContext(MythContext);
@@ -13,11 +15,18 @@ const MainProgress = (props) => {
     const [progressObject, setProgressObject] = useState(null);
     const [allProgress, setAllProgress] = useState([{channel: 1, value: 0}, {channel: 2, value: 0}, {channel: 3, value: 0}, {channel: 4, value: 0}, {channel: 5, value: 0}, {channel: 6, value: 0}]);
     const ctxBle = useContext(BleContext);
+    const [subModel, setSubModel] = useState(null);
 
 
     useEffect(() => {
         let emptyBytes = createEmptyArray();
         setBytes(emptyBytes);
+
+        let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
+        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+
+        console.log(selectedsubModel.Channels);
+        setSubModel(selectedsubModel);
     }, [])
 
     useEffect(() => {
@@ -114,24 +123,15 @@ const MainProgress = (props) => {
         <View style={{flex: 1, padding: 5}}>
             <StatusBar hidden={true}></StatusBar>
             <View style={styles.progressContainer}>
-                <View style={{marginBottom: 1}}>
-                    <ChannelProgress value={getValue(1)} ChannelName='Royal' Channel={1} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
-                </View>
-                <View style={{marginBottom: 1}}>
-                    <ChannelProgress value={getValue(2)} ChannelName='Blue' Channel={2} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
-                </View>
-                <View style={{marginBottom: 1}}>
-                    <ChannelProgress value={getValue(3)} ChannelName='Cyan+' Channel={3} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
-                </View>
-                <View style={{marginBottom: 1}}>
-                    <ChannelProgress value={getValue(4)} ChannelName='Actinic+' Channel={4} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
-                </View>
-                <View style={{marginBottom: 1}}>
-                    <ChannelProgress value={getValue(5)} ChannelName='He White' Channel={5} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
-                </View>
-                <View style={{marginBottom: 1}}>
-                    <ChannelProgress value={getValue(6)} ChannelName='Magenta+' Channel={6} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
-                </View>
+                {subModel &&
+                    subModel.Channels.map(x => {
+                        return (
+                            <View style={{marginBottom: 1}}>
+                                <ChannelProgress value={getValue(x.value)} ChannelName={x.label} Channel={x.Channel} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
+                            </View>
+                        );
+                    })
+                }
             </View>
         </View>
     );

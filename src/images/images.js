@@ -3,8 +3,6 @@ export default {
     background2: require('../../assets/bg.jpg'),
     undercons: require('./under_construction.jpg'),
     delete: require('../../assets/delete.png'),
-    deviceIcon: require('../../assets/icon.png'),
-    mythLight: require('../../assets/icon.png'),
     insta: require('../../assets/instagram.png'),
     checked: require('../../assets/blue-check.png'),
     transparentIcon: require('../../assets/iconTrans.png'),

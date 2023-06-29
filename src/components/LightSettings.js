@@ -7,6 +7,7 @@ import {clearStorage, getAllKeys, getData, removeItem, saveData} from "../../dat
 import ImageSelect from "./ImagePicker";
 import * as ImagePicker from "expo-image-picker";
 import {findArrayElementById} from "../utils";
+import {Models} from "../../data/Model";
 
 const width = Dimensions.get('window').width;
 const LightSettings = (props) => {
@@ -17,6 +18,7 @@ const LightSettings = (props) => {
     const [t] = useTranslation();
     const [image, setImage] = useState(null);
     const [imageUri, setImageUri] = useState('');
+    const [modelName, setModelName] = useState("IKIGAI-STANDART")
 
     const styles = {
         app: {
@@ -50,6 +52,12 @@ const LightSettings = (props) => {
         getData("aquariumList").then(result => {
             let selected = result.filter(a => a.name === ctx.aquarium.name)[0];
             setSelectedAquarium(selected);
+
+            if (selected.deviceList.length > 0) {
+                let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
+                let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+                setModelName(model?.name + '-' + subModel?.Name);
+            }
         });
 
     }, [])
@@ -105,7 +113,7 @@ const LightSettings = (props) => {
                         <TouchableOpacity onPress={pickImage}>
                             {selectedAquarium.image ?
                                 <Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image> :
-                                <Image source={images.deviceIcon} style={{height: 300, width: Dimensions.get('window').width}}></Image>
+                                <Image source={images.newLogo} style={{height: 300, width: Dimensions.get('window').width}}></Image>
                             }
                         </TouchableOpacity>
                     </Col>
@@ -140,6 +148,15 @@ const LightSettings = (props) => {
                         <Text style={styles.text}>{selectedAquarium.deviceList?.length}</Text>
                     </Col>
                 </Row>
+
+                <Row>
+                    <Col numRows={1}>
+                        <Text style={styles.text}>{t('modelName')}</Text>
+                    </Col>
+                    <Col numRows={2}>
+                        <Text style={styles.text}>{modelName}</Text>
+                    </Col>
+                </Row>
                 <Row>
                     <Col numRows={1}>
                         <Text style={styles.text}>{t('shareinsta')}</Text>
@@ -149,9 +166,8 @@ const LightSettings = (props) => {
                     </Col>
 
                 </Row>
-                <Row>
-                    <Col numRows={1}></Col>
-                </Row>
+
+
                 <Row>
                     <Col numRows={1}>
                         <Button title={t("save")} onPress={save}></Button>

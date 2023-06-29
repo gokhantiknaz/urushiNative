@@ -53,6 +53,7 @@
     "clearStorage": "Sıfırla",
     "chosoLanguage": "Dil Seçimi",
     "aquariumDetail": "Akvaryum Detayı",
-    "lights": "Işıklar"
+    "lights": "Işıklar",
+    "modelName": "Modal Adı"
   }
 }

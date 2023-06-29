@@ -61,7 +61,7 @@ const Welcome_screen = ({navigation}) => {
                 {item.item.image ?
                     <Image source={{uri: `data:image/png;base64,${item.item.image}`}} style={{height: 60, width: 60}}></Image>
                     :
-                    <Image source={images.mythLight} style={{height: 60, width: 60}}></Image>
+                    <Image source={images.newLogo} style={{height: 60, width: 60}}></Image>
                 }
 
                 <Text style={{marginTop: 5, fontSize: 12, color: 'white'}}>{item.item.name}</Text>

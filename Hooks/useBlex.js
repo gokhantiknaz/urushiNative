@@ -6,7 +6,7 @@ import base64 from "react-native-base64";
 import * as ExpoDevice from "expo-device";
 
 const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
-const SERVICE_UUID2 = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+const SERVICE_UUID2 = "00002d8d-0000-1000-8000-00805f9b34fb"; // VOO
 const SERVICE_UUID3 = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 const SERVICE_UUID4 = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 

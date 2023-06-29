@@ -14,6 +14,7 @@ import {BleContext} from "../../store/ble-context";
 import {useTranslation} from "react-i18next";
 import {SheetManager} from "react-native-actions-sheet";
 import {useIsMounted} from "../../Hooks/useIsMounted";
+import images from "../images/images";
 
 export const Simulation = (props) => {
 
@@ -80,7 +81,7 @@ export const Simulation = (props) => {
             setAllPoints(tmpallpoints);
             setChannels(subModel.Channels);
             subModel.Channels.map(x => {
-                tmpactions.push({text: x.label, icon: require("../../assets/icon.png"), name: x.label, position: 2, id: x.value});
+                tmpactions.push({text: x.label, icon: images.transparentIcon, name: x.label, position: 2, id: x.value});
             });
         }
 

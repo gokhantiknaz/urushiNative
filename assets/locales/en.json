@@ -53,7 +53,8 @@
     "clearStorage": "Reset",
     "chosoLanguage": "Choose Language",
     "aquariumDetail": "Aquarium Detail",
-    "lights": "Lights"
+    "lights": "Lights",
+    "modelName": "Model"
 
   }
 }
