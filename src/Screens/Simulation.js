@@ -80,7 +80,7 @@ export const Simulation = (props) => {
             setAllPoints(tmpallpoints);
             setChannels(subModel.Channels);
             subModel.Channels.map(x => {
-                tmpactions.push({text: x.label, icon: require("../../assets/aibot_one.png"), name: x.label, position: 2, id: x.value});
+                tmpactions.push({text: x.label, icon: require("../../assets/icon.png"), name: x.label, position: 2, id: x.value});
             });
         }
 
