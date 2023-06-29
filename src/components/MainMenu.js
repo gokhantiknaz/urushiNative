@@ -253,7 +253,7 @@ export default function MainMenu(props) {
                                 preserveAspectRatio="xMidYMid slice"
                             /> :
                             <Image
-                                href={images.deviceIcon}
+                                href={images.newLogo}
                                 width="100%"
                                 height="300"
                                 preserveAspectRatio="xMidYMid slice"

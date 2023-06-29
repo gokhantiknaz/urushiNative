@@ -72,7 +72,7 @@ const LightSettings = (props) => {
 
             removeItem("aquariumList").then(res => {
                 saveData("aquariumList", tempList).then(resX => {
-                    Alert.alert(t('success'), t('success'));
+                    Alert.alert(t('Success'), t('Success'));
                     ctx.setAquarium(selectedAquarium);
                     props.navigation.goBack();
                 });

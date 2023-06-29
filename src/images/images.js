@@ -22,5 +22,7 @@ export default {
     simulation:require('../../assets/simulation.png'),
     tr:require('../../assets/tr.png'),
     en:require('../../assets/en.png'),
+    newLogo:require('../../assets/newLogo.jpg'),
+
 
 }
