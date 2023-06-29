@@ -11,9 +11,9 @@ import {Models} from "../../data/Model";
 import {findArrayElementById, getDateFromHours, minToTime} from "../utils";
 import {Icon} from '@rneui/themed';
 import {BleContext} from "../../store/ble-context";
-import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 import {useTranslation} from "react-i18next";
 import {SheetManager} from "react-native-actions-sheet";
+import {useIsMounted} from "../../Hooks/useIsMounted";
 
 export const Simulation = (props) => {
 
@@ -22,17 +22,17 @@ export const Simulation = (props) => {
     const DUMMY_DATA = [
         // <--- This is the data that is being used to create the draggable dots
         {power: 0, time: 480, color: "lightsalmon"},
-        {power: 50, time: 720, color: "darkorange"},
-        {power: 50, time: 1080, color: "darkturquoise"},
+        {power: 90, time: 720, color: "darkorange"},
+        {power: 90, time: 1080, color: "darkturquoise"},
         {power: 0, time: 1250, color: "chartreuse"}
     ];
 
     const [channels, setChannels] = useState([]);
     const [channelName, setChannelName] = useState([]);
-    const [selectedChannel, setChannel] = useState(1);
+    const [selectedChannel, setChannel] = useState(-1);
     const [points, setPoints] = useState(null);
     const [allPoints, setAllPoints] = useState([]);
-    const [data, setData] = useState({Channel: 1, Point: DUMMY_DATA});
+    const [data, setData] = useState({Channel: -1, Point: null});
     const [actions, setActions] = useState([]);
     const [allProgress, setAllProgress] = useState([{channel: 1, value: 0}, {channel: 2, value: 0}, {channel: 3, value: 0}, {channel: 4, value: 0}, {channel: 5, value: 0}, {channel: 6, value: 0}]);
     const [bytes, setBytes] = useState([]);
@@ -41,6 +41,10 @@ export const Simulation = (props) => {
     let ctxBle = useContext(BleContext);
 
     useEffect(() => {
+        let template = props?.route?.params
+        if (template) {
+            setAllPoints(template.template);
+        }
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let tmpactions = [];
         tmpactions.push({
@@ -59,24 +63,23 @@ export const Simulation = (props) => {
                             id: 100
                         });
         if (model && model.SubModels) {
-            console.log("model", model.SubModels);
+
             let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
             let tmpallpoints = [...allPoints];
+            if (template) {
+                tmpallpoints = template.template;
+            }
             subModel?.Channels.forEach(ch => {
                 const index = tmpallpoints.findIndex(
                     x => ch.Channel === x.Channel
                 );
-
                 if (index === -1) {
+                    alert(index);
                     tmpallpoints.push({Channel: ch.Channel, Point: DUMMY_DATA});
                 }
             })
-
-            //setPoints(tmpallpoints[0].Point);
             setAllPoints(tmpallpoints);
-
             setChannels(subModel.Channels);
-
             subModel.Channels.map(x => {
                 tmpactions.push({text: x.label, icon: require("../../assets/aibot_one.png"), name: x.label, position: 2, id: x.value});
             });
@@ -92,17 +95,14 @@ export const Simulation = (props) => {
 
     useEffect(() => {
         let selectedChannelPoint = allPoints.filter(x => x.Channel == selectedChannel);
-
         if (selectedChannelPoint.length > 0) {
             setData(selectedChannelPoint[0]);
         }
     }, [selectedChannel])
-    const getSimulation = async () => {
-        let simulationlist = await getData("simulation");
-    }
 
     useEffect(() => {
         if (points != null) {
+            console.log("sendindg", points);
             let obj = {Channel: selectedChannel, Point: points};
             sendSimulation(obj);
         }
@@ -189,8 +189,6 @@ export const Simulation = (props) => {
 
     function setActiveChannel(operator) {
         let selected = selectedChannel;
-
-
         if (operator === "next") {
             if (selected >= 6) {
                 selected = 6;
@@ -261,7 +259,7 @@ export const Simulation = (props) => {
                             SheetManager.show("savetemplate", {
                                 payload: {value: t("templatename")},
                             }).then(result => {
-                                console.log(result);
+                                // console.log(result);
                                 if (result && result.length > 0) {
                                     saveTemplate(result);
                                 }

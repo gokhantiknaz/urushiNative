@@ -6,12 +6,14 @@ import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {Icon} from "react-native-elements";
 import {useTranslation} from "react-i18next";
+import {useNavigation} from "@react-navigation/native";
 
 const TemplateList = (props) => {
 
     const [t] = useTranslation();
     const [templateList, setTemplateList] = useState([]);
     const ctx = useContext(MythContext);
+    const navigation = useNavigation();
 
     const getTemplates = async () => {
         let list = await getData("manueltemplates");
@@ -30,9 +32,12 @@ const TemplateList = (props) => {
         }
     }, [props.refresh])
     const loadTemplate = item => {
-        console.log("selecteditem:", item);
         ctx.setTemplate(item.value);
-        props.jumpTo("manuelMod");
+        if (props.mod === "auto") {
+            navigation.navigate("simulationdetail",{template: item.value});
+        } else {
+            props.jumpTo("manuelMod");
+        }
     }
     const deleteTemplate = async (item) => {
         let savedTemplates = await getData(props.mod == "auto" ? "autotemplates" : "manueltemplates");
