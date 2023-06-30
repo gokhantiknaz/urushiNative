@@ -1,0 +1,37 @@
+diff --git a/node_modules/react-native-radial-slider/lib/components/RadialSlider/hooks/useSilderAnimation.js b/node_modules/react-native-radial-slider/lib/components/RadialSlider/hooks/useSilderAnimation.js
+index 5202180..38d9c46 100644
+--- a/node_modules/react-native-radial-slider/lib/components/RadialSlider/hooks/useSilderAnimation.js
++++ b/node_modules/react-native-radial-slider/lib/components/RadialSlider/hooks/useSilderAnimation.js
+@@ -49,11 +49,30 @@ const useSilderAnimation = (props) => {
+         });
+         onChange(prevValue.current);
+     };
+-    const handlePanResponderEnd = () => {
++    const handlePanResponderEnd = (_e, gestureState) => {
+         if (disabled) {
+             return;
+         }
+-        onComplete(value);
++        let { x, y } = startCartesian;
++        x += gestureState.dx;
++        y += gestureState.dy;
++        const radian = cartesianToPolar(x, y, radius, sliderWidth, thumbRadius, thumbBorderWidth);
++        const ratio = (moveStartRadian - radian) / ((Math.PI - radianValue) * 2);
++        const diff = max - min;
++        let nValue;
++        if (step) {
++            nValue = moveStartValue + Math.round((ratio * diff) / step) * step;
++        }
++        else {
++            nValue = moveStartValue + ratio * diff;
++        }
++        nValue = Math.max(min, Math.min(max, nValue));
++        setValue((prevState) => {
++            prevValue.current = Math.round(Math.abs(nValue - prevState) > diff / 4 ? prevState : nValue);
++            return Math.round(Math.abs(nValue - prevState) > diff / 4 ? prevState : nValue);
++        });
++        onChange(prevValue.current);
++        onComplete(prevValue.current);
+     };
+     const panResponder = useRef(PanResponder.create({
+         onStartShouldSetPanResponder: () => true,

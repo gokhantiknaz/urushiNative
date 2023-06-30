@@ -122,8 +122,9 @@ export const Simulation = (props) => {
         let data = [...bytes];
 
         let byteSira = 1;
+
         tmpallpoints.forEach(ch => {
-            data[++byteSira] = (0x01);
+            data[++byteSira] = (byteSira);
             ch.Point.forEach(point => {
                 let power = point.power;
                 let time2 = minToTime(point.time);
