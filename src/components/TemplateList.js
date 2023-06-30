@@ -38,7 +38,6 @@ const TemplateList = (props) => {
             navigation.navigate("simulationdetail", {template: item.value});
         } else {
             props.setSelectedTemplate(item.value);
-
             sendAllProgress(item.value);
             props.jumpTo("manuelMod");
         }
@@ -55,18 +54,19 @@ const TemplateList = (props) => {
         bytes[9] = (0x66);
         return bytes;
     }
-    function sendAllProgress(data) {
+    function sendAllProgress(channelValues) {
 
-        if (data.length > 0) {
+        if (channelValues.length > 0) {
             let data = createEmptyArray();
             data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
-            data.forEach(x => {
+            channelValues.forEach(x => {
                 data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
             });
             sendData(data);
         }
     }
     const sendData = async (data) => {
+        console.log(data);
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
