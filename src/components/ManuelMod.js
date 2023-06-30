@@ -17,7 +17,6 @@ import {Button_1} from "./export";
 export const ManuelMod = (props) => {
 
     const ctx = useContext(MythContext);
-    const [template, setTemplate] = useState(null);
     const [allProgress, setAllProgress] = useState([]);
     const [delay, setDelay] = useState(1);
 
@@ -32,26 +31,12 @@ export const ManuelMod = (props) => {
     const [speed, setSpeed] = useState(0);
     const [allOnOff, setAllOnOff] = useState(0);
 
-    // let all = [{"channel": 1, "value": speed}, {"channel": 2, "value": speed}, {"channel": 3, "value": speed}, {"channel": 4, "value": speed}, {"channel": 5, "value": speed}, {"channel": 6, "value": speed}];
-    // setAllProgress(all);
-    // if (speed === 100 || speed === 0) {
-    //     setAllOnOff(speed);
-    // }
-
     useEffect(() => {
-
-        if (allProgress) {
-            setTemplate(allProgress);
+        if (props.selectedTemplate) {
+            setAllProgress(props.selectedTemplate);
         }
-    }, [allProgress])
+    }, [props.selectedTemplate])
 
-
-    useEffect(() => {
-        if (ctx.manuelTemplate) {
-            console.log(ctx.manuelTemplate);
-            setAllProgress(ctx.manuelTemplate);
-        }
-    }, [ctx.manuelTemplate])
 
     const complete = (value) => {
         let all = [{"channel": 1, "value": value}, {"channel": 2, "value": value}, {"channel": 3, "value": value}, {"channel": 4, "value": value}, {"channel": 5, "value": value}, {"channel": 6, "value": value}];
@@ -62,11 +47,11 @@ export const ManuelMod = (props) => {
         let savedTemplates = await getData("manueltemplates");
         if (savedTemplates == null) {
             let newlist = [];
-            let obj = {name: templateName, value: template};
+            let obj = {name: templateName, value: allProgress};
             newlist.push(obj);
             await saveData("manueltemplates", newlist);
         } else {
-            let obj = {name: templateName, value: template};
+            let obj = {name: templateName, value: allProgress};
             savedTemplates.push(obj);
             await removeItem("manueltemplates");
             await saveData("manueltemplates", savedTemplates);

@@ -7,12 +7,14 @@ import {MythContext} from "../../store/myth-context";
 import {Icon} from "react-native-elements";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
+import {BleContext} from "../../store/ble-context";
 
 const TemplateList = (props) => {
 
     const [t] = useTranslation();
     const [templateList, setTemplateList] = useState([]);
     const ctx = useContext(MythContext);
+    const ctxBle = useContext(BleContext);
     const navigation = useNavigation();
 
     const getTemplates = async () => {
@@ -32,12 +34,48 @@ const TemplateList = (props) => {
         }
     }, [props.refresh])
     const loadTemplate = item => {
-        ctx.setTemplate(item.value);
         if (props.mod === "auto") {
             navigation.navigate("simulationdetail", {template: item.value});
         } else {
+            props.setSelectedTemplate(item.value);
+
+            sendAllProgress(item.value);
             props.jumpTo("manuelMod");
         }
+    }
+    const createEmptyArray = () => {
+        let bytes = [];
+        for (let i = 0; i < 10; i++) {
+            bytes.push(0);
+        }
+        bytes[0] = (0x65);
+        bytes[1] = (0x06);
+
+        bytes[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
+        bytes[9] = (0x66);
+        return bytes;
+    }
+    function sendAllProgress(data) {
+
+        if (data.length > 0) {
+            let data = createEmptyArray();
+            data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
+            data.forEach(x => {
+                data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
+            });
+            sendData(data);
+        }
+    }
+    const sendData = async (data) => {
+        ctxBle.getBleManagerConnectedDevices().then(devices => {
+            devices.forEach(x => {
+                if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
+                    console.log(x.name);
+                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
+                    ctxBle.sendDatatoDevice(x, data, null, serviceid);
+                }
+            });
+        });
     }
     const deleteTemplate = async (item) => {
         let savedTemplates = await getData(props.mod == "auto" ? "autotemplates" : "manueltemplates");

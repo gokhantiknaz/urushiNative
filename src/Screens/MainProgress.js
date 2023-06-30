@@ -45,9 +45,11 @@ const MainProgress = (props) => {
             sendData(data);
         }
     }, [progressObject])
+
     function sendAllProgress() {
         let tmpArray = [...props.allProgress];
-        if (props.allProgress.length > 0) {
+
+        if (tmpArray.length > 0) {
             let data = createEmptyArray();
             data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
             tmpArray.forEach(x => {
@@ -92,17 +94,17 @@ const MainProgress = (props) => {
         });
     }
 
-    useEffect(() => {
-        if (ctx.manuelTemplate) {
-            setAllProgress(ctx.manuelTemplate);
-            props.setAllProgress(ctx.manuelTemplate);
-        }
-    }, [ctx.manuelTemplate])
+    // useEffect(() => {
+    //     if (allProgress) {
+    //         setAllProgress(props.allProgress);
+    //         props.setAllProgress(props.allProgress);
+    //     }
+    // }, [allProgress])
 
     const getValue = (channel) => {
-        let selectedChannel = findArrayElementById(props.allProgress,channel,"channel");
+        let selectedChannel = findArrayElementById(props.allProgress, channel, "channel");
         if (selectedChannel) {
-            return  parseInt(selectedChannel.value);
+            return parseInt(selectedChannel.value);
         }
         return 0;
     }

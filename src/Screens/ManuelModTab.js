@@ -25,11 +25,10 @@ import Loading from "../../loading";
 export const ManuelModTab = () => {
 
     const renderScene = SceneMap({
-                                     manuelMod: (props) => <ManuelMod {...props} setRefresh={setRefresh}/>,
-                                     template: (props) => <TemplateList {...props} mod={'manuel'} refresh={refresh}/>
-
+                                     manuelMod: (props) => <ManuelMod {...props} setRefresh={setRefresh} selectedTemplate={selectedTemplate}/>,
+                                     template: (props) => <TemplateList {...props} mod={'manuel'} refresh={refresh} setSelectedTemplate={setSelectedTemplate}/>
                                  });
-
+    const [selectedTemplate, setSelectedTemplate] = useState(null);
     const [refresh, setRefresh] = useState(false);
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
@@ -43,9 +42,8 @@ export const ManuelModTab = () => {
     const ctx = useContext(MythContext);
 
     useEffect(() => {
-        if(ctx.aquarium.deviceList.length==0)
-        {
-            Alert.alert(t("warn"),t("noDevice"));
+        if (ctx.aquarium.deviceList.length == 0) {
+            Alert.alert(t("warn"), t("noDevice"));
             return;
         }
         searchAndConnect();
@@ -79,13 +77,6 @@ export const ManuelModTab = () => {
     return (
         <View style={{flex: 1}}>
             <StatusBar hidden={true}></StatusBar>
-            {/*<TabView*/}
-            {/*    renderTabBar={props => <TabBar {...props} />}*/}
-            {/*    navigationState={{index, routes}}*/}
-            {/*    renderScene={renderScene}*/}
-            {/*    onIndexChange={setIndex}*/}
-            {/*    initialLayout={{width: layout.width}}*/}
-            {/*/>*/}
             <TabView
                 navigationState={{index, routes}}
                 renderTabBar={renderTabBar}
@@ -93,6 +84,7 @@ export const ManuelModTab = () => {
                 onIndexChange={setIndex}
                 swipeEnabled={false}
                 initialLayout={{width: layout.width}}
+                lazy
             />
         </View>
     );

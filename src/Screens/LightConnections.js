@@ -1,12 +1,13 @@
-import {Text, View, StyleSheet, TouchableOpacity, ImageBackground, StatusBar, ScrollView, Dimensions} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity, ImageBackground, StatusBar, ScrollView, Dimensions, Alert} from "react-native";
 import React, {useContext, useEffect, useState} from "react";
 import {BleContext} from "../../store/ble-context";
 import {Button_1} from "../components/export";
 import {useTranslation} from "react-i18next";
 import images from "../images/images";
 import {MythContext} from "../../store/myth-context";
-import {removeItemFromArray} from "../utils";
+import {findArrayElementById, removeItemFromArray} from "../utils";
 import Loading from "../../loading";
+import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 
 const LightConnections = (props) => {
 
@@ -72,7 +73,7 @@ const LightConnections = (props) => {
         peripheral.connected = false;
         let newAq = {...ctx.aquarium};
         newAq.deviceList = newArray;
-        ctx.setAquarium(newAq);
+        save(newAq);
     }
 
     const additemtoDeviceList = (peripheral) => {
@@ -81,8 +82,23 @@ const LightConnections = (props) => {
         newArray.push(peripheral);
         let newAq = {...ctx.aquarium};
         newAq.deviceList = newArray;
-        ctx.setAquarium(newAq);
+        save(newAq);
+    }
 
+    const save =(newAq)=>{
+        getData("aquariumList").then(result => {
+            let selected = findArrayElementById(result, ctx.aquarium.name, "name");
+            let index = result.findIndex(x => x.id == selected.id);
+            let tempList = [...result];
+            tempList[index] = newAq;
+
+            removeItem("aquariumList").then(res => {
+                saveData("aquariumList", tempList).then(resX => {
+                    Alert.alert(t('Success'), t('Success'));
+                    ctx.setAquarium(newAq);
+                });
+            });
+        });
     }
     const RenderItem = ({peripheral}) => {
         // if (peripheral.name.toUpperCase() !== "myth".toUpperCase()) {
