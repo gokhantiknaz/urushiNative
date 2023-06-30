@@ -222,7 +222,7 @@ export const Simulation = (props) => {
             await removeItem("autotemplates");
             await saveData("autotemplates", savedTemplates);
         }
-        Alert.alert(t("success"), t("success"));
+        Alert.alert(t("Success"), t("Success"));
         props.setRefresh(true);
 
     }

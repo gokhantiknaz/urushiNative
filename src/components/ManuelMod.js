@@ -56,7 +56,7 @@ export const ManuelMod = (props) => {
             await removeItem("manueltemplates");
             await saveData("manueltemplates", savedTemplates);
         }
-        Alert.alert(t("success"), t("success"));
+        Alert.alert(t("Success"), t("Success"));
         props.setRefresh(true);
     }
 
