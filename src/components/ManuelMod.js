@@ -48,6 +48,7 @@ export const ManuelMod = (props) => {
 
     useEffect(() => {
         if (ctx.manuelTemplate) {
+            console.log(ctx.manuelTemplate);
             setAllProgress(ctx.manuelTemplate);
         }
     }, [ctx.manuelTemplate])

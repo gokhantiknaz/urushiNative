@@ -86,8 +86,8 @@ const useBlex = () => {
                                         if (device && device.name) {
                                             setDevices((prevState) => {
                                                 if (!isDuplicteDevice(prevState, device)) {
-                                                     // console.log("Device", device.id, device.name);
-                                                     // console.log("uuid:", device.serviceUUIDs);
+                                                    // console.log("Device", device.id, device.name);
+                                                    // console.log("uuid:", device.serviceUUIDs);
                                                     //MYTH IKG MIA111230001
                                                     return [...prevState, device];
                                                 }
@@ -106,10 +106,20 @@ const useBlex = () => {
         const deviceID = id ? id : _device.id;
         _BleManager.stopDeviceScan();
 
-        _BleManager.connectToDevice(deviceID, {timeout: 60000}).then(async device => {
+        const options = {
+            autoConnect: false,
+            requestMTU: 517,
+            timeout: 60000
+        };
+
+        _BleManager.connectToDevice(deviceID, options).then(async device => {
             return await device.discoverAllServicesAndCharacteristics();
         }).then(device => {
             console.log(`Device connected with ${device.name}`);
+            console.log("Connected device MTU: " + device.mtu);
+            // const tmpMtu = device.requestMTU();
+            // console.log("Connected device MTU 2: ", tmpMtu);
+
             setConnectedDevice(() => device);
             const subscribe = _BleManager.onDeviceDisconnected(device.id, (error, disconnectedDevice) => {
                                                                    console.log("Disconnected", error, disconnectedDevice)
@@ -122,14 +132,14 @@ const useBlex = () => {
             console.log("Connect", err)
         });
     };
-    const sendDatatoDevice = (device, data, id = null,serviceUUID=null) => { //send data to device
+    const sendDatatoDevice = (device, data, id = null, serviceUUID = null) => { //send data to device
         const deviceID = id ? id : device.id
         // device secili akv.a ait değilse disconnect all devam et.
         console.log("data will send to serviceiid:", serviceUUID);
         const dataToSend = base64.encodeFromByteArray(data);
-        _BleManager.writeCharacteristicWithoutResponseForDevice(deviceID,(serviceUUID?? SERVICE_UUID), CHARACTERISTIC_UUID, dataToSend).then(device => {
-                                                                                                                                  console.log("sendDatatoDevice", deviceID, data);
-                                                                                                                              }
+        _BleManager.writeCharacteristicWithoutResponseForDevice(deviceID, (serviceUUID ?? SERVICE_UUID), CHARACTERISTIC_UUID, dataToSend).then(device => {
+                                                                                                                                                   console.log("sendDatatoDevice", deviceID, data);
+                                                                                                                                               }
         ).catch(err => {
                     console.log("sendDatatoDevice Error", err)
                 }

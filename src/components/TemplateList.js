@@ -34,7 +34,7 @@ const TemplateList = (props) => {
     const loadTemplate = item => {
         ctx.setTemplate(item.value);
         if (props.mod === "auto") {
-            navigation.navigate("simulationdetail",{template: item.value});
+            navigation.navigate("simulationdetail", {template: item.value});
         } else {
             props.jumpTo("manuelMod");
         }
@@ -49,7 +49,7 @@ const TemplateList = (props) => {
         await saveData(props.mod == "auto" ? "autotemplates" : "manueltemplates", newArray);
 
         setTemplateList(newArray);
-        Alert.alert(t("success"),"Başarıyla Silindi");
+        Alert.alert(t("Success"), t("Success"));
     }
 
     return (
@@ -65,12 +65,12 @@ const TemplateList = (props) => {
                     renderItem={({item}) => {
                         return (
                             <View style={{flexDirection: 'row', flex: 1}}>
-                                <View style={styles.cardContent}>
-                                    <TouchableOpacity onPress={() => loadTemplate(item)}>
+                                <TouchableOpacity onPress={() => loadTemplate(item)} style={styles.cardContent}>
+                                    <View>
                                         {/*<Image style={styles.image} source={item.image}/>*/}
                                         <Text style={styles.name}>{item.name}</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                    </View>
+                                </TouchableOpacity>
                                 <View style={styles.delete}>
                                     <TouchableOpacity onPress={() => {deleteTemplate(item)}}>
                                         <Icon name='delete' color='red'/>

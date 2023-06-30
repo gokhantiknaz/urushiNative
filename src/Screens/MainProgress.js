@@ -17,15 +17,11 @@ const MainProgress = (props) => {
     const ctxBle = useContext(BleContext);
     const [subModel, setSubModel] = useState(null);
 
-
     useEffect(() => {
         let emptyBytes = createEmptyArray();
         setBytes(emptyBytes);
-
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
-
-        console.log(selectedsubModel.Channels);
         setSubModel(selectedsubModel);
     }, [])
 
@@ -49,7 +45,6 @@ const MainProgress = (props) => {
             sendData(data);
         }
     }, [progressObject])
-
     function sendAllProgress() {
         let tmpArray = [...props.allProgress];
         if (props.allProgress.length > 0) {
@@ -57,13 +52,10 @@ const MainProgress = (props) => {
             data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
             tmpArray.forEach(x => {
                 data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
-                getValue(x.channel, false);
             });
-
             sendData(data);
         }
     }
-
 
     useEffect(() => {
 
@@ -104,19 +96,15 @@ const MainProgress = (props) => {
         if (ctx.manuelTemplate) {
             setAllProgress(ctx.manuelTemplate);
             props.setAllProgress(ctx.manuelTemplate);
-
         }
     }, [ctx.manuelTemplate])
 
     const getValue = (channel) => {
-        let val = 0;
-        let filtered = props.allProgress?.filter(x => {
-            return x.channel === channel;
-        })
-        if (filtered?.length > 0) {
-            val = filtered[0].value;
+        let selectedChannel = findArrayElementById(props.allProgress,channel,"channel");
+        if (selectedChannel) {
+            return  parseInt(selectedChannel.value);
         }
-        return val;
+        return 0;
     }
 
     return (
@@ -126,7 +114,7 @@ const MainProgress = (props) => {
                 {subModel &&
                     subModel.Channels.map(x => {
                         return (
-                            <View style={{marginBottom: 1}}>
+                            <View style={{marginBottom: 1}} key={x.value}>
                                 <ChannelProgress value={getValue(x.value)} ChannelName={x.label} Channel={x.Channel} setValue={(e) => {setProgressObject(e)}}></ChannelProgress>
                             </View>
                         );
