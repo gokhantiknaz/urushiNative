@@ -66,7 +66,6 @@ const TemplateList = (props) => {
         }
     }
     const sendData = async (data) => {
-        console.log(data);
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
