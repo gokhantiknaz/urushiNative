@@ -136,6 +136,7 @@ export const Simulation = (props) => {
             });
         });
 
+
         setBytes(data);
         sendData(data);
     }
@@ -169,13 +170,15 @@ export const Simulation = (props) => {
     }
     const createEmptyArray = () => {
         let bytes = [];
-
+        let now = new Date();
         for (let i = 0; i < 83; i++) {
             bytes.push(0);
         }
         bytes[0] = (0x65);
         bytes[1] = (0x01);
 
+        bytes[80] = now.getHours();
+        bytes[81] = now.getMinutes();
         // 1.Kanal 2
         // 2.Kanal 15
         // 3.Kanal 28
