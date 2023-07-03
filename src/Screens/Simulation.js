@@ -19,7 +19,8 @@ import images from "../images/images";
 export const Simulation = (props) => {
 
     const ctx = useContext(MythContext);
-
+    const [t] = useTranslation();
+    const ctxBle = useContext(BleContext);
     const DUMMY_DATA = [
         // <--- This is the data that is being used to create the draggable dots
         {power: 0, time: 480, color: "lightsalmon"},
@@ -35,9 +36,6 @@ export const Simulation = (props) => {
     const [data, setData] = useState({Channel: -1, Point: null});
     const [actions, setActions] = useState([]);
     const [bytes, setBytes] = useState([]);
-
-    const [t] = useTranslation();
-    let ctxBle = useContext(BleContext);
 
     useEffect(() => {
         let template = props?.route?.params

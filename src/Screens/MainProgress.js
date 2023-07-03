@@ -50,7 +50,7 @@ const MainProgress = (props) => {
         let tmpArray = [...props.allProgress];
 
         if (tmpArray.length > 0) {
-            let data = createEmptyArray();
+            let data = createEmptyArrayManuel();
             data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
             tmpArray.forEach(x => {
                 data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
@@ -63,8 +63,6 @@ const MainProgress = (props) => {
 
         sendAllProgress();
     }, [props.allOnOff])
-
-
     const setByteArrayData = (channel, value) => {
         let data = bytes.slice();
         data[channel + 2] = value; //0.1.2 kanallar dolu oldugundan...
@@ -82,14 +80,6 @@ const MainProgress = (props) => {
             });
         });
     }
-
-    // useEffect(() => {
-    //     if (allProgress) {
-    //         setAllProgress(props.allProgress);
-    //         props.setAllProgress(props.allProgress);
-    //     }
-    // }, [allProgress])
-
     const getValue = (channel) => {
         let selectedChannel = findArrayElementById(props.allProgress, channel, "channel");
         if (selectedChannel) {

@@ -35,7 +35,9 @@ export function getDateFromHours(time) {
 export const createEmptyArrayManuel = (channel, value, delayTime) => {
     let bytes = [];
     for (let i = 0; i < 10; i++) {
-        bytes.push(-1);
+        if (i > 2 && i < 9) {
+            bytes.push(-1);
+        }
     }
     bytes[0] = (0x65);
     bytes[1] = (0x06);
