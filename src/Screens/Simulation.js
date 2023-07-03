@@ -44,11 +44,19 @@ export const Simulation = (props) => {
         }
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let tmpactions = [];
+
+        tmpactions.push({
+                            text: "Send",
+                            icon: require("../../assets/blue-check.png"),
+                            name: "bt_send",
+                            position: 1,
+                            id: 98
+                        });
         tmpactions.push({
                             text: "Save",
                             icon: require("../../assets/saveIcon.png"),
                             name: "bt_save",
-                            position: 1,
+                            position: 2,
                             id: 99
                         });
 
@@ -77,7 +85,7 @@ export const Simulation = (props) => {
             setAllPoints(tmpallpoints);
 
             subModel.Channels.map(x => {
-                tmpactions.push({text: x.label, icon: images.transparentIcon, name: x.label, position: 2, id: x.value});
+                tmpactions.push({text: x.label, icon: images.transparentIcon, name: x.label, position: 3, id: x.value});
             });
         }
 
@@ -116,6 +124,7 @@ export const Simulation = (props) => {
             });
         });
     }
+
     function calculateSimulation(point) {
         let startTime = parseInt(point.Point[0].time);
         let max1Time = parseInt(point.Point[1].time);
@@ -154,22 +163,24 @@ export const Simulation = (props) => {
     }
     const sendSimulation = (obj) => {
         let tmpallpoints = [...allPoints];
-
-        const index = tmpallpoints.findIndex(
-            x => obj.Channel === x.Channel
-        );
-        if (index === -1) {
-            tmpallpoints.push(obj);
-        } else {
-            tmpallpoints[index] = obj;
+        if(obj)
+        {
+            const index = tmpallpoints.findIndex(
+                x => obj.Channel === x.Channel
+            );
+            if (index === -1) {
+                tmpallpoints.push(obj);
+            } else {
+                tmpallpoints[index] = obj;
+            }
+            setAllPoints(tmpallpoints);
         }
-        setAllPoints(tmpallpoints);
+
         let data = [...bytes];
 
         let byteSira = 1;
 
         tmpallpoints.forEach(ch => {
-
             data[++byteSira] = (ch.Channel);
             ch.Point.forEach(point => {
                 let power = point.power;
@@ -223,6 +234,7 @@ export const Simulation = (props) => {
         setBytes(bytes);
         return bytes;
     }
+
     function setActiveChannel(operator) {
         let selected = selectedChannel;
         if (operator === "next") {
@@ -244,6 +256,7 @@ export const Simulation = (props) => {
             setChannel(selected);
         }
     }
+
     const saveTemplate = async (templateName) => {
         let savedTemplates = await getData("autotemplates");
         if (savedTemplates == null) {
@@ -302,6 +315,10 @@ export const Simulation = (props) => {
                         } else {
                             if (tmp.id == 100) {
                                 props.navigation.goBack();
+                            }
+                            if (tmp.id == 98) {
+                                //let obj = {Channel: selectedChannel, Point: points};
+                                sendSimulation(null);
                             }
                         }
                     }
