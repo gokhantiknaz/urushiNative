@@ -8,7 +8,7 @@ import {FloatingAction} from "react-native-floating-action";
 import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
-import {findArrayElementById, getDateFromHours, minToTime} from "../utils";
+import {createEmptyArrayManuel, findArrayElementById, getDateFromHours, minToTime, sendData} from "../utils";
 import {Icon} from '@rneui/themed';
 import {BleContext} from "../../store/ble-context";
 import {useTranslation} from "react-i18next";
@@ -28,14 +28,12 @@ export const Simulation = (props) => {
         {power: 0, time: 1250, color: "chartreuse"}
     ];
 
-    const [channels, setChannels] = useState([]);
     const [channelName, setChannelName] = useState([]);
     const [selectedChannel, setChannel] = useState(-1);
     const [points, setPoints] = useState(null);
     const [allPoints, setAllPoints] = useState([]);
     const [data, setData] = useState({Channel: -1, Point: null});
     const [actions, setActions] = useState([]);
-    const [allProgress, setAllProgress] = useState([{channel: 1, value: 0}, {channel: 2, value: 0}, {channel: 3, value: 0}, {channel: 4, value: 0}, {channel: 5, value: 0}, {channel: 6, value: 0}]);
     const [bytes, setBytes] = useState([]);
 
     const [t] = useTranslation();
@@ -79,7 +77,7 @@ export const Simulation = (props) => {
                 }
             })
             setAllPoints(tmpallpoints);
-            setChannels(subModel.Channels);
+
             subModel.Channels.map(x => {
                 tmpactions.push({text: x.label, icon: images.transparentIcon, name: x.label, position: 2, id: x.value});
             });
@@ -102,11 +100,60 @@ export const Simulation = (props) => {
 
     useEffect(() => {
         if (points != null) {
-            console.log("sendindg", points);
             let obj = {Channel: selectedChannel, Point: points};
-            sendSimulation(obj);
+            //sendSimulation(obj);
+            let powerWillBeSent = calculateSimulation(obj);
+            let dataWillSent = createEmptyArrayManuel(obj.Channel, powerWillBeSent, 10);
+            sendData(dataWillSent);
+            console.log(dataWillSent);
         }
     }, [points])
+    const sendData = async (data) => {
+        ctxBle.getBleManagerConnectedDevices().then(devices => {
+            devices.forEach(x => {
+                if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
+                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
+                    ctxBle.sendDatatoDevice(x, data, null, serviceid);
+                }
+            });
+        });
+    }
+    function calculateSimulation(point) {
+        let startTime = parseInt(point.Point[0].time);
+        let max1Time = parseInt(point.Point[1].time);
+        let max2Time = parseInt(point.Point[2].time);
+        let endTime = parseInt(point.Point[3].time);
+        let now = new Date().getHours() * 60 + new Date().getMinutes();
+        let selectedPoint = findArrayElementById(point.Point, true, "selected");
+        let power = 0;
+
+        if (now <= max1Time) {
+            let dkArtis = 1 * points[1].power / (max1Time - startTime);
+            power = dkArtis * (now - startTime);
+            console.log("1.aralık", power);
+        } else {
+            if (now > max2Time && now < endTime) {
+                let dkArtis = 1 * points[2].power / (endTime - max2Time);
+                power = dkArtis * (endTime - now);
+                console.log("3.aralık:", power);
+            } else {
+                if (max1Time < now && now < max2Time) {
+                    let dkArtis = (points[2].power - points[1].power) / (max2Time - max1Time);
+                    power = points[1].power + (now - max1Time) * dkArtis;
+                    console.log("2.aralık:", power);
+                }
+            }
+        }
+        if (now >= endTime) {
+            power = 1;
+        }
+
+        if (now <= startTime) {
+            power = 1;
+        }
+
+        return power;
+    }
     const sendSimulation = (obj) => {
         let tmpallpoints = [...allPoints];
 
@@ -136,11 +183,9 @@ export const Simulation = (props) => {
             });
         });
 
-
         setBytes(data);
         sendData(data);
     }
-
     const searchAndConnect = async () => {
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             ctx.aquarium.deviceList.forEach(x => {
@@ -157,28 +202,15 @@ export const Simulation = (props) => {
             })
         }
     }
-
-    const sendData = async (data) => {
-        ctxBle.getBleManagerConnectedDevices().then(devices => {
-            devices.forEach(x => {
-                if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
-                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
-                    ctxBle.sendDatatoDevice(x, data, null, serviceid);
-                }
-            });
-        });
-    }
     const createEmptyArray = () => {
         let bytes = [];
         let now = new Date();
-        for (let i = 0; i < 83; i++) {
+        for (let i = 0; i < 111; i++) {
             bytes.push(0);
         }
         bytes[0] = (0x65);
         bytes[1] = (0x01);
 
-        bytes[80] = now.getHours();
-        bytes[81] = now.getMinutes();
         // 1.Kanal 2
         // 2.Kanal 15
         // 3.Kanal 28
@@ -186,12 +218,13 @@ export const Simulation = (props) => {
         // 5.Kanal 54
         // 6.Kanal 67
 
-
-        bytes[82] = (0x66);
+        bytes[107] = now.getHours();
+        bytes[108] = now.getMinutes();
+        bytes[109] = (0x0); // lunar Mod Off/On
+        bytes[110] = (0x66);
         setBytes(bytes);
         return bytes;
     }
-
     function setActiveChannel(operator) {
         let selected = selectedChannel;
         if (operator === "next") {
@@ -213,7 +246,6 @@ export const Simulation = (props) => {
             setChannel(selected);
         }
     }
-
     const saveTemplate = async (templateName) => {
         let savedTemplates = await getData("autotemplates");
         if (savedTemplates == null) {

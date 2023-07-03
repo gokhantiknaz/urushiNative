@@ -12,7 +12,7 @@ const interpolateValue2Pos = (power = 0, time = 0) => {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });
-        const interpolateY = interpolate(time, [0, 1440], [50, height - 50], {
+        const interpolateY = interpolate(time, [0, 1439], [50, height - 50], {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });

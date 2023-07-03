@@ -17,6 +17,7 @@ const useBlex = () => {
     const _BleManager = useMemo(() => new BleManager(), []);
     const [devices, setDevices] = useState([]);
     const [connectedDevice, setConnectedDevice] = useState(null);
+    const [receviedData, setReceviedData] = useState({device: null, data: null});
 
     const ModelIdArray = [SERVICE_UUID, SERVICE_UUID2, SERVICE_UUID3, SERVICE_UUID4];
 
@@ -108,7 +109,7 @@ const useBlex = () => {
 
         const options = {
             autoConnect: false,
-            requestMTU: 517,
+            requestMTU: 128,
             timeout: 60000
         };
 
@@ -145,6 +146,26 @@ const useBlex = () => {
                 }
         );
     }
+
+    //read notificaitons from device
+    const readNotifications =async (device, id = null) => {
+        if (!device) return;
+        const deviceID = id ? id : device.id
+        _BleManager.monitorCharacteristicForDevice(deviceID, SERVICE_UUID, CHARACTERISTIC_UUID, (error, characteristic) => {
+            if (error) {
+                console.log("readNotifications Error", error)
+            }
+            if (characteristic) {
+                console.log("readNotifications",characteristic.deviceID,base64.decode(characteristic.value))
+                setReceviedData({
+                                    device:characteristic.deviceID,
+                                    data:base64.decode(characteristic.value)})
+
+                // getBleManagerConnectedDevices();
+                return characteristic
+            }
+        })
+    }
     const getBleManagerConnectedDevices = async () => { //get connected devices
         try {
             const connectedDevices = await _BleManager.connectedDevices(ModelIdArray);
@@ -172,7 +193,8 @@ const useBlex = () => {
             sendDatatoDevice,
             getBleManagerConnectedDevices,
             stopScan,
-            disconnectDeviceByDevice
+            disconnectDeviceByDevice,
+            receviedData
         }
     )
 }

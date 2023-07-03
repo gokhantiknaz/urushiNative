@@ -1,4 +1,7 @@
-export function findArrayElementById(array, id,findBy) {
+import {useContext} from "react";
+import {BleContext} from "../store/ble-context";
+
+export function findArrayElementById(array, id, findBy) {
     return array.find((element) => {
         return element[findBy] === id;
     })
@@ -12,7 +15,7 @@ export function removeItemFromArray(array, item, searchBy) {
 };
 
 
-export function  minToTime (minute) {
+export function minToTime(minute) {
     //convert minutes to time
     const hours = Math.floor(minute / 60)
         .toString()
@@ -28,3 +31,22 @@ export function getDateFromHours(time) {
     let now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...time);
 }
+
+export const createEmptyArrayManuel = (channel, value, delayTime) => {
+    let bytes = [];
+    for (let i = 0; i < 10; i++) {
+        bytes.push(-1);
+    }
+    bytes[0] = (0x65);
+    bytes[1] = (0x06);
+    if (channel && value) {
+        bytes[channel + 2] = value;
+    }
+    // kac dk acık kalacagını dk cinsinden
+    if (delayTime) {
+        bytes[2] = delayTime;
+    }
+    bytes[9] = (0x66);
+    return bytes;
+}
+

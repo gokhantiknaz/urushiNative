@@ -33,7 +33,7 @@ const DraggableDot = (props) => {
     const pointValues = useSharedValue({x: 50, y: 50}); //current point position
     const pointOffset = useSharedValue({x: 0, y: 0}); //offset of point from center of dot
     const [pointRealValues, setPointRealValues] = useState({time: 0, power: 0}); //current point real values
-    const pointLimits = useSharedValue({min: 0, max: 1440});
+    const pointLimits = useSharedValue({min: 1, max: 1439});
     useEffect(() => {
         const pos = interpolateValue2Pos(point.power, point.time);
         pointValues.value = {
@@ -50,11 +50,11 @@ const DraggableDot = (props) => {
             return;
         } //if limits is undefined return
         //set limits
-        const interpolateMin = interpolate(limits.min, [0, 1440], [50, height - 50], {
+        const interpolateMin = interpolate(limits.min, [1, 1439], [50, height - 50], {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         }); //convert min to position
-        const interpolateMax = interpolate(limits.max, [0, 1440], [50, height - 50], {
+        const interpolateMax = interpolate(limits.max, [1, 1439], [50, height - 50], {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         }); //convert max to position
@@ -72,7 +72,7 @@ const DraggableDot = (props) => {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });
-        const interpolateY = interpolate(y, [0, 1440], [50, height - 50], {
+        const interpolateY = interpolate(y, [0, 1439], [50, height - 50], {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });
@@ -85,7 +85,7 @@ const DraggableDot = (props) => {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });
-        const interpolateY = interpolate(y, [50, height - 50], [0, 1440], {
+        const interpolateY = interpolate(y, [50, height - 50], [0, 1439], {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });

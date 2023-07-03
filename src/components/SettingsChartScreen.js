@@ -28,7 +28,7 @@ function getDateFromHours(time) {
 const SettingsChartScreen = (props) => {
     const [chartLayout, setChartLayout] = useState({width: 0, height: 0, x: 0, y: 0});
     const [points, setPoints] = useState({values: []});
-    const [limits, setLimits] = useState([{min: 0, max: 1440}]);
+    const [limits, setLimits] = useState([{min: 1, max: 1439}]);
     const [showTimePicker, setShowTimePicker] = useState(false);
     const [currentDate, setCurrentDate] = useState({date: new Date(), index: -1});
 
@@ -52,7 +52,7 @@ const SettingsChartScreen = (props) => {
         }
         const newlimits = points.values.map((point, index) => {
             const min = points.values[index - 1] ? points.values[index - 1].time + 60 : 0;
-            const max = points.values[index + 1] ? points.values[index + 1].time - 60 : 1440;
+            const max = points.values[index + 1] ? points.values[index + 1].time - 60 : 1439;
             return {min, max};
         });
         setLimits((prev) => [...newlimits]);
@@ -61,8 +61,14 @@ const SettingsChartScreen = (props) => {
     const pointsUpdateCallBack = (pointData, index) => {
         //update point data
         const {power, time} = pointData;
-        const newPoints = points.values;
-        newPoints[index] = {...points.values[index], power: power, time: time};
+        // const newPoints = points.values;
+
+        const newPoints = points.values.map((e) => {
+            e.selected = false;
+            return e;
+        });
+
+        newPoints[index] = {...points.values[index], power: power, time: time,selected:true};
         setPoints((prev) => ({...prev, values: [...newPoints]}));
 
         props.setPoints([...newPoints]);
@@ -78,7 +84,7 @@ const SettingsChartScreen = (props) => {
         const minute = selectedDate.getMinutes();
         const newTimeValue = hour * 60 + minute;
         const pointIndex = currentDate.index;
-        if (newTimeValue < 0 || newTimeValue > 1440) {
+        if (newTimeValue < 0 || newTimeValue > 1439) {
             return;
         }
         if (newTimeValue < limits[pointIndex].min || newTimeValue > limits[pointIndex].max) {

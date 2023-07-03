@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/iconTrans.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.gokhantiknaz.MythLights",
@@ -33,7 +33,7 @@
       ]
     },
     "web": {
-      "favicon": "./assets/icon.png"
+      "favicon": "./assets/iconTrans.png"
     },
     "extra": {
       "eas": {

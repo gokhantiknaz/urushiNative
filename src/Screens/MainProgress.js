@@ -6,7 +6,7 @@ import {MythContext} from "../../store/myth-context";
 import bleContext, {BleContext} from "../../store/ble-context";
 import {StatusBar} from "expo-status-bar";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
-import {findArrayElementById} from "../utils";
+import {createEmptyArrayManuel, findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 
 const MainProgress = (props) => {
@@ -18,7 +18,7 @@ const MainProgress = (props) => {
     const [subModel, setSubModel] = useState(null);
 
     useEffect(() => {
-        let emptyBytes = createEmptyArray();
+        let emptyBytes = createEmptyArrayManuel();
         setBytes(emptyBytes);
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
@@ -63,18 +63,7 @@ const MainProgress = (props) => {
 
         sendAllProgress();
     }, [props.allOnOff])
-    const createEmptyArray = () => {
-        let bytes = [];
-        for (let i = 0; i < 10; i++) {
-            bytes.push(0);
-        }
-        bytes[0] = (0x65);
-        bytes[1] = (0x06);
 
-        bytes[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
-        bytes[9] = (0x66);
-        return bytes;
-    }
 
     const setByteArrayData = (channel, value) => {
         let data = bytes.slice();
