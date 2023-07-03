@@ -7,13 +7,11 @@ export function findArrayElementById(array, id, findBy) {
     })
 }
 
-
 export function removeItemFromArray(array, item, searchBy) {
     return array.filter(function (x) {
         return x[searchBy] !== item[searchBy]
     })
 };
-
 
 export function minToTime(minute) {
     //convert minutes to time
