@@ -107,6 +107,17 @@ export const Simulation = (props) => {
     useEffect(() => {
         if (points != null) {
             let obj = {Channel: selectedChannel, Point: points};
+            let tmpallpoints = [...allPoints];
+            const index = tmpallpoints.findIndex(
+                x => obj.Channel === x.Channel
+            );
+            if (index === -1) {
+                tmpallpoints.push(obj);
+            } else {
+                tmpallpoints[index] = obj;
+            }
+            setAllPoints(tmpallpoints);
+
             //sendSimulation(obj);
             let powerWillBeSent = calculateSimulation(obj);
             let dataWillSent = createEmptyArrayManuel(obj.Channel, powerWillBeSent, 10);
@@ -159,25 +170,11 @@ export const Simulation = (props) => {
             power = 1;
         }
 
-        return power;
+        return Math.round(power);
     }
-    const sendSimulation = (obj) => {
+    const sendSimulation = () => {
         let tmpallpoints = [...allPoints];
-        if(obj)
-        {
-            const index = tmpallpoints.findIndex(
-                x => obj.Channel === x.Channel
-            );
-            if (index === -1) {
-                tmpallpoints.push(obj);
-            } else {
-                tmpallpoints[index] = obj;
-            }
-            setAllPoints(tmpallpoints);
-        }
-
         let data = [...bytes];
-
         let byteSira = 1;
 
         tmpallpoints.forEach(ch => {
@@ -186,13 +183,14 @@ export const Simulation = (props) => {
                 let power = point.power;
                 let time2 = minToTime(point.time);
                 let date = getDateFromHours(time2);
-                data[++byteSira] = power; // güç
+                data[++byteSira] = Math.round(power); // güç
                 data[++byteSira] = date.getHours(); // gün dogum hour
                 data[++byteSira] = date.getMinutes(); // gün dogum min
             });
         });
 
         setBytes(data);
+        console.log(data);
         sendData(data);
     }
     const searchAndConnect = async () => {
@@ -234,7 +232,6 @@ export const Simulation = (props) => {
         setBytes(bytes);
         return bytes;
     }
-
     function setActiveChannel(operator) {
         let selected = selectedChannel;
         if (operator === "next") {
@@ -256,7 +253,6 @@ export const Simulation = (props) => {
             setChannel(selected);
         }
     }
-
     const saveTemplate = async (templateName) => {
         let savedTemplates = await getData("autotemplates");
         if (savedTemplates == null) {
@@ -318,7 +314,7 @@ export const Simulation = (props) => {
                             }
                             if (tmp.id == 98) {
                                 //let obj = {Channel: selectedChannel, Point: points};
-                                sendSimulation(null);
+                                sendSimulation();
                             }
                         }
                     }
