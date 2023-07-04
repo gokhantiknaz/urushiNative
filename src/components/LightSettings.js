@@ -36,6 +36,9 @@ const LightSettings = (props) => {
         "2col": {
             flex: 3
         },
+        "3col": {
+            flex: 4
+        },
         "text": {
             color: "white",
             marginTop: 10,
@@ -157,17 +160,48 @@ const LightSettings = (props) => {
                         <Text style={styles.text}>{modelName}</Text>
                     </Col>
                 </Row>
+                {/*<Row>*/}
+                {/*    <Col numRows={1}>*/}
+                {/*        <Text style={styles.text}>{t('shareinsta')}</Text>*/}
+                {/*    </Col>*/}
+                {/*    <Col numRows={2}>*/}
+                {/*        <Image source={images.insta} style={{height: 50, width: 50}}/>*/}
+                {/*    </Col>*/}
+
+                {/*</Row>*/}
+
                 <Row>
                     <Col numRows={1}>
-                        <Text style={styles.text}>{t('shareinsta')}</Text>
+                        <Text style={[styles.text, {alignSelf: "center"}]}></Text>
                     </Col>
-                    <Col numRows={2}>
-                        <Image source={images.insta} style={{height: 50, width: 50}}/>
-                    </Col>
-
                 </Row>
 
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{flex: 1, height: 1, backgroundColor: 'white'}}/>
+                    <View>
+                        <Text style={{width: 170, textAlign: 'center', color: 'white'}}>{t("devicenumber")}</Text>
+                    </View>
+                    <View style={{flex: 1, height: 1, backgroundColor: 'white'}}/>
+                </View>
+                <Row>
+                    <Col numRows={3}>
+                        <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
+                        <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0001A"}</Text>
+                        <Text style={styles.text}>{"Sıcaklık:54"}</Text>
+                    </Col>
 
+                    <Col numRows={3}>
+                        <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
+                        <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0002A"}</Text>
+                        <Text style={styles.text}>{"Sıcaklık:43"}</Text>
+                    </Col>
+
+                    <Col numRows={3}>
+                        <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
+                        <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0003A"}</Text>
+                        <Text style={styles.text}>{"Sıcaklık:63"}</Text>
+                    </Col>
+                </Row>
                 <Row>
                     <Col numRows={1}>
                         <Button title={t("save")} onPress={save}></Button>
