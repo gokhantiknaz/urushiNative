@@ -27,40 +27,16 @@ const ChannelProgress = (props) => {
                 <Text style={styles.text}>
                     {props.ChannelName}: {value} %
                 </Text>
-                {/*<Slider style={styles.slide}*/}
-                {/*        value={value}*/}
-                {/*        minimumValue={0}*/}
-                {/*        maximumValue={100}*/}
-                {/*        thumbImage={images.sliderIcon}*/}
-                {/*        step={1}*/}
-                {/*        minimumTrackTintColor={colors.test2}*/}
-                {/*        maximumTrackTintColor="white"*/}
-                {/*        onValueChange={setValue}*/}
-                {/*        onSlidingStart={value => {*/}
-                {/*            setSlideStartingValue(value);*/}
-                {/*        }}*/}
-                {/*        onSlidingComplete={e => {*/}
-                {/*            setReturnObj({channel: props.Channel, value: e});*/}
-                {/*            setSlideCompletionValue(value);*/}
-                {/*        }}*/}
-                {/*/>*/}
 
                 <MotionSlider
                     min={0}
                     max={100}
-                    height={50}
-                    width={250}
-                    // valueBackgroundColor={'rgb(188,182,174)'}
-                    // valueColor='white'
                     value={value}
-                    // decimalPlaces={1}
-                    borderRadius={10}
+                    borderRadius={5}
                     units={'%'}
-
                     backgroundColor={['rgb(253,192,41)', 'rgb(223,135,29)', 'rgb(170,61,1)']}
                     onValueChanged={(x) => setValue(x)}
                     onPressOut={() => setReturnObj({channel: props.Channel, value: value})}
-                    // onDrag={() => console.log('Dragging')}
                 />
             </View>
         </View>
