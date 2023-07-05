@@ -144,7 +144,7 @@ const LightSettings = (props) => {
                         <Text style={styles.text}>{t("aquariumname")} :</Text>
                     </View>
                     <View style={styles["3col"]}>
-                        <TextInput style={{color: 'white', backgroundColor: 'grey'}}
+                        <TextInput style={{color: 'white', backgroundColor: 'grey',marginLeft:10}}
                                    value={selectedAquarium.name}
                                    onChangeText={(e) => {
                                        let tmp = {...selectedAquarium};
@@ -171,10 +171,10 @@ const LightSettings = (props) => {
                 {/*</Row>*/}
 
                 <Row>
-                    <Col numRows={1}>
+                    <Col numRows={2}>
                         <Text style={styles.text}>{t('modelName')}</Text>
                     </Col>
-                    <Col numRows={2}>
+                    <Col numRows={3}>
                         <Text style={styles.text}>{modelName}</Text>
                     </Col>
                 </Row>
@@ -205,20 +205,20 @@ const LightSettings = (props) => {
                     <Row>
                         <Col numRows={3}>
                             <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
-                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0001A"}</Text>
-                            <Text style={styles.text}>{"Sıcaklık:54"}</Text>
+                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"Device Name"}</Text>
+                            <Text style={styles.text}>{"Sıcaklık:--"}</Text>
                         </Col>
 
                         <Col numRows={3}>
                             <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
-                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0002A"}</Text>
-                            <Text style={styles.text}>{"Sıcaklık:43"}</Text>
+                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"Device Name"}</Text>
+                            <Text style={styles.text}>{"Sıcaklık:--"}</Text>
                         </Col>
 
                         <Col numRows={3}>
                             <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
-                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0003A"}</Text>
-                            <Text style={styles.text}>{"Sıcaklık:63"}</Text>
+                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"Device Name"}</Text>
+                            <Text style={styles.text}>{"Sıcaklık:--"}</Text>
                         </Col>
                     </Row>
                 </ScrollView>
