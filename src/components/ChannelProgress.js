@@ -32,6 +32,8 @@ const ChannelProgress = (props) => {
                     min={0}
                     max={100}
                     value={value}
+                    height={50}
+                    width={250}
                     borderRadius={5}
                     units={'%'}
                     backgroundColor={['rgb(253,192,41)', 'rgb(223,135,29)', 'rgb(170,61,1)']}

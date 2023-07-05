@@ -9,6 +9,7 @@ import {useContext, useEffect, useState} from "react";
 import {BleContext} from "../../store/ble-context";
 import {MythContext} from "../../store/myth-context";
 import Loading from "../../loading";
+import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 
 
 // const renderScene = ({route}) => {
@@ -61,6 +62,7 @@ export const ManuelModTab = () => {
                             console.log("I:", x.name + " connected");
                         });
                     }
+                    showMessage(x.name +" device Connected","load")
                 })
             })
         }
