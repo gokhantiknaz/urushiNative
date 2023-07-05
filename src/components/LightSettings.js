@@ -1,4 +1,4 @@
-import {Dimensions, Image, ImageBackground, StatusBar, View, StyleSheet, Text, TextInput, Button, Pressable, TouchableOpacity, Alert} from "react-native";
+import {Dimensions, Image, ImageBackground, StatusBar, View, StyleSheet, Text, TextInput, Button, Pressable, TouchableOpacity, Alert, ScrollView} from "react-native";
 import images from "../images/images";
 import React, {useContext, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
@@ -9,6 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 import {BleContext} from "../../store/ble-context";
+import {Button_1} from "./export";
 
 const width = Dimensions.get('window').width;
 const LightSettings = (props) => {
@@ -21,8 +22,6 @@ const LightSettings = (props) => {
     const [image, setImage] = useState(null);
     const [imageUri, setImageUri] = useState('');
     const [modelName, setModelName] = useState("IKIGAI-STANDART")
-
-
 
     const styles = {
         app: {
@@ -71,7 +70,7 @@ const LightSettings = (props) => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
                     let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
-                    let temperatureData= [101,5,102]
+                    let temperatureData = [101, 5, 102]
                     bleCtx.sendDatatoDevice(x, temperatureData, null, serviceid);
                 }
             });
@@ -79,9 +78,9 @@ const LightSettings = (props) => {
 
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(bleCtx.receviedData);
-    },[bleCtx.receviedData])
+    }, [bleCtx.receviedData])
     const Col = ({numRows, children}) => {
         return (
             <View style={styles[`${numRows}col`]}>{children}</View>
@@ -139,11 +138,12 @@ const LightSettings = (props) => {
                         </TouchableOpacity>
                     </Col>
                 </Row>
+
                 <View style={{flexDirection: "row", marginTop: 10}}>
-                    <View style={styles["1col"]}>
+                    <View style={styles["2col"]}>
                         <Text style={styles.text}>{t("aquariumname")} :</Text>
                     </View>
-                    <View style={styles["2col"]}>
+                    <View style={styles["3col"]}>
                         <TextInput style={{color: 'white', backgroundColor: 'grey'}}
                                    value={selectedAquarium.name}
                                    onChangeText={(e) => {
@@ -161,14 +161,14 @@ const LightSettings = (props) => {
                         <Text style={styles.text}>{new Date(selectedAquarium.createdDate).toLocaleDateString() ?? ''}</Text>
                     </Col>
                 </Row>
-                <Row>
-                    <Col numRows={2}>
-                        <Text style={styles.text}>{t("devicenumber")}</Text>
-                    </Col>
-                    <Col numRows={3}>
-                        <Text style={styles.text}>{selectedAquarium.deviceList?.length}</Text>
-                    </Col>
-                </Row>
+                {/*<Row>*/}
+                {/*    <Col numRows={2}>*/}
+                {/*        <Text style={styles.text}>{t("devicenumber")}</Text>*/}
+                {/*    </Col>*/}
+                {/*    <Col numRows={3}>*/}
+                {/*        <Text style={styles.text}>{selectedAquarium.deviceList?.length}</Text>*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
 
                 <Row>
                     <Col numRows={1}>
@@ -201,28 +201,38 @@ const LightSettings = (props) => {
                     </View>
                     <View style={{flex: 1, height: 1, backgroundColor: 'white'}}/>
                 </View>
-                <Row>
-                    <Col numRows={3}>
-                        <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
-                        <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0001A"}</Text>
-                        <Text style={styles.text}>{"Sıcaklık:54"}</Text>
-                    </Col>
+                <ScrollView>
+                    <Row>
+                        <Col numRows={3}>
+                            <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
+                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0001A"}</Text>
+                            <Text style={styles.text}>{"Sıcaklık:54"}</Text>
+                        </Col>
 
-                    <Col numRows={3}>
-                        <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
-                        <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0002A"}</Text>
-                        <Text style={styles.text}>{"Sıcaklık:43"}</Text>
-                    </Col>
+                        <Col numRows={3}>
+                            <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
+                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0002A"}</Text>
+                            <Text style={styles.text}>{"Sıcaklık:43"}</Text>
+                        </Col>
 
-                    <Col numRows={3}>
-                        <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
-                        <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0003A"}</Text>
-                        <Text style={styles.text}>{"Sıcaklık:63"}</Text>
-                    </Col>
-                </Row>
+                        <Col numRows={3}>
+                            <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>
+                            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"MYTHLIGHT-IKIGAI 0003A"}</Text>
+                            <Text style={styles.text}>{"Sıcaklık:63"}</Text>
+                        </Col>
+                    </Row>
+                </ScrollView>
                 <Row>
                     <Col numRows={1}>
-                        <Button title={t("save")} onPress={save}></Button>
+                        <View style={{
+                            width: width,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            bottom: "5%"
+                        }}>
+                            <Button_1 title={t("save")} onPress={save}></Button_1>
+                        </View>
+
                     </Col>
                 </Row>
             </View>
