@@ -27,7 +27,7 @@ export const ManuelMod = (props) => {
     ]
     const [t] = useTranslation();
     const options = [
-        {label: t("on"), value: "1"}, {label: t("off"), value: "0"}
+        {label: t("on"), value: "1"}, {label: t("off"), value: "0"},{label:"Stop",value: "2"}
     ];
 
     const [speed, setSpeed] = useState(0);
@@ -67,7 +67,7 @@ export const ManuelMod = (props) => {
                 <View style={{flex: 2, marginTop: 5}}>
                     <Text style={{color: 'white', marginLeft: 20}}>{t("alllights")}</Text>
                 </View>
-                <View style={{flex: 3, marginRight: 20}}>
+                <View style={{flex: 3, marginRight: 30}}>
                     <SwitchSelector
                         options={options}
                         //textStyle={{backgroundColor:'#AA3D0' }}
