@@ -116,7 +116,7 @@ export const ManuelMod = (props) => {
 
             </View>
 
-            <View style={{flex: 2, alignItems: 'center', marginTop: 70}}>
+            <View style={{flex: 2, alignItems: 'center', marginTop: 10}}>
                 <RadioForm formHorizontal={true} animation={true}>
                     {delays.map((obj, i) => (<RadioButton labelHorizontal={true} key={obj.value}>
                         {/*  You can set RadioButtonLabel before RadioButtonInput */}
@@ -145,7 +145,7 @@ export const ManuelMod = (props) => {
             </View>
 
             <View style={{flex: 4}}>
-                <ScrollView style={{marginTop: -40}}>
+                <ScrollView style={{marginTop: -70}}>
                     <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
                 </ScrollView>
 
