@@ -8,17 +8,21 @@ import ImageSelect from "./ImagePicker";
 import * as ImagePicker from "expo-image-picker";
 import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
+import {BleContext} from "../../store/ble-context";
 
 const width = Dimensions.get('window').width;
 const LightSettings = (props) => {
 
     const ctx = useContext(MythContext);
+    const bleCtx = useContext(BleContext);
     const [name, setName] = useState("");
     const [selectedAquarium, setSelectedAquarium] = useState({});
     const [t] = useTranslation();
     const [image, setImage] = useState(null);
     const [imageUri, setImageUri] = useState('');
     const [modelName, setModelName] = useState("IKIGAI-STANDART")
+
+
 
     const styles = {
         app: {
@@ -63,7 +67,21 @@ const LightSettings = (props) => {
             }
         });
 
+        bleCtx.getBleManagerConnectedDevices().then(devices => {
+            devices.forEach(x => {
+                if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
+                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
+                    let temperatureData= [101,5,102]
+                    bleCtx.sendDatatoDevice(x, temperatureData, null, serviceid);
+                }
+            });
+        });
+
     }, [])
+
+    useEffect(()=>{
+        console.log(bleCtx.receviedData);
+    },[bleCtx.receviedData])
     const Col = ({numRows, children}) => {
         return (
             <View style={styles[`${numRows}col`]}>{children}</View>

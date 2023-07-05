@@ -15,6 +15,7 @@ import {useTranslation} from "react-i18next";
 import {SheetManager} from "react-native-actions-sheet";
 import {useIsMounted} from "../../Hooks/useIsMounted";
 import images from "../images/images";
+import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 
 export const Simulation = (props) => {
 
@@ -36,12 +37,18 @@ export const Simulation = (props) => {
     const [data, setData] = useState({Channel: -1, Point: null});
     const [actions, setActions] = useState([]);
     const [bytes, setBytes] = useState([]);
+    const [issimulationSent, setIsSimulationSent] = useState(false);
+
+    const [manuelBytes, setManuelBytes] = useState([]);
 
     useEffect(() => {
         let template = props?.route?.params
         if (template) {
             setAllPoints(template.template);
         }
+
+        setManuelBytes(createEmptyArrayManuel(true, null, null, 10));
+
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let tmpactions = [];
 
@@ -95,6 +102,10 @@ export const Simulation = (props) => {
         createEmptyArray();
 
         searchAndConnect();
+
+        return () => {
+
+        }
     }, [])
 
     useEffect(() => {
@@ -117,15 +128,22 @@ export const Simulation = (props) => {
                 tmpallpoints[index] = obj;
             }
             setAllPoints(tmpallpoints);
-
             //sendSimulation(obj);
             let powerWillBeSent = calculateSimulation(obj);
-            let dataWillSent = createEmptyArrayManuel(obj.Channel, powerWillBeSent, 10);
+
+            // console.log("manuel:", manuelBytes);
+            //
+            // let newByteArray = [...manuelBytes];
+            // newByteArray[obj.Channel + 3] = powerWillBeSent;
+            // setManuelBytes(newByteArray);
+            // console.log("new manuel:", newByteArray);
+
+            let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 10);
             sendData(dataWillSent);
-            console.log(dataWillSent);
         }
     }, [points])
     const sendData = async (data) => {
+
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
@@ -172,6 +190,7 @@ export const Simulation = (props) => {
 
         return Math.round(power);
     }
+
     const sendSimulation = () => {
         let tmpallpoints = [...allPoints];
         let data = [...bytes];
@@ -188,9 +207,9 @@ export const Simulation = (props) => {
                 data[++byteSira] = date.getMinutes(); // gün dogum min
             });
         });
-
         setBytes(data);
-        console.log(data);
+        console.log("all Simulation:", data);
+        setIsSimulationSent(true);
         sendData(data);
     }
     const searchAndConnect = async () => {
@@ -227,11 +246,12 @@ export const Simulation = (props) => {
 
         bytes[107] = now.getHours();
         bytes[108] = now.getMinutes();
-        bytes[109] = (0x0); // lunar Mod Off/On
+        bytes[109] = (0x00); // lunar Mod Off/On
         bytes[110] = (0x66);
         setBytes(bytes);
         return bytes;
     }
+
     function setActiveChannel(operator) {
         let selected = selectedChannel;
         if (operator === "next") {
@@ -253,6 +273,7 @@ export const Simulation = (props) => {
             setChannel(selected);
         }
     }
+
     const saveTemplate = async (templateName) => {
         let savedTemplates = await getData("autotemplates");
         if (savedTemplates == null) {
@@ -321,7 +342,6 @@ export const Simulation = (props) => {
                 }}
             />
         </View>
-
     );
 }
 

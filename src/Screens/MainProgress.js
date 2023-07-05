@@ -18,7 +18,7 @@ const MainProgress = (props) => {
     const [subModel, setSubModel] = useState(null);
 
     useEffect(() => {
-        let emptyBytes = createEmptyArrayManuel();
+        let emptyBytes = createEmptyArrayManuel(false);
         setBytes(emptyBytes);
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
@@ -30,7 +30,6 @@ const MainProgress = (props) => {
             if (!allProgress) {
                 return;
             }
-
             const newState = allProgress.map(obj => {
                 if (obj.channel === progressObject.channel) {
                     return {...obj, value: progressObject.value};
@@ -41,7 +40,6 @@ const MainProgress = (props) => {
             props.setAllProgress(newState);
             let data = setByteArrayData(progressObject.channel, progressObject.value);
             setBytes(data);
-
             sendData(data);
         }
     }, [progressObject])
@@ -50,7 +48,7 @@ const MainProgress = (props) => {
         let tmpArray = [...props.allProgress];
 
         if (tmpArray.length > 0) {
-            let data = createEmptyArrayManuel();
+            let data = createEmptyArrayManuel(false);
             data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
             tmpArray.forEach(x => {
                 data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
@@ -65,15 +63,15 @@ const MainProgress = (props) => {
     }, [props.allOnOff])
     const setByteArrayData = (channel, value) => {
         let data = bytes.slice();
-        data[channel + 2] = value; //0.1.2 kanallar dolu oldugundan...
+        data[channel + 2] = parseInt(value); //0.1.2 kanallar dolu oldugundan...
         data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
         return data;
     }
     const sendData = async (data) => {
+
         ctxBle.getBleManagerConnectedDevices().then(devices => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
-                    console.log(x.name);
                     let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
                     ctxBle.sendDatatoDevice(x, data, null, serviceid);
                 }
