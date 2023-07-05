@@ -280,16 +280,15 @@ export const Simulation = (props) => {
             let newlist = [];
             let obj = {name: templateName, value: allPoints};
             newlist.push(obj);
-            await saveData("autotemplates", newlist);
+            saveData("autotemplates", newlist);
         } else {
             let obj = {name: templateName, value: allPoints};
             savedTemplates.push(obj);
-            await removeItem("autotemplates");
-            await saveData("autotemplates", savedTemplates);
+            removeItem("autotemplates").then(result => {
+                saveData("autotemplates", savedTemplates);
+            });
         }
         Alert.alert(t("Success"), t("Success"));
-        props.setRefresh(true);
-
     }
 
     return (
