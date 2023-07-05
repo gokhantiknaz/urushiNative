@@ -13,6 +13,8 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-
 import {SheetManager} from "react-native-actions-sheet";
 import {MythContext} from "../../store/myth-context";
 import {Button_1} from "./export";
+import {CountDown} from "./CountDown";
+
 
 export const ManuelMod = (props) => {
 
@@ -36,7 +38,6 @@ export const ManuelMod = (props) => {
             setAllProgress(props.selectedTemplate);
         }
     }, [props.selectedTemplate])
-
 
     const complete = (value) => {
         let all = [{"channel": 1, "value": value}, {"channel": 2, "value": value}, {"channel": 3, "value": value}, {"channel": 4, "value": value}, {"channel": 5, "value": value}, {"channel": 6, "value": value}];
@@ -84,8 +85,12 @@ export const ManuelMod = (props) => {
                         }}
                     />
                 </View>
-            </View>
 
+                <View style={{alignContent:"space-between"}}>
+                    <CountDown delayTime={delay}></CountDown>
+                </View>
+
+            </View>
             <View style={{flex: 4, alignItems: 'center'}}>
                 {/*https://www.npmjs.com/package/react-native-radial-slider2*/}
                 {/*https://github.com/SimformSolutionsPvtLtd/react-native-radial-slider*/}
@@ -108,6 +113,7 @@ export const ManuelMod = (props) => {
                               ]}
                               onChange={setSpeed}
                 />
+
             </View>
 
             <View style={{flex: 2, alignItems: 'center', marginTop: 70}}>
@@ -165,3 +171,4 @@ export const ManuelMod = (props) => {
         </View>
     </ImageBackground>);
 }
+
