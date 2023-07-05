@@ -224,6 +224,7 @@ export const Simulation = (props) => {
                             console.log("I:", x.name + " connected");
                         });
                     }
+                    showMessage(x.name +" device Connected","load")
                 })
             })
         }
