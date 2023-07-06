@@ -33,12 +33,12 @@ export function getDateFromHours(time) {
 export const createEmptyArrayManuel = (isSimulation, delayTime) => {
     let bytes = [];
     for (let i = 0; i < 11; i++) {
-        // if (isSimulation) {
-        //     bytes.push("255");
-        // } else {
-        //     bytes.push(0);
-        // }
-        bytes.push(0);
+        if (isSimulation) {
+            bytes.push("255");
+        } else {
+            bytes.push(0);
+        }
+        //bytes.push(0);
     }
 
     bytes[0] = (0x65);
