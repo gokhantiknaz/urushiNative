@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/iconTrans.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gokhantiknaz.MythLights",
+      "package": "com.gokhantiknaz.MythLightsTest",
       "permissions": [
         "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_ADMIN",
