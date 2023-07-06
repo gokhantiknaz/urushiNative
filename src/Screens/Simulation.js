@@ -41,10 +41,17 @@ export const Simulation = (props) => {
 
     const [manuelBytes, setManuelBytes] = useState([]);
 
+    const [isRealTime, setIsRealTime] = useState(false);
+
     useEffect(() => {
-        let template = props?.route?.params
-        if (template) {
-            setAllPoints(template.template);
+
+        let params = props?.route?.params
+        if (params.template) {
+            setAllPoints(params.template);
+        }
+
+        if (params.isRealTime) {
+            setIsRealTime(params.isRealTime);
         }
 
         setManuelBytes(createEmptyArrayManuel(true, null, null, 10));
@@ -78,8 +85,8 @@ export const Simulation = (props) => {
 
             let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
             let tmpallpoints = [...allPoints];
-            if (template) {
-                tmpallpoints = template.template;
+            if (params.template) {
+                tmpallpoints = params.template;
             }
             subModel?.Channels.forEach(ch => {
                 const index = tmpallpoints.findIndex(
@@ -129,7 +136,13 @@ export const Simulation = (props) => {
             }
             setAllPoints(tmpallpoints);
             //sendSimulation(obj);
-            let powerWillBeSent = calculateSimulation(obj);
+
+
+            let selectedPoint = findArrayElementById(obj.Point, true, "selected");
+            let powerWillBeSent = Math.round(selectedPoint.power);
+            if (isRealTime) {
+                powerWillBeSent = calculateSimulation(obj);
+            }
 
             // console.log("manuel:", manuelBytes);
             //
@@ -224,7 +237,7 @@ export const Simulation = (props) => {
                             console.log("I:", x.name + " connected");
                         });
                     }
-                    showMessage(x.name +" device Connected","load")
+                    showMessage(x.name + " device Connected", "load")
                 })
             })
         }

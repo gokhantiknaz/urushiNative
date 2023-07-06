@@ -30,11 +30,12 @@ export function getDateFromHours(time) {
     return new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...time);
 }
 
-export const createEmptyArrayManuel = (isSimulaton, channel, value, delayTime) => {
+export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) => {
     let bytes = [];
     for (let i = 0; i < 11; i++) {
-        if (isSimulaton) {
-            bytes.push("255");
+        if (isSimulation) {
+            //bytes.push("255");
+            bytes.push(0);
         } else {
             bytes.push(0);
         }

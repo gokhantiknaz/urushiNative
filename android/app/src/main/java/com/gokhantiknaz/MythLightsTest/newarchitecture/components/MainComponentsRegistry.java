@@ -1,4 +1,4 @@
-package com.gokhantiknaz.MythLights.newarchitecture.components;
+package com.gokhantiknaz.MythLightsTest.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

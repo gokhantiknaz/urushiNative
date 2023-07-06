@@ -10,6 +10,7 @@ import {useContext, useDebugValue, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
 import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
+import {CheckBox} from '@rneui/themed';
 
 
 const SimulationMainScreen = ({navigation}) => {
@@ -18,6 +19,8 @@ const SimulationMainScreen = ({navigation}) => {
     const [lightDetail, setlightdetail] = useState({activeChannels: 0, sunRise: "08:00", night: "24:00", activeHours: 0, maxPar: 0, maxLumen: 0});
     const [refresh, setRefresh] = useState(false);
     const ctx = useContext(MythContext);
+    const [isRealTime, setIsRealTime] = useState(false);
+    const toggleCheckbox = () => setIsRealTime(!isRealTime);
 
     useEffect(() => {
         if (ctx.aquarium.deviceList.length == 0) {
@@ -49,7 +52,11 @@ const SimulationMainScreen = ({navigation}) => {
                         />
                     </View>
                 </View>
-                <TouchableOpacity style={{flex: 2}} onPress={() => {navigation.navigate("simulationdetail")}}>
+                <TouchableOpacity style={{flex: 2}} onPress={() => {
+                    navigation.navigate("simulationdetail", {
+                        isRealTime: isRealTime
+                    })
+                }}>
                     <Image style={{flex: 2, height: '100%', width: '100%', resizeMode: 'contain'}} source={images.simulation}/>
                 </TouchableOpacity>
 
@@ -105,13 +112,34 @@ const SimulationMainScreen = ({navigation}) => {
                             <Text style={{color: "white"}}>{lightDetail.maxLumen}</Text>
                         </View>
                     </View>
+
+                    <View style={styles.row}>
+                        {/*<View style={{flex: 2}}>*/}
+                        {/*    <Text style={{color: "white"}}>Real Time Data</Text>*/}
+                        {/*</View>*/}
+
+                        <CheckBox
+                            size={18}
+                            containerStyle={{width: "50%", backgroundColor: "black"}}
+                            textStyle={{color: "white"}}
+                            title="Real Time Simulation"
+                            checked={isRealTime}
+                            onPress={toggleCheckbox}
+                            // Use ThemeProvider to make change for all checkbox
+                            iconType="material-community"
+                            checkedIcon="checkbox-marked"
+                            uncheckedIcon="checkbox-blank-outline"
+                            checkedColor="orange"
+                        />
+
+                    </View>
                 </View>
             </View></>
     }
     const renderScene = SceneMap({
                                      // auto: MainScreen,
                                      // templates: () => <TemplateList mod={'auto'}/>,
-                                     auto: (props) => <MainScreen {...props} setRefresh={setRefresh}/>,
+                                     auto: (props) => <MainScreen {...props} setRefresh={setRefresh} isRealTime={isRealTime}/>,
                                      templates: (props) => <TemplateList {...props} mod={'auto'} refresh={refresh}/>
                                  });
 

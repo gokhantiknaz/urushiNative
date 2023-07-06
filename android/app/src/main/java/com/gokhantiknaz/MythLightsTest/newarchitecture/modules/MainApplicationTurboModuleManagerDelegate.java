@@ -1,4 +1,4 @@
-package com.gokhantiknaz.MythLights.newarchitecture.modules;
+package com.gokhantiknaz.MythLightsTest.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

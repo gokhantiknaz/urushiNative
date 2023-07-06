@@ -1,4 +1,4 @@
-package com.gokhantiknaz.MythLights;
+package com.gokhantiknaz.MythLightsTest;
 
 import android.os.Build;
 import android.os.Bundle;
