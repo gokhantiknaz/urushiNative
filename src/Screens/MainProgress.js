@@ -5,7 +5,6 @@ import React, {useContext, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
 import bleContext, {BleContext} from "../../store/ble-context";
 import {StatusBar} from "expo-status-bar";
-import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 import {createEmptyArrayManuel, findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 

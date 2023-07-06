@@ -54,7 +54,7 @@ export const Simulation = (props) => {
             setIsRealTime(params.isRealTime);
         }
 
-        setManuelBytes(createEmptyArrayManuel(true, null, null, 10));
+        setManuelBytes(createEmptyArrayManuel(true, 10));
 
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let tmpactions = [];
@@ -135,8 +135,6 @@ export const Simulation = (props) => {
                 tmpallpoints[index] = obj;
             }
             setAllPoints(tmpallpoints);
-            //sendSimulation(obj);
-
 
             let selectedPoint = findArrayElementById(obj.Point, true, "selected");
             let powerWillBeSent = Math.round(selectedPoint.power);
@@ -144,8 +142,12 @@ export const Simulation = (props) => {
                 powerWillBeSent = calculateSimulation(obj);
             }
 
+            console.log("fist:", manuelBytes)
             let newByteArray = [...manuelBytes];
-            newByteArray[obj.Channel + 3] = powerWillBeSent;
+
+            console.log(obj.Channel);
+            newByteArray[obj.Channel + 2] = powerWillBeSent;
+            console.log("then:", newByteArray)
             setManuelBytes(newByteArray);
             sendData(newByteArray);
 

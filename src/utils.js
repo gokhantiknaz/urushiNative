@@ -30,24 +30,20 @@ export function getDateFromHours(time) {
     return new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...time);
 }
 
-export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) => {
+export const createEmptyArrayManuel = (isSimulation, delayTime) => {
     let bytes = [];
     for (let i = 0; i < 11; i++) {
-        if (isSimulation) {
-            //bytes.push("255");
-            bytes.push(0);
-        } else {
-            bytes.push(0);
-        }
-        //bytes.push(0);
+        // if (isSimulation) {
+        //     bytes.push("255");
+        // } else {
+        //     bytes.push(0);
+        // }
+        bytes.push(0);
     }
 
     bytes[0] = (0x65);
     bytes[1] = (0x06);
 
-    if (channel && value) {
-        bytes[channel + 3] = value;
-    }
     // kac dk acık kalacagını dk cinsinden
     if (delayTime) {
         bytes[2] = delayTime;
