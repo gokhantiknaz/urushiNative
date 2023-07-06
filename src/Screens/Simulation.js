@@ -144,15 +144,14 @@ export const Simulation = (props) => {
                 powerWillBeSent = calculateSimulation(obj);
             }
 
-            // console.log("manuel:", manuelBytes);
-            //
-            // let newByteArray = [...manuelBytes];
-            // newByteArray[obj.Channel + 3] = powerWillBeSent;
-            // setManuelBytes(newByteArray);
-            // console.log("new manuel:", newByteArray);
+            let newByteArray = [...manuelBytes];
+            newByteArray[obj.Channel + 3] = powerWillBeSent;
+            setManuelBytes(newByteArray);
+            sendData(newByteArray);
 
-            let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 10);
-            sendData(dataWillSent);
+            // ali 255 i yaptıktan sonra bunu kullanacağız.
+            // let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 10);
+            // sendData(dataWillSent);
         }
     }, [points])
     const sendData = async (data) => {
