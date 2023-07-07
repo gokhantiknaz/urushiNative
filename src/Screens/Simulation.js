@@ -246,24 +246,28 @@ export const Simulation = (props) => {
     const createEmptyArray = () => {
         let bytes = [];
         let now = new Date();
-        for (let i = 0; i < 111; i++) {
+        for (let i = 0; i < 110; i++) {
             bytes.push(0);
         }
         bytes[0] = (0x65);
         bytes[1] = (0x01);
 
-        // 1.Kanal 2
-        // 2.Kanal 15
-        // 3.Kanal 28
-        // 4.Kanal 41
-        // 5.Kanal 54
-        // 6.Kanal 67
+        // 1.Kanal byte[2]]
+        // 2.Kanal byte[15]
+        // 3.Kanal byte[28]
+        // 4.Kanal byte[41]
+        // 5.Kanal byte[54]
+        // 6.Kanal byte[67]
+        // 7.kanal byte[80]
+        // 8.kanal byte[93]
+        // 8.kanal end byte[106]
 
         bytes[107] = now.getHours();
         bytes[108] = now.getMinutes();
         bytes[109] = (0x00); // lunar Mod Off/On
         bytes[110] = (0x66);
         setBytes(bytes);
+
         return bytes;
     }
 
