@@ -86,9 +86,9 @@ export const ManuelMod = (props) => {
                     />
                 </View>
 
-                <View style={{alignContent:"space-between"}}>
-                    <CountDown delayTime={delay}></CountDown>
-                </View>
+                {/*<View style={{alignContent:"space-between"}}>*/}
+                {/*    <CountDown delayTime={delay}></CountDown>*/}
+                {/*</View>*/}
 
             </View>
             <View style={{flex: 4, alignItems: 'center'}}>
