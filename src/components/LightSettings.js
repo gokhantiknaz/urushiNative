@@ -10,6 +10,7 @@ import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 import {BleContext} from "../../store/ble-context";
 import {Button_1} from "./export";
+import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 
 const width = Dimensions.get('window').width;
 const LightSettings = (props) => {
@@ -70,7 +71,7 @@ const LightSettings = (props) => {
             devices.forEach(x => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
                     let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
-                    let temperatureData = [101, 5, 102]
+                    let temperatureData = [101, 5, 102];
                     bleCtx.sendDatatoDevice(x, temperatureData, null, serviceid);
                 }
             });
@@ -79,7 +80,9 @@ const LightSettings = (props) => {
     }, [])
 
     useEffect(() => {
-        console.log(bleCtx.receviedData);
+        if (bleCtx.receviedData && bleCtx.receviedData.length > 0) {
+            showMessage("temprature:" + bleCtx.receviedData.split('#')[0].toString() + "°C","load")
+        }
     }, [bleCtx.receviedData])
     const Col = ({numRows, children}) => {
         return (
@@ -144,7 +147,7 @@ const LightSettings = (props) => {
                         <Text style={styles.text}>{t("aquariumname")} :</Text>
                     </View>
                     <View style={styles["3col"]}>
-                        <TextInput style={{color: 'white', backgroundColor: 'grey',marginLeft:10}}
+                        <TextInput style={{color: 'white', backgroundColor: 'grey', marginLeft: 10}}
                                    value={selectedAquarium.name}
                                    onChangeText={(e) => {
                                        let tmp = {...selectedAquarium};

@@ -16,7 +16,7 @@ export const BleContext = React.createContext({ //create context for ble manager
                                                   getBleManagerConnectedDevices: async () => [],
                                                   stopScan: () => { },
                                                   disconnectDeviceByDevice: (device) => { },
-                                                  receviedData: { device: null, data: null },
+                                                  receviedData: {  },
                                               });
 const BleContextProvider = ({children}) => {
     const blxFns = useBlex()

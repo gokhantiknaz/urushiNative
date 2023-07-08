@@ -17,7 +17,7 @@ const useBlex = () => {
     const _BleManager = useMemo(() => new BleManager(), []);
     const [devices, setDevices] = useState([]);
     const [connectedDevice, setConnectedDevice] = useState(null);
-    const [receviedData, setReceviedData] = useState({device: null, data: null});
+    const [receviedData, setReceviedData] = useState();
 
     const ModelIdArray = [SERVICE_UUID, SERVICE_UUID2, SERVICE_UUID3, SERVICE_UUID4];
 
@@ -118,10 +118,8 @@ const useBlex = () => {
         }).then(device => {
             console.log(`Device connected with ${device.name}`);
             console.log("Connected device MTU: " + device.mtu);
-            // const tmpMtu = device.requestMTU();
-            // console.log("Connected device MTU 2: ", tmpMtu);
-
             setConnectedDevice(() => device);
+            readNotifications(device, deviceID); //read notifications from device
             const subscribe = _BleManager.onDeviceDisconnected(device.id, (error, disconnectedDevice) => {
                                                                    console.log("Disconnected", error, disconnectedDevice)
                                                                    setConnectedDevice(null);
@@ -132,6 +130,7 @@ const useBlex = () => {
         }).catch(err => {
             console.log("Connect", err)
         });
+
     };
     const sendDatatoDevice = (device, data, id = null, serviceUUID = null) => { //send data to device
         const deviceID = id ? id : device.id
@@ -147,18 +146,18 @@ const useBlex = () => {
     }
 
     //read notificaitons from device
-    const readNotifications =async (device, id = null) => {
-        if (!device) return;
+    const readNotifications = async (device, id = null) => {
+        if (!device) {
+            return;
+        }
         const deviceID = id ? id : device.id
         _BleManager.monitorCharacteristicForDevice(deviceID, SERVICE_UUID, CHARACTERISTIC_UUID, (error, characteristic) => {
             if (error) {
                 console.log("readNotifications Error", error)
             }
             if (characteristic) {
-                console.log("readNotifications",characteristic.deviceID,base64.decode(characteristic.value))
-                setReceviedData({
-                                    device:characteristic.deviceID,
-                                    data:base64.decode(characteristic.value)})
+                console.log("readNotifications", characteristic.deviceID, base64.decode(characteristic.value))
+                setReceviedData(base64.decode(characteristic.value))
 
                 // getBleManagerConnectedDevices();
                 return characteristic

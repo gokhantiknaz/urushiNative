@@ -163,6 +163,7 @@ export const Simulation = (props) => {
                 if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
                     let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
                     ctxBle.sendDatatoDevice(x, data, null, serviceid);
+
                 }
             });
         });
@@ -262,10 +263,10 @@ export const Simulation = (props) => {
         // 8.kanal byte[93]
         // 8.kanal end byte[106]
 
-        bytes[107] = now.getHours();
-        bytes[108] = now.getMinutes();
-        bytes[109] = (0x00); // lunar Mod Off/On
-        bytes[110] = (0x66);
+        bytes[106] = now.getHours();
+        bytes[107] = now.getMinutes();
+        bytes[108] = (0x00); // lunar Mod Off/On
+        bytes[109] = (0x66);
         setBytes(bytes);
 
         return bytes;
