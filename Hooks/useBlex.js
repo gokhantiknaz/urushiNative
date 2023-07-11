@@ -128,7 +128,8 @@ const useBlex = () => {
             );
 
         }).catch(err => {
-            console.log("Connect", err)
+            console.log("Connect", err);
+            throw  err;
         });
 
     };
