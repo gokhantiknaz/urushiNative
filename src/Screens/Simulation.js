@@ -271,7 +271,6 @@ export const Simulation = (props) => {
 
         return bytes;
     }
-
     function setActiveChannel(operator) {
         let selected = selectedChannel;
         if (operator === "next") {
@@ -293,7 +292,6 @@ export const Simulation = (props) => {
             setChannel(selected);
         }
     }
-
     const saveTemplate = async (templateName) => {
         let savedTemplates = await getData("autotemplates");
         if (savedTemplates == null) {

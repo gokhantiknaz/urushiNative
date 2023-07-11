@@ -57,12 +57,13 @@ export const ManuelModTab = () => {
                 bleCtx.getBleManagerConnectedDevices().then(result => {
                     if (result.find(d => d.id == x.id)) {
                         console.log("I:", x.name + " already connected");
+                        showMessage(x.name + " already connected", "load");
                     } else {
                         bleCtx.connectDevice(null, x.id).then(result => {
+                            showMessage(x.name + " device Connected", "load");
                             console.log("I:", x.name + " connected");
                         });
                     }
-                    showMessage(x.name +" device Connected","load")
                 })
             })
         }

@@ -4,8 +4,7 @@ import {StyleSheet, Image, FlatList, Alert, useWindowDimensions} from 'react-nat
 import {useTranslation} from "react-i18next";
 import colors from "../components/colors";
 import images from "../images/images";
-import {LinearGradient} from 'expo-linear-gradient';
-import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
+
 import {MythContext} from "../../store/myth-context";
 import {showConfirmDialog} from "../components/Confirm";
 import {StatusBar} from "expo-status-bar";

@@ -54,7 +54,9 @@
     "chosoLanguage": "Choose Language",
     "aquariumDetail": "Aquarium Detail",
     "lights": "Lights",
-    "modelName": "Model"
+    "modelName": "Model",
+    "save": "Save",
+    "devicedetail": "Click for Details"
 
   }
 }
