@@ -44,9 +44,7 @@ export const DeviceListTemp = (props) => {
                 }
                 return device;
             });
-
             setDeviceList(newList);
-
             setRefreshEnable(true);
         }
     }, [ctxBle.receviedData])
@@ -55,29 +53,6 @@ export const DeviceListTemp = (props) => {
 
         setRefreshEnable(false);
         setSelectedDevice(device);
-        alert("x");
-
-        ctxBle.getBleManagerConnectedDevices().then(result => {
-            if (result.find(d => d.id == device.Id)) {
-                console.log("I:", device.name + " already connected");
-            } else {
-                ctxBle.connectDevice(null, device.Id).then(result => {
-                    console.log("I:", device.name + " connected");
-                }).catch(error => {
-                    console.log("E:", error);
-                });
-            }
-        }).then(result => {
-            let temperatureData = [101, 5, 102];
-            let list = ctx.aquarium.deviceList.filter(a => a.id == device.id);
-            if (list.length > 0) {
-                let serviceid = list[0].serviceUUIDs[0];
-                ctxBle.sendDatatoDevice(device, temperatureData, null, serviceid);
-            }
-        }).catch(error => {
-            console.log("E:", error);
-            setRefreshEnable(true);
-        })
     }
     const renderRow = ({item}) => {
         const desc = item.description;

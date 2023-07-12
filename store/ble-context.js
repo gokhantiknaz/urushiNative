@@ -1,10 +1,5 @@
-//Context for Ble Manager
-import {createContext} from "react";
+import React, {useState, useEffect} from "react";
 import useBlex from "../Hooks/useBlex";
-import React from 'react'
-import {useState} from "react";
-import {useEffect} from "react";
-
 
 export const BleContext = React.createContext({ //create context for ble manager
                                                   startScan: () => { },
@@ -12,11 +7,11 @@ export const BleContext = React.createContext({ //create context for ble manager
                                                   disconnectDevice: () => { },
                                                   devices: [],
                                                   connectedDevice: null,
-                                                  sendDatatoDevice: (device, data, id = null,serviceUUID=null) => { },
+                                                  sendDatatoDevice: (device, data, id = null, serviceUUID = null) => { },
                                                   getBleManagerConnectedDevices: async () => [],
                                                   stopScan: () => { },
                                                   disconnectDeviceByDevice: (device) => { },
-                                                  receviedData: {  },
+                                                  receviedData: {},
                                               });
 const BleContextProvider = ({children}) => {
     const blxFns = useBlex()
@@ -34,7 +29,7 @@ const BleContextProvider = ({children}) => {
         } catch (e) {
 
         }
-    }, [bleDevices,blxFns.receviedData])
+    }, [bleDevices, blxFns.receviedData])
 
 
     return (
