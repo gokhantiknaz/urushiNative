@@ -159,7 +159,7 @@ const SimulationMainScreen = ({navigation}) => {
             {...props}
             activeColor={'white'}
             inactiveColor={'black'}
-            style={{marginTop: 0, backgroundColor: '#5D92C4'}}
+            style={{marginTop: 0, backgroundColor: '#484848'}}
         />
     );
     return (

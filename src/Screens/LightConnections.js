@@ -213,9 +213,9 @@ const styles = StyleSheet.create({
                                          height: windowHeight,
                                      },
                                      buttonStyle: {
-                                         backgroundColor: '#307ecc',
+                                         backgroundColor: '#484848',
                                          borderWidth: 0,
-                                         color: '#FFFFFF',
+                                         color: 'rgb(253,192,41)',
                                          borderColor: '#307ecc',
                                          height: 40,
                                          alignItems: 'center',

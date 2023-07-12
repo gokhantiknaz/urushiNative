@@ -1,5 +1,6 @@
 import ActionSheet, {SheetManager, SheetProps} from "react-native-actions-sheet";
 import {View, Text, Button} from "react-native";
+import {Button_1} from "../export";
 
 function ConfirmSheet(props: SheetProps<{ message: string }>) {
     return (
@@ -12,7 +13,7 @@ function ConfirmSheet(props: SheetProps<{ message: string }>) {
             >
                 {props.payload?.message}
             </Text>
-            <Button
+            <Button_1
                 title="No"
                 onPress={() => {
                     SheetManager.hide(props.sheetId, {
@@ -20,7 +21,7 @@ function ConfirmSheet(props: SheetProps<{ message: string }>) {
                     });
                 }}
             />
-            <Button
+            <Button_1
                 title="Yes"
                 onPress={() => {
                     SheetManager.hide(props.sheetId, {

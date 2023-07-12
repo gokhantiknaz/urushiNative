@@ -2,6 +2,7 @@ import { View, Text, Button,ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import {BleContext} from "../../store/ble-context";
 import {getAllKeys} from "../../data/useAsyncStorage";
+import {Button_1} from "../components/export";
 
 const BLEDevices = () => {
     const [devices, setDevices] = useState([]);
@@ -43,7 +44,7 @@ const BLEDevices = () => {
                 </View>
                 }
             </ScrollView>
-            <Button title="Send Data" onPress={checkDevice} />
+            <Button_1 title="Send Data" onPress={checkDevice} />
         </>
     )
 }

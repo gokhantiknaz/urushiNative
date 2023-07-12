@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
                                          fontSize: 20,
                                          marginBottom: 30,
                                          fontFamily: 'OpenSans_800ExtraBold',
-                                         color: "#5DB4C4",
+                                         color: 'rgb(223,135,29)',
                                      },
                                      input: {
                                          width: "100%",
