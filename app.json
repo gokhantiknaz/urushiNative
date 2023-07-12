@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "Light",
-    "icon": "./assets/iconTrans.png",
+    "icon": "./assets/logoTransparant.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/iconTrans.png",
+        "foregroundImage": "./assets/logoTransparant.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.gokhantiknaz.MythLightsTest",
@@ -33,7 +33,7 @@
       ]
     },
     "web": {
-      "favicon": "./assets/iconTrans.png"
+      "favicon": "./assets/logoTransparant.png"
     },
     "extra": {
       "eas": {
