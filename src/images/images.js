@@ -9,6 +9,7 @@ export default {
     simulation: require('../../assets/simulation.png'),
     tr: require('../../assets/tr.png'),
     en: require('../../assets/en.png'),
-    newLogo: require('../../assets/newLogo.jpg'),
+    newLogo: require('../../assets/logoTransparant.png'),
     refreshing: require('../../assets/refreshing.gif'),
+    newLogoTransparant: require('../../assets/logoTransparant.png'),
 }

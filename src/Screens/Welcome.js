@@ -48,7 +48,6 @@ const Welcome_screen = ({navigation}) => {
             console.log(error);
         }
     };
-
     const navigate = (item) => {
         ctx.setAquarium(item);
         ctx.setTemplate()
@@ -81,8 +80,8 @@ const Welcome_screen = ({navigation}) => {
             <View style={styles.container}>
                 <View style={styles.Image}>
                     <Image
-                        resizeMode="contain"
-                        source={images.transparentIcon}
+                        resizeMode="center"
+                        source={images.newLogoTransparant}
                     />
                 </View>
                 <View style={styles.containerLang}>
