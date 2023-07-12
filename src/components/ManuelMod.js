@@ -67,7 +67,7 @@ export const ManuelMod = (props) => {
                 <View style={{flex: 2, marginTop: 5}}>
                     <Text style={{color: 'white', marginLeft: 20}}>{t("alllights")}</Text>
                 </View>
-                <View style={{flex: 3, marginRight: 30}}>
+                <View style={{flex: 3, marginRight: 20}}>
                     <SwitchSelector
                         options={options}
                         //textStyle={{backgroundColor:'#AA3D0' }}
@@ -116,7 +116,7 @@ export const ManuelMod = (props) => {
 
             </View>
 
-            <View style={{flex: 2, alignItems: 'center', marginTop: 10}}>
+            <View style={{flex: 2, alignItems: 'center', marginTop: 70}}>
                 <RadioForm formHorizontal={true} animation={true}>
                     {delays.map((obj, i) => (<RadioButton labelHorizontal={true} key={obj.value}>
                         {/*  You can set RadioButtonLabel before RadioButtonInput */}
@@ -145,7 +145,7 @@ export const ManuelMod = (props) => {
             </View>
 
             <View style={{flex: 4}}>
-                <ScrollView style={{marginTop: -70}}>
+                <ScrollView style={{marginTop: -40}}>
                     <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
                 </ScrollView>
 

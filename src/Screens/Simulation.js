@@ -99,7 +99,7 @@ export const Simulation = (props) => {
             setAllPoints(tmpallpoints);
 
             subModel.Channels.map(x => {
-                tmpactions.push({text: x.label, icon: images.transparentIcon, name: x.label, position: 3, id: x.value});
+                tmpactions.push({text: x.label, icon: images.newLogoTransparant, name: x.label, position: 3, id: x.value});
             });
         }
 
