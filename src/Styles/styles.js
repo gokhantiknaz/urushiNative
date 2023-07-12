@@ -25,11 +25,11 @@ export const getFont = () => {
 
 export const values = {
     "font_body": getFont(),
-    "font_body_size": 14,
-    "font_title_size": 20,
+    "font_body_size": 10,
+    "font_title_size": 15,
     "font_time_size": 12,
     "font_place_size": 20,
-    "font_temp_size": 27,
+    "font_temp_size": 20,
     'border_radius': 2,
     "tiny_icon_size": 22,
     "small_icon_size": 40,
@@ -44,7 +44,7 @@ export const addDegreesToEnd = (temp) => {
 export const home_screen_list = StyleSheet.create(
     {
         container: {
-            marginTop: 18,
+            marginTop: 10,
             alignSelf: "stretch",
         },
         row: {
@@ -69,7 +69,7 @@ export const home_screen_list = StyleSheet.create(
             flexDirection: 'column',
         },
         row_cell_temp: {
-            color: colors.weather_text_color,
+            color: "red",
             paddingLeft: 16,
             flex: 0,
             fontSize: values.font_temp_size,
@@ -97,11 +97,10 @@ export const home_screen = StyleSheet.create(
     {
         v_container: {
             flex: 1,
-            padding: 8,
+            padding: 3,
             flexDirection: 'column', // main axis
-            justifyContent: 'center', // main axis
+            justifyContent: 'space-around', // main axis
             alignItems: 'center', // cross axis
-
         },
     });
 

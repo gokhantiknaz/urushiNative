@@ -56,7 +56,8 @@
     "lights": "Lights",
     "modelName": "Model",
     "save": "Save",
-    "devicedetail": "Click for Details"
+    "devicedetail": "Click for Details",
+    "refrestempinfo": "Click Refresh button to get temperature"
 
   }
 }

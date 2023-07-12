@@ -1,4 +1,4 @@
-package com.gokhantiknaz.MythLights.newarchitecture;
+package com.gokhantiknaz.MythLightsTest.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.gokhantiknaz.MythLights.BuildConfig;
-import com.gokhantiknaz.MythLights.newarchitecture.components.MainComponentsRegistry;
-import com.gokhantiknaz.MythLights.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.gokhantiknaz.MythLightsTest.BuildConfig;
+import com.gokhantiknaz.MythLightsTest.newarchitecture.components.MainComponentsRegistry;
+import com.gokhantiknaz.MythLightsTest.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

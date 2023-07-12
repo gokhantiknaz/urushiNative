@@ -79,11 +79,6 @@ const LightSettings = (props) => {
 
     }, [])
 
-    useEffect(() => {
-        if (bleCtx.receviedData && bleCtx.receviedData.length > 0) {
-            showMessage("temprature:" + bleCtx.receviedData.split('#')[0].toString() + "°C", "load")
-        }
-    }, [bleCtx.receviedData])
     const Col = ({numRows, children}) => {
         return (
             <View style={styles[`${numRows}col`]}>{children}</View>

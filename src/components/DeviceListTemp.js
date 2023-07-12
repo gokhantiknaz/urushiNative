@@ -1,4 +1,4 @@
-import {FlatList, ImageBackground, Pressable, Text, TouchableHighlight, TouchableNativeFeedback, View} from "react-native";
+import {FlatList, Image, ImageBackground, LogBox, Pressable, ScrollView, StatusBar, Text, TextInput, TouchableHighlight, TouchableNativeFeedback, View} from "react-native";
 import * as css from "../Styles/styles";
 import {listData} from "../../data/data";
 import React, {useContext, useEffect, useState} from "react";
@@ -21,20 +21,34 @@ export const DeviceListTemp = (props) => {
     const [isRefreshEnable, setRefreshEnable] = useState(true);
 
     useEffect(() => {
-        // let tmplist = [
-        //     {name: "ikigai-1", id: 1, temperature: "40", description: "Açıklama"},
-        //     {name: "ikigai-2", id: 2, temperature: "65", description: "Açıklama"},
-        //     {name: "ikigai-3", id: 3, temperature: "33", description: "Açıklama"},
-        //     {name: "ikigai-4", id: 4, temperature: "68", description: "Açıklama"},
-        // ];
-        //
-        // setDeviceList(tmplist);
-        let list = ctx.aquarium.deviceList.map(x => {return {...x, temperature: "0"}});
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, [])
+    useEffect(() => {
+
+        if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+            ctx.aquarium.deviceList.forEach(x => {
+                //baglı değilse.
+                ctxBle.getBleManagerConnectedDevices().then(result => {
+                    if (result.find(d => d.id == x.id)) {
+                        console.log("I:", x.name + " already connected");
+                        showMessage(x.name + " already connected", "load");
+                    } else {
+                        ctxBle.connectDevice(null, x.id).then(result => {
+                            showMessage(x.name + " device Connected", "load");
+                            console.log("I:", x.name + " connected");
+                        });
+                    }
+                })
+            })
+        }
+
+        let list = ctx.aquarium.deviceList.map(x => {return {...x, temperature: "0", description: "Deneme"}});
         setDeviceList(list);
     }, [])
 
     useEffect(() => {
-        if (ctxBle.receviedData && ctxBle.receviedData.length > 0) {
+        if (selectedDevice && ctxBle.receviedData && ctxBle.receviedData.length > 0) {
+            console.log(ctxBle.receviedData);
             let tmpList = deviceList;
             let selected = findArrayElementById(deviceList, selectedDevice.id, "id");
             selected.temperature = ctxBle.receviedData.split('#')[0].toString();
@@ -53,6 +67,20 @@ export const DeviceListTemp = (props) => {
 
         setRefreshEnable(false);
         setSelectedDevice(device);
+
+        let temperatureData = [101, 5, 102];
+        let list = ctx.aquarium.deviceList.filter(a => a.id == device.id);
+        try {
+            if (list.length > 0) {
+                let serviceid = list[0].serviceUUIDs[0];
+                ctxBle.sendDatatoDevice(device, temperatureData, null, serviceid);
+            }
+        } catch (e) {
+            console.log("E:", e);
+            setRefreshEnable(true);
+        }
+
+
     }
     const renderRow = ({item}) => {
         const desc = item.description;
@@ -68,41 +96,30 @@ export const DeviceListTemp = (props) => {
         let actualRowComponent =
             <View style={css.home_screen_list.row}>
                 <View style={css.home_screen_list.row_cell_timeplace}>
-                    <Text style={css.home_screen_list.row_time}>{t(desc)}</Text>
                     <Text style={css.home_screen_list.row_place}>{name}</Text>
+                    {/*<Text style={css.home_screen_list.row_time}>{desc}</Text>*/}
                 </View>
 
                 <Text style={css.home_screen_list.row_cell_temp}>{temp}</Text>
-
-                <Pressable onPress={() => isRefreshEnable && connect(item)}>
-                    <Icon color={icon.iconColor} size={css.values.small_icon_size} style={{marginLeft: 20}} name={icon.iconName}
-                          type={icon.iconFont}/>
-                </Pressable>
+                {!isRefreshEnable && item.id == selectedDevice.id ? <Image style={{height: 40, width: 40}} source={images.refreshing}></Image> :
+                    <Pressable onPress={() => connect(item)}>
+                        <Icon color={icon.iconColor} size={css.values.small_icon_size} style={{marginLeft: 20}} name={icon.iconName}
+                              type={icon.iconFont}/>
+                    </Pressable>
+                }
             </View>;
 
         let touchableWrapperIos =
             <TouchableHighlight
                 activeOpacity={0.5}
-                underlayColor={css.colors.transparent_white}
-                onPress={
-                    () => {
-                        //clickEventListener(item);
-                    }
-                }
-            >
+                underlayColor={css.colors.transparent_white}>
                 {actualRowComponent}
             </TouchableHighlight>;
 
         let touchableWrapperAndroid =
             <TouchableNativeFeedback
                 useForeground={true}
-                background={TouchableNativeFeedback.SelectableBackgroundBorderless()}
-                onPress={
-                    () => {
-
-                    }
-                }
-            >
+                background={TouchableNativeFeedback.SelectableBackgroundBorderless()}>
                 {actualRowComponent}
             </TouchableNativeFeedback>;
 
@@ -111,13 +128,13 @@ export const DeviceListTemp = (props) => {
         } else {
             return touchableWrapperAndroid;
         }
-
     };
     return (
         <ImageBackground source={images.background} style={{flex: 1}}>
-            <FlatList
-                style={css.home_screen_list.container}
-                data={deviceList}
-                renderItem={renderRow}
-            /></ImageBackground>);
+            <Text style={{color: "white", marginTop: 20, marginLeft: 20}}>{t('refrestempinfo')}</Text>
+            <ScrollView>
+                <FlatList style={css.home_screen_list.container} data={deviceList} renderItem={renderRow}/>
+            </ScrollView>
+        </ImageBackground>);
+
 }

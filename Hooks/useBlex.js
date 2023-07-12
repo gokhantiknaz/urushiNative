@@ -141,7 +141,9 @@ const useBlex = () => {
                                                                                                                                                    console.log("sendDatatoDevice", deviceID, data);
                                                                                                                                                }
         ).catch(err => {
-                    console.log("sendDatatoDevice Error", err)
+                    console.log("sendDatatoDevice Error", err);
+                    throw  err;
+
                 }
         );
     }
