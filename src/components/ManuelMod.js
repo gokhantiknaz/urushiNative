@@ -14,6 +14,8 @@ import {SheetManager} from "react-native-actions-sheet";
 import {MythContext} from "../../store/myth-context";
 import {Button_1} from "./export";
 import {CountDown} from "./CountDown";
+import {findArrayElementById} from "../utils";
+import {Models} from "../../data/Model";
 
 
 export const ManuelMod = (props) => {
@@ -27,11 +29,19 @@ export const ManuelMod = (props) => {
     ]
     const [t] = useTranslation();
     const options = [
-        {label: t("on"), value: "1"}, {label: t("off"), value: "0"},{label:"Stop",value: "2"}
+        {label: t("on"), value: "1"}, {label: t("off"), value: "0"}, {label: "Stop", value: "2"}
     ];
 
     const [speed, setSpeed] = useState(0);
     const [allOnOff, setAllOnOff] = useState(0);
+
+    useEffect(() => {
+        let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
+        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+        let tmp = selectedsubModel.Channels.map(x => {return {channel: x.Channel, value: 0}});
+        setAllProgress(tmp);
+    }, [])
+
 
     useEffect(() => {
         if (props.selectedTemplate) {
@@ -40,8 +50,12 @@ export const ManuelMod = (props) => {
     }, [props.selectedTemplate])
 
     const complete = (value) => {
-        let all = [{"channel": 1, "value": value}, {"channel": 2, "value": value}, {"channel": 3, "value": value}, {"channel": 4, "value": value}, {"channel": 5, "value": value}, {"channel": 6, "value": value}];
-        setAllProgress(all);
+
+        // all progress burda boşa atıyor. oncomplete metodundan kaynaklıdır diye düşünüyorum. o yüzden tekrar setliyorum.
+        let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
+        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+        let tmp = selectedsubModel.Channels.map(x => {return {channel: x.Channel, value: value}});
+        setAllProgress(tmp);
         setAllOnOff(value);
     }
     const save = async (templateName) => {
@@ -100,7 +114,7 @@ export const ManuelMod = (props) => {
                               variant={'radial-circle-slider'}
                               min={0}
                               max={100}
-                              onComplete={(value) => {complete(value)}}
+                              onComplete={(value) => {complete(value);}}
                     // valueStyle={{fontSize:60,color:"black",alignItems:"center",justifyContent:"center", marginTop:20}}
                               thumbColor={'#FF7345'}
                               unitStyle={{marginLeft: 0, color: "white", fontWeight: "bold", marginTop: 10}}

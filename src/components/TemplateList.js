@@ -8,6 +8,7 @@ import {Icon} from "react-native-elements";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
 import {BleContext} from "../../store/ble-context";
+import {sendData} from "../utils";
 
 const TemplateList = (props) => {
 
@@ -62,20 +63,20 @@ const TemplateList = (props) => {
             channelValues.forEach(x => {
                 data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
             });
-            sendData(data);
+            sendData(data,ctxBle,ctx);
         }
     }
-    const sendData = async (data) => {
-        ctxBle.getBleManagerConnectedDevices().then(devices => {
-            devices.forEach(x => {
-                if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
-                    console.log(x.name);
-                    let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
-                    ctxBle.sendDatatoDevice(x, data, null, serviceid);
-                }
-            });
-        });
-    }
+    // const sendData = async (data) => {
+    //     ctxBle.getBleManagerConnectedDevices().then(devices => {
+    //         devices.forEach(x => {
+    //             if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
+    //                 console.log(x.name);
+    //                 let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
+    //                 ctxBle.sendDatatoDevice(x, data, null, serviceid);
+    //             }
+    //         });
+    //     });
+    // }
     const deleteTemplate = async (item) => {
         let savedTemplates = await getData(props.mod == "auto" ? "autotemplates" : "manueltemplates");
         let newArray = (savedTemplates.filter(function (t) {

@@ -55,3 +55,15 @@ export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) 
     bytes[11] = (0x66);
     return bytes;
 }
+
+export  const sendData = async (data,ctxBle,ctx) => {
+    console.log("sending data from utils:",data);
+    ctxBle.getBleManagerConnectedDevices().then(devices => {
+        devices.forEach(x => {
+            if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
+                let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
+                ctxBle.sendDatatoDevice(x, data, null, serviceid);
+            }
+        });
+    });
+}
