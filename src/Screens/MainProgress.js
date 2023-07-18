@@ -27,7 +27,7 @@ const MainProgress = (props) => {
             }
             const newState = props.allProgress.map(obj => {
                 if (obj.channel === progressObject.channel) {
-                    return {...obj, value: progressObject.value};
+                    return {...obj, value: parseInt(progressObject.value)};
                 }
                 return obj;
             });
@@ -47,7 +47,7 @@ const MainProgress = (props) => {
             let data = createEmptyArrayManuel(false);
             data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
             tmpArray.forEach(x => {
-                data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
+                data[x.channel + 2] = parseInt(x.value); //0.1.2 kanallar dolu oldugundan...
             });
             sendData(data, ctxBle, ctx);
         }
