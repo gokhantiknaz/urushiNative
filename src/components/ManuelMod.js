@@ -50,7 +50,6 @@ export const ManuelMod = (props) => {
     }, [props.selectedTemplate])
 
     const complete = (value) => {
-
         // all progress burda boşa atıyor. oncomplete metodundan kaynaklıdır diye düşünüyorum. o yüzden tekrar setliyorum.
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
@@ -90,8 +89,8 @@ export const ManuelMod = (props) => {
                         onPress={(value) => {
                             console.log(value);
                             if (value == 1) {
+                                setSpeed(100);
                                 complete(100);
-                                setSpeed(100)
                             } else {
                                 setSpeed(0);
                                 complete(0);

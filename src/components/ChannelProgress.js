@@ -1,20 +1,15 @@
-import {ImageBackground, StyleSheet, Text, View} from "react-native";
-import Slider from '@react-native-community/slider';
-import {useContext, useEffect, useState} from "react";
-import colors from "./colors";
-import images from "../images/images";
+import {StyleSheet, Text, View} from "react-native";
+import {useEffect, useState} from "react";
 import MotionSlider from 'react-native-motion-slider';
 
+
 const ChannelProgress = (props) => {
-    const [slideStartingValue, setSlideStartingValue] = useState(0);
-    const [slideCompletionValue, setSlideCompletionValue] = useState(0);
-
     const [value, setValue] = useState(props.value ?? 0);
-
-    const [returnobj, setReturnObj] = useState({});
+    const [returnobj, setReturnObj] = useState({channel: 1, value: 0});
 
     useEffect(() => {
         setValue(props.value)
+
     }, [props.value])
 
     useEffect(() => {

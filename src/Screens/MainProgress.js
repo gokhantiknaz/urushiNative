@@ -20,6 +20,8 @@ const MainProgress = (props) => {
 
     }, [])
 
+
+
     useEffect(() => {
         if (progressObject && progressObject.channel) {
             if (!props.allProgress || props.allProgress.length === 0) {
@@ -37,6 +39,10 @@ const MainProgress = (props) => {
         }
     }, [progressObject])
 
+    useEffect(() => {
+        sendAllProgress();
+    }, [props.allOnOff])
+
     function sendAllProgress(newState) {
         let tmpArray = [...props.allProgress];
         if (newState) {
@@ -53,14 +59,12 @@ const MainProgress = (props) => {
         }
     }
 
-    useEffect(() => {
-        sendAllProgress();
-    }, [props.allOnOff])
-
     const getValue = (channel) => {
+
         let selectedChannel = findArrayElementById(props.allProgress, channel, "channel");
         if (selectedChannel) {
-            return parseInt(selectedChannel.value);
+            let val = parseInt(selectedChannel.value);
+            return val;
         }
         return 0;
     }
