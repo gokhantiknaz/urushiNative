@@ -45,7 +45,7 @@ export const ManuelMod = (props) => {
     ];
 
     const [speed, setSpeed] = useState(0);
-    const [allOnOff, setAllOnOff] = useState(0);
+    const [allOnOff, setAllOnOff] = useState(99);
 
     useEffect(() => {
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
@@ -97,19 +97,18 @@ export const ManuelMod = (props) => {
                         options={options}
                         //textStyle={{backgroundColor:'#AA3D0' }}
                         buttonColor='#AA3D01'
-                        initial={1}
+                        initial={0}
                         onPress={(value) => {
+
                             if (value == 1) {
-                                setSpeed(100);
-                                complete(100);
+                                setAllOnOff(1);
                             }
-                            if (value == 2) {
-                                setSpeed(0);
-                                complete(0);
+                            if (value == 0) {
+                                setAllOnOff(0);
                             }
-                            if (value == 2) {
+                            if (value ==2) {
                                 // manual mod end
-                                complete(-1);
+                                setAllOnOff(-1);
                             }
 
                         }}

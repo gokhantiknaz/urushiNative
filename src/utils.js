@@ -54,7 +54,7 @@ export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) 
 }
 
 export const sendData = async (data, ctxBle, ctx) => {
-    console.log("sending data from utils:", data);
+  //  console.log("sending data from utils:", data);
     ctxBle.getBleManagerConnectedDevices().then(devices => {
         devices.forEach(x => {
             if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {

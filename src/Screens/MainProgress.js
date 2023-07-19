@@ -43,7 +43,7 @@ const MainProgress = (props) => {
     }, [props.allOnOff])
 
     function sendAllProgress(newState) {
-        console.log(props.delayTime);
+
         let tmpArray = [...props.allProgress];
         if (newState) {
             tmpArray = newState
@@ -51,12 +51,12 @@ const MainProgress = (props) => {
 
         if (tmpArray.length > 0) {
             let data = createEmptyArrayManuel(false, null, null, props.delayTime ?? 1);
-            if(props.allOnOff==-1)
-            {
-                data[2]=0;// manual modu kapatma
+            if (props.allOnOff == -1) {
+                data[2] = 0;// manual modu kapatma
             }
+
             tmpArray.forEach(x => {
-                data[x.channel + 2] = parseInt(x.value); //0.1.2 kanallar dolu oldugundan...
+                data[x.channel + 2] = props.allOnOff == 0 ? 0 : parseInt(x.value); //0.1.2 kanallar dolu oldugundan...
             });
             sendData(data, ctxBle, ctx);
         }
