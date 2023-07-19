@@ -34,7 +34,7 @@ export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) 
     let bytes = [];
     for (let i = 0; i < 11; i++) {
         if (isSimulation) {
-            bytes.push("255");
+            bytes.push(255);
         } else {
             bytes.push(0);
         }
@@ -43,10 +43,9 @@ export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) 
     bytes[0] = (0x65);
     bytes[1] = (0x06);
     bytes[2] = delayTime ?? 1;
-    // bytes[3] = (0x01);
-    console.log("channel:",channel);
-    if (channel && value) {
-        bytes[channel + 3] = value;     // kac dk acık kalacagını dk cinsinden
+    console.log(value);
+    if (channel) {
+        bytes[channel + 2] = parseInt(value);
     }
 
     bytes[11] = (0x66);
