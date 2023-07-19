@@ -54,7 +54,7 @@ export const Simulation = (props) => {
             setIsRealTime(params.isRealTime);
         }
 
-        setManuelBytes(createEmptyArrayManuel(true, 10));
+        setManuelBytes(createEmptyArrayManuel(true,null,null, 10));
 
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let tmpactions = [];
@@ -223,7 +223,6 @@ export const Simulation = (props) => {
             });
         });
         setBytes(data);
-        console.log("all Simulation:", data);
         setIsSimulationSent(true);
         sendData(data);
     }

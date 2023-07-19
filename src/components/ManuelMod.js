@@ -20,6 +20,18 @@ import {Models} from "../../data/Model";
 
 export const ManuelMod = (props) => {
 
+    // [0] = 0x65
+    // [1] = 6
+    // [2] = 'delay time'
+    // [3] = '1.kanal'
+    // [4] = '2.kanal'
+    // [5] = '3.kanal'
+    // [6] = '4.kanal'
+    // [7] = '5.kanal'
+    // [8] = '6.kanal'
+    // [9] = '7.kanal'
+    // [10]= '8.kanal'
+    // [11] = (0x66);
     const ctx = useContext(MythContext);
     const [allProgress, setAllProgress] = useState([]);
     const [delay, setDelay] = useState(1);
@@ -53,7 +65,7 @@ export const ManuelMod = (props) => {
         // all progress burda boşa atıyor. oncomplete metodundan kaynaklıdır diye düşünüyorum. o yüzden tekrar setliyorum.
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
-        let tmp = selectedsubModel.Channels.map(x => {return {channel: x.Channel, value: value}});
+        let tmp = selectedsubModel.Channels.map(x => {return {channel: x.Channel, value: value == -1 ? 0 : value}});
         setAllProgress(tmp);
         setAllOnOff(value);
     }
@@ -87,14 +99,19 @@ export const ManuelMod = (props) => {
                         buttonColor='#AA3D01'
                         initial={1}
                         onPress={(value) => {
-                            console.log(value);
                             if (value == 1) {
                                 setSpeed(100);
                                 complete(100);
-                            } else {
+                            }
+                            if (value == 2) {
                                 setSpeed(0);
                                 complete(0);
                             }
+                            if (value == 2) {
+                                // manual mod end
+                                complete(-1);
+                            }
+
                         }}
                     />
                 </View>

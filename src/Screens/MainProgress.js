@@ -21,7 +21,6 @@ const MainProgress = (props) => {
     }, [])
 
 
-
     useEffect(() => {
         if (progressObject && progressObject.channel) {
             if (!props.allProgress || props.allProgress.length === 0) {
@@ -44,14 +43,18 @@ const MainProgress = (props) => {
     }, [props.allOnOff])
 
     function sendAllProgress(newState) {
+        console.log(props.delayTime);
         let tmpArray = [...props.allProgress];
         if (newState) {
             tmpArray = newState
         }
 
         if (tmpArray.length > 0) {
-            let data = createEmptyArrayManuel(false);
-            data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
+            let data = createEmptyArrayManuel(false, null, null, props.delayTime ?? 1);
+            if(props.allOnOff==-1)
+            {
+                data[2]=0;// manual modu kapatma
+            }
             tmpArray.forEach(x => {
                 data[x.channel + 2] = parseInt(x.value); //0.1.2 kanallar dolu oldugundan...
             });

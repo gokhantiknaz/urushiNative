@@ -38,26 +38,23 @@ export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) 
         } else {
             bytes.push(0);
         }
-        //bytes.push(0);
     }
 
     bytes[0] = (0x65);
     bytes[1] = (0x06);
-    if (delayTime) {
-        bytes[2] = delayTime;
-    }
-
+    bytes[2] = delayTime ?? 1;
+    // bytes[3] = (0x01);
+    console.log("channel:",channel);
     if (channel && value) {
-        bytes[channel + 2] = value;
+        bytes[channel + 3] = value;     // kac dk acık kalacagını dk cinsinden
     }
-    // kac dk acık kalacagını dk cinsinden
 
     bytes[11] = (0x66);
     return bytes;
 }
 
-export  const sendData = async (data,ctxBle,ctx) => {
-    console.log("sending data from utils:",data);
+export const sendData = async (data, ctxBle, ctx) => {
+    console.log("sending data from utils:", data);
     ctxBle.getBleManagerConnectedDevices().then(devices => {
         devices.forEach(x => {
             if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
