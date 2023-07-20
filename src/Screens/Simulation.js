@@ -151,23 +151,10 @@ export const Simulation = (props) => {
             // setManuelBytes(newByteArray);
             // sendData(newByteArray);
 
-            let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 10);
+            let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 0);
             sendData(dataWillSent,ctxBle,ctx);
         }
     }, [points])
-    // const sendData = async (data) => {
-    //
-    //     ctxBle.getBleManagerConnectedDevices().then(devices => {
-    //         devices.forEach(x => {
-    //             if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
-    //                 let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
-    //                 ctxBle.sendDatatoDevice(x, data, null, serviceid);
-    //
-    //             }
-    //         });
-    //     });
-    // }
-
     function calculateSimulation(point) {
         let startTime = parseInt(point.Point[0].time);
         let max1Time = parseInt(point.Point[1].time);

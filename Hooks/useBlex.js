@@ -76,7 +76,6 @@ const useBlex = () => {
         console.log("Scanning started");
         setDevices([]);
 
-
         _BleManager.startDeviceScan(ModelIdArray, {
                                         allowDuplicates: false,
                                     },
@@ -117,16 +116,14 @@ const useBlex = () => {
             return await device.discoverAllServicesAndCharacteristics();
         }).then(device => {
             console.log(`Device connected with ${device.name}`);
-            console.log("Connected device MTU: " + device.mtu);
             setConnectedDevice(() => device);
-            readNotifications(device, deviceID); //read notifications from device
+            readNotifications(device, deviceID);
             const subscribe = _BleManager.onDeviceDisconnected(device.id, (error, disconnectedDevice) => {
-                                                                   console.log("Disconnected", error, disconnectedDevice)
+                                                                   // console.log("Disconnected", error, disconnectedDevice)
                                                                    setConnectedDevice(null);
                                                                    subscribe.remove()
                                                                }
             );
-
         }).catch(err => {
             console.log("Connect", err);
             throw  err;
@@ -143,7 +140,6 @@ const useBlex = () => {
         ).catch(err => {
                     console.log("sendDatatoDevice Error", err);
                     throw  err;
-
                 }
         );
     }
@@ -156,13 +152,12 @@ const useBlex = () => {
         const deviceID = id ? id : device.id
         _BleManager.monitorCharacteristicForDevice(deviceID, SERVICE_UUID, CHARACTERISTIC_UUID, (error, characteristic) => {
             if (error) {
-                console.log("readNotifications Error", error)
+                console.log("readNotifications Error", error);
+                return ;
             }
             if (characteristic) {
                 console.log("readNotifications", characteristic.deviceID, base64.decode(characteristic.value))
                 setReceviedData(base64.decode(characteristic.value))
-
-                // getBleManagerConnectedDevices();
                 return characteristic
             }
         })
@@ -181,7 +176,7 @@ const useBlex = () => {
     };
     const disconnectDeviceByDevice = async (device) => { //disconnect from device
         console.log("disconnected from:" + device.name);
-        device.cancelConnection();
+        await device.cancelConnection();
     };
 
     return ( //return functions and variables

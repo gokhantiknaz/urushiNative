@@ -1,5 +1,6 @@
 import {useContext} from "react";
 import {BleContext} from "../store/ble-context";
+import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 
 export function findArrayElementById(array, id, findBy) {
     return array.find((element) => {
@@ -43,18 +44,24 @@ export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) 
     bytes[0] = (0x65);
     bytes[1] = (0x06);
     bytes[2] = delayTime ?? 1;
-    console.log(value);
     if (channel) {
         bytes[channel + 2] = parseInt(value);
     }
 
     bytes[11] = (0x66);
+
     return bytes;
 }
 
 export const sendData = async (data, ctxBle, ctx) => {
   //  console.log("sending data from utils:", data);
     ctxBle.getBleManagerConnectedDevices().then(devices => {
+        if(devices.length===0)
+        {
+            console.log("no devices");
+            showMessage("Cannoat Connect to Devices");
+            return;
+        }
         devices.forEach(x => {
             if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
                 let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];

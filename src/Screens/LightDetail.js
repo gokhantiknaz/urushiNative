@@ -78,15 +78,15 @@ const LightDetail = (props) => {
 
     return (
         <ImageBackground source={images.background} style={{flex: 1}}>
-
+            <StatusBar
+                hidden={true}
+                translucent={false}
+                animated={true}
+                barStyle={'light-content'}
+                backgroundColor={css.colors.secondary}
+            />
             <View style={css.home_screen.v_container}>
-                <StatusBar
-                    hidden={true}
-                    translucent={false}
-                    animated={true}
-                    barStyle={'light-content'}
-                    backgroundColor={css.colors.secondary}
-                />
+
                 <FlatList
                     style={css.home_screen_list.container}
                     data={listData}

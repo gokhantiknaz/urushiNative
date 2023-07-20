@@ -23,7 +23,7 @@ const LightConnections = (props) => {
         //disconnect from connected devices
 
         setLoading(true);
-        bleCtx.getBleManagerConnectedDevices().then(results => {
+        bleCtx.getBleManagerConnectedDevices().then(async results => {
             for (let i = 0; i < results.length; i++) {
                 let peripheral = results[i];
                 bleCtx.disconnectDeviceByDevice(peripheral);

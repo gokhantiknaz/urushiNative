@@ -93,7 +93,7 @@ const NewAquarium = () => {
             });
 
         } catch (e) {
-            console.log(e);
+            console.log("new aquarium error:",e);
             alert('Failed to save the data to the storage')
         }
     }

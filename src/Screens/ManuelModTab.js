@@ -1,4 +1,4 @@
-import {Alert, useWindowDimensions, View} from "react-native";
+import {Alert, Text, useWindowDimensions, View} from "react-native";
 import * as React from "react";
 import {SceneMap, TabBar, TabView} from "react-native-tab-view";
 import TemplateList from "../components/TemplateList";
@@ -10,6 +10,7 @@ import {BleContext} from "../../store/ble-context";
 import {MythContext} from "../../store/myth-context";
 import Loading from "../../loading";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
+import appLoading from "expo-app-loading/src/AppLoading";
 
 
 // const renderScene = ({route}) => {
@@ -39,6 +40,8 @@ export const ManuelModTab = () => {
                                         {key: 'template', title: t('favs')},
                                     ]);
 
+    const [loading, setLoading] = useState(false);
+
     const bleCtx = useContext(BleContext);
     const ctx = useContext(MythContext);
 
@@ -47,28 +50,28 @@ export const ManuelModTab = () => {
             Alert.alert(t("warn"), t("noDevice"));
             return;
         }
+        setLoading(false);
         searchAndConnect();
     }, [])
 
-    const searchAndConnect = async () => {
+
+    const searchAndConnect =  () => {
+
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+            showMessage(" Connecting devices", "load");
             ctx.aquarium.deviceList.forEach(x => {
                 //baglı değilse.
                 bleCtx.getBleManagerConnectedDevices().then(result => {
                     if (result.find(d => d.id == x.id)) {
                         console.log("I:", x.name + " already connected");
-                        showMessage(x.name + " already connected", "load");
                     } else {
-                        bleCtx.connectDevice(null, x.id).then(result => {
-                            showMessage(x.name + " device Connected", "load");
-                            console.log("I:", x.name + " connected");
-                        });
+                        bleCtx.connectDevice(null, x.id);
                     }
                 })
-            })
+            });
+            setLoading(false);
         }
     }
-
     const renderTabBar = props => (
         <TabBar
             {...props}
@@ -77,6 +80,10 @@ export const ManuelModTab = () => {
             style={{marginTop: 0, backgroundColor: '#484848'}}
         />
     );
+
+    if (loading) {
+        return <Loading>{<Text>Connecting to saved devices</Text>}</Loading>
+    }
     return (
         <View style={{flex: 1}}>
             <StatusBar hidden={true}></StatusBar>

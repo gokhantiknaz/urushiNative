@@ -58,6 +58,7 @@ const MainProgress = (props) => {
             tmpArray.forEach(x => {
                 data[x.channel + 2] = props.allOnOff == 0 ? 0 : parseInt(x.value); //0.1.2 kanallar dolu oldugundan...
             });
+
             sendData(data, ctxBle, ctx);
         }
     }
