@@ -22,6 +22,7 @@ const MainProgress = (props) => {
 
 
     useEffect(() => {
+
         if (progressObject && progressObject.channel) {
             if (!props.allProgress || props.allProgress.length === 0) {
                 return;

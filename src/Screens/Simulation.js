@@ -16,6 +16,7 @@ import {SheetManager} from "react-native-actions-sheet";
 import {useIsMounted} from "../../Hooks/useIsMounted";
 import images from "../images/images";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
+import Loading from "../../loading";
 
 export const Simulation = (props) => {
 
@@ -42,6 +43,7 @@ export const Simulation = (props) => {
     const [manuelBytes, setManuelBytes] = useState([]);
 
     const [isRealTime, setIsRealTime] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
 
@@ -54,7 +56,7 @@ export const Simulation = (props) => {
             setIsRealTime(params.isRealTime);
         }
 
-        setManuelBytes(createEmptyArrayManuel(true,null,null, 10));
+        setManuelBytes(createEmptyArrayManuel(true, null, null, 10));
 
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
         let tmpactions = [];
@@ -152,9 +154,10 @@ export const Simulation = (props) => {
             // sendData(newByteArray);
 
             let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 0);
-            sendData(dataWillSent,ctxBle,ctx);
+            sendData(dataWillSent, ctxBle, ctx);
         }
     }, [points])
+
     function calculateSimulation(point) {
         let startTime = parseInt(point.Point[0].time);
         let max1Time = parseInt(point.Point[1].time);
@@ -210,9 +213,10 @@ export const Simulation = (props) => {
         });
         setBytes(data);
         setIsSimulationSent(true);
-        sendData(data,ctxBle,ctx);
+        sendData(data, ctxBle, ctx);
     }
     const searchAndConnect = async () => {
+        setLoading(true);
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             ctx.aquarium.deviceList.forEach(x => {
                 //baglı değilse.
@@ -222,11 +226,17 @@ export const Simulation = (props) => {
                     } else {
                         ctxBle.connectDevice(null, x.id).then(result => {
                             console.log("I:", x.name + " connected");
+                        }).catch(error => {
+                            console.log("connect device error:", error);
                         });
                     }
                     showMessage(x.name + " device Connected", "load")
+                }).catch(error => {
+                    console.log("getconnecteddevice error", error);
                 })
             })
+
+            setTimeout(function () { setLoading(false);}, ctx.aquarium.deviceList.length * 1000)
         }
     }
     const createEmptyArray = () => {
@@ -256,6 +266,7 @@ export const Simulation = (props) => {
 
         return bytes;
     }
+
     function setActiveChannel(operator) {
         let selected = selectedChannel;
         if (operator === "next") {
@@ -277,6 +288,7 @@ export const Simulation = (props) => {
             setChannel(selected);
         }
     }
+
     const saveTemplate = async (templateName) => {
         let savedTemplates = await getData("autotemplates");
         if (savedTemplates == null) {
@@ -294,6 +306,9 @@ export const Simulation = (props) => {
         Alert.alert(t("Success"), t("Success"));
     }
 
+    if (loading) {
+        return <Loading>{<Text>Connecting to saved devices</Text>}</Loading>
+    }
     return (
         <View style={styles.container}>
             <StatusBar hidden={true}></StatusBar>

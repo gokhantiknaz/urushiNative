@@ -50,13 +50,12 @@ export const ManuelModTab = () => {
             Alert.alert(t("warn"), t("noDevice"));
             return;
         }
-        setLoading(false);
         searchAndConnect();
     }, [])
 
 
-    const searchAndConnect =  () => {
-
+    const searchAndConnect = () => {
+        setLoading(true);
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             showMessage(" Connecting devices", "load");
             ctx.aquarium.deviceList.forEach(x => {
@@ -65,11 +64,12 @@ export const ManuelModTab = () => {
                     if (result.find(d => d.id == x.id)) {
                         console.log("I:", x.name + " already connected");
                     } else {
-                        bleCtx.connectDevice(null, x.id);
+                        bleCtx.connectDevice(null, x.id).then(res=>{}).catch(er=>{});
                     }
                 })
             });
-            setLoading(false);
+
+            setTimeout(function () { setLoading(false);}, ctx.aquarium.deviceList.length * 1000)
         }
     }
     const renderTabBar = props => (
