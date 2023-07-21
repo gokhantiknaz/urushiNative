@@ -144,16 +144,13 @@ export const Simulation = (props) => {
                 powerWillBeSent = calculateSimulation(obj);
             }
 
-            // console.log("fist:", manuelBytes)
+
             // let newByteArray = [...manuelBytes];
-            //
-            // console.log(obj.Channel);
             // newByteArray[obj.Channel + 2] = powerWillBeSent;
-            // console.log("then:", newByteArray)
             // setManuelBytes(newByteArray);
             // sendData(newByteArray);
 
-            let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 0);
+            let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 10);
             sendData(dataWillSent, ctxBle, ctx);
         }
     }, [points])
