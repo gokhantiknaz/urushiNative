@@ -51,7 +51,7 @@ const SettingsChartScreen = (props) => {
             return;
         }
         const newlimits = points.values.map((point, index) => {
-            const min = points.values[index - 1] ? points.values[index - 1].time + 60 : 0;
+            const min = points.values[index - 1] ? points.values[index - 1].time + 60 : 1;
             const max = points.values[index + 1] ? points.values[index + 1].time - 60 : 1439;
             return {min, max};
         });
@@ -84,7 +84,7 @@ const SettingsChartScreen = (props) => {
         const minute = selectedDate.getMinutes();
         const newTimeValue = hour * 60 + minute;
         const pointIndex = currentDate.index;
-        if (newTimeValue < 0 || newTimeValue > 1439) {
+        if (newTimeValue < 1 || newTimeValue > 1439) {
             return;
         }
         if (newTimeValue < limits[pointIndex].min || newTimeValue > limits[pointIndex].max) {

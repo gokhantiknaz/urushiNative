@@ -89,14 +89,15 @@ export const ManuelMod = (props) => {
     return (<ImageBackground source={images.background} style={{flex: 1}}>
         <View style={{flex: 1, marginTop: 20}}>
             <View style={{flex: 1, flexDirection: 'row'}}>
-                <View style={{flex: 2, marginTop: 5}}>
-                    <Text style={{color: 'white', marginLeft: 20}}>{t("alllights")}</Text>
-                </View>
-                <View style={{flex: 3, marginRight: 20}}>
+                {/*<View style={{flex: 2, marginTop: 5}}>*/}
+                {/*    <Text style={{color: 'white', marginLeft: 20}}>{t("alllights")}</Text>*/}
+                {/*</View>*/}
+                <View style={{flex: 3, marginRight: 20,marginLeft:20}}>
                     <SwitchSelector
+                        hasPadding
                         options={options}
                         //textStyle={{backgroundColor:'#AA3D0' }}
-                        buttonColor='#AA3D01'
+                        buttonColor='rgb(223,135,29)'
                         initial={0}
                         onPress={(value) => {
 
@@ -112,6 +113,7 @@ export const ManuelMod = (props) => {
                             }
 
                         }}
+
                     />
                 </View>
 
@@ -175,7 +177,7 @@ export const ManuelMod = (props) => {
 
             <View style={{flex: 4}}>
                 <ScrollView style={{marginTop: -40}}>
-                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff}></MainProgress>
+                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff} setAllOnOff={setAllOnOff}></MainProgress>
                 </ScrollView>
 
             </View>

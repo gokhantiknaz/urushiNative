@@ -72,7 +72,7 @@ const DraggableDot = (props) => {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });
-        const interpolateY = interpolate(y, [0, 1439], [50, height - 50], {
+        const interpolateY = interpolate(y, [1, 1439], [50, height - 50], {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });
@@ -85,7 +85,7 @@ const DraggableDot = (props) => {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });
-        const interpolateY = interpolate(y, [50, height - 50], [0, 1439], {
+        const interpolateY = interpolate(y, [50, height - 50], [1, 1439], {
             extrapolateRight: Extrapolation.CLAMP,
             extrapolateLeft: Extrapolation.CLAMP
         });

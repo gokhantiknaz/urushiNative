@@ -36,6 +36,8 @@ const MainProgress = (props) => {
 
             props.setAllProgress(newState);
             sendAllProgress(newState);
+
+            props.setAllOnOff(1);
         }
     }, [progressObject])
 
