@@ -60,7 +60,7 @@ const Welcome_screen = ({navigation}) => {
                 {item.item.image ?
                     <Image source={{uri: `data:image/png;base64,${item.item.image}`}} style={{height: 60, width: 60}}></Image>
                     :
-                    <Image source={images.newLogo} style={{height: 60, width: 60}}></Image>
+                    <Image source={images.transLogo} style={{height: 60, width: 60}}></Image>
                 }
 
                 <Text style={{marginTop: 5, fontSize: 12, color: 'white'}}>{item.item.name}</Text>
@@ -80,8 +80,9 @@ const Welcome_screen = ({navigation}) => {
             <View style={styles.container}>
                 <View style={styles.Image}>
                     <Image
+                        source={images.transLogo}
+                        style={{height:256,width:256}}
                         resizeMode="center"
-                        source={images.newLogoTransparant}
                     />
                 </View>
                 <View style={styles.containerLang}>
@@ -125,7 +126,7 @@ const Welcome_screen = ({navigation}) => {
 };
 
 const width = Dimensions.get('window').width;
-const numColumns = 2;
+
 const styles = StyleSheet.create({
                                      container: {
                                          flex: 1,
@@ -133,14 +134,15 @@ const styles = StyleSheet.create({
                                          alignItems: "center",
                                      },
                                      Image: {
-                                         width: width, paddingTop: "20%", alignItems: "center"
+                                        width: width, paddingTop: "15%", alignItems: "center"
                                      },
                                      containerLang: {},
                                      button: {
                                          width: width,
                                          paddingTop: '5%',
                                          paddingHorizontal: '5%',
-                                         alignItems: "center"
+                                         alignItems: "center",
+                                         paddingBottom:20
                                      },
                                      containerFlag: {
                                          paddingTop: '10%'

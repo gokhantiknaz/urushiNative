@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "Light",
-    "icon": "./assets/logoTransparant.png",
+    "icon": "./assets/newIcon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -20,10 +20,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logoTransparant.png",
+        "foregroundImage": "./assets/newIcon.png",
+        "resizeMode": "cover",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gokhantiknaz.MythLights",
+      "package": "com.gokhantiknaz.MythLightsTest",
       "permissions": [
         "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_ADMIN",
@@ -33,7 +34,7 @@
       ]
     },
     "web": {
-      "favicon": "./assets/logoTransparant.png"
+      "favicon": "./assets/blackIcon.jpg"
     },
     "extra": {
       "eas": {

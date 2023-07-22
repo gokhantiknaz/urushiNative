@@ -5,11 +5,11 @@ export default {
     delete: require('../../assets/delete.png'),
     insta: require('../../assets/instagram.png'),
     checked: require('../../assets/blue-check.png'),
-    transparentIcon: require('../../assets/iconTrans.png'),
     simulation: require('../../assets/simulation.png'),
     tr: require('../../assets/tr.png'),
     en: require('../../assets/en.png'),
-    newLogo: require('../../assets/logoTransparant.png'),
+    newLogo: require('../../assets/newIcon.png'),
     refreshing: require('../../assets/refreshing.gif'),
-    newLogoTransparant: require('../../assets/logoTransparant.png'),
+    transLogo: require('../../assets/iconNew-removebg-preview.png'),
+
 }
