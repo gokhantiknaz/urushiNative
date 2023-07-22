@@ -70,7 +70,7 @@ export const ManuelModTab = () => {
                 })
             });
 
-            // setTimeout(function () { setLoading(false);}, ctx.aquarium.deviceList.length * 1000)
+            setTimeout(function () { setLoading(false);}, ctx.aquarium.deviceList.length * 1000)
         }
     }
     const renderTabBar = props => (
