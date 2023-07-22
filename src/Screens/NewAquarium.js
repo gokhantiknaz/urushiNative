@@ -1,4 +1,4 @@
-import React, {useEffect, useId, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, TextInput, Button, StyleSheet, Text, Alert, Dimensions, ImageBackground, ScrollView} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 
@@ -18,6 +18,7 @@ import {StatusBar} from "expo-status-bar";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
+import {MythContext} from "../../store/myth-context";
 
 const width = Dimensions.get('window').width;
 const NewAquarium = () => {
@@ -27,14 +28,24 @@ const NewAquarium = () => {
     const [imageUri, setImageUri] = useState('');
     const [t] = useTranslation();
     const navigation = useNavigation();
+    const ctx = useContext(MythContext);
+    const [aquariumlist, setAquariumList] = useState([]);
 
-    const id = useId();
-
+    useEffect(() => {
+        getData("aquariumList").then(list => {
+            console.log(list);
+            if (list == null) {
+                setAquariumList([]);
+            } else {
+                setAquariumList(list);
+            }
+        });
+    }, [])
     const save = () => {
 
         try {
             let myAquarium = {
-                id: id,
+                id: aquariumlist.length + 1,
                 name: name,
                 image: image,
                 imageUri: imageUri,
@@ -75,25 +86,43 @@ const NewAquarium = () => {
             }
             myAquarium.deviceList = deviceList;
 
-            getData("aquariumList").then(list => {
-                if (list == null) {
-                    let newlist = [];
-                    newlist.push(myAquarium);
-                    saveData("aquariumList", newlist).then(res => {
+            let tmpList = [...aquariumlist];
+            ;
+            if (tmpList.length == 0) {
+                tmpList.push(myAquarium);
+                saveData("aquariumList", tmpList).then(res => {
+                    Alert.alert(t("Success"), t("Success"));
+                    navigation.goBack();
+                });
+            } else {
+                tmpList.push(myAquarium);
+                removeItem("aquariumList").then(res => {
+                    saveData("aquariumList", tmpList).then(res => {
                         Alert.alert(t("Success"), t("Success"));
                         navigation.goBack();
                     });
-                } else {
-                    list.push(myAquarium);
-                    removeItem("aquariumList").then(res => {
-                        saveData("aquariumList", list);
-                        navigation.goBack();
-                    });
-                }
-            });
+                    ;
+                });
+            }
+            // getData("aquariumList").then(list => {
+            //     if (list == null) {
+            //         let newlist = [];
+            //         newlist.push(myAquarium);
+            //         saveData("aquariumList", newlist).then(res => {
+            //             Alert.alert(t("Success"), t("Success"));
+            //             navigation.goBack();
+            //         });
+            //     } else {
+            //         list.push(myAquarium);
+            //         removeItem("aquariumList").then(res => {
+            //             saveData("aquariumList", list);
+            //             navigation.goBack();
+            //         });
+            //     }
+            // });
 
         } catch (e) {
-            console.log("new aquarium error:",e);
+            console.log("new aquarium error:", e);
             alert('Failed to save the data to the storage')
         }
     }
