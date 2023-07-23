@@ -5,7 +5,7 @@ import SwitchSelector from "react-native-switch-selector";
 import images from "../images/images";
 import colors from "./colors";
 import {RadialSlider} from "react-native-radial-slider";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import Dialog from "react-native-dialog";
 import {useTranslation} from "react-i18next";
@@ -14,8 +14,9 @@ import {SheetManager} from "react-native-actions-sheet";
 import {MythContext} from "../../store/myth-context";
 import {Button_1} from "./export";
 import {CountDown} from "./CountDown";
-import {findArrayElementById} from "../utils";
+import {createEmptyArrayManuel, findArrayElementById, sendData} from "../utils";
 import {Models} from "../../data/Model";
+import {BleContext} from "../../store/ble-context";
 
 
 export const ManuelMod = (props) => {
@@ -33,6 +34,7 @@ export const ManuelMod = (props) => {
     // [10]= '8.kanal'
     // [11] = (0x66);
     const ctx = useContext(MythContext);
+    const ctxBle = useContext(BleContext);
     const [allProgress, setAllProgress] = useState([]);
     const [delay, setDelay] = useState(1);
 
@@ -54,7 +56,6 @@ export const ManuelMod = (props) => {
         setAllProgress(tmp);
     }, [])
 
-
     useEffect(() => {
         if (props.selectedTemplate) {
             setAllProgress(props.selectedTemplate);
@@ -71,6 +72,7 @@ export const ManuelMod = (props) => {
     }
     const save = async (templateName) => {
         let savedTemplates = await getData("manueltemplates");
+
         if (savedTemplates == null) {
             let newlist = [];
             let obj = {name: templateName, value: allProgress};
@@ -86,13 +88,47 @@ export const ManuelMod = (props) => {
         props.setRefresh(true);
     }
 
+    useEffect(() => {
+        if (allProgress) {
+            sendAllProgress(allProgress);
+        }
+    }, [allProgress])
+
+    function sendAllProgress(newState, stopManuelChannel) {
+
+        console.log("asasda",allOnOff,allProgress);
+        if (allOnOff == 99) {
+            return;
+        }
+        let tmpArray = [];
+        if (newState) {
+            tmpArray = newState
+        } else {
+            tmpArray = allProgress;
+        }
+
+        if (tmpArray.length > 0) {
+            let data = createEmptyArrayManuel(false, null, null, delay);
+            if (props.allOnOff == -1 || stopManuelChannel) {
+                data[2] = 0;// manual modu kapatma
+            }
+
+            tmpArray.forEach(x => {
+                data[x.channel + 2] = props.allOnOff == 0 ? 0 : parseInt(x.value); //0.1.2 kanallar dolu oldugundan...
+            });
+
+            sendData(data, ctxBle, ctx);
+        }
+    }
+
+
     return (<ImageBackground source={images.background} style={{flex: 1}}>
         <View style={{flex: 1, marginTop: 20}}>
             <View style={{flex: 1, flexDirection: 'row'}}>
                 {/*<View style={{flex: 2, marginTop: 5}}>*/}
                 {/*    <Text style={{color: 'white', marginLeft: 20}}>{t("alllights")}</Text>*/}
                 {/*</View>*/}
-                <View style={{flex: 3, marginRight: 20,marginLeft:20}}>
+                <View style={{flex: 3, marginRight: 20, marginLeft: 20}}>
                     <SwitchSelector
                         hasPadding
                         options={options}
@@ -101,17 +137,25 @@ export const ManuelMod = (props) => {
                         initial={0}
                         onPress={(value) => {
 
+                            //eğer 1 ise all progress i aynen gonder.
+                            //0 ise all progress i değiştirme. tmp bi array yap 0 value ile gonder.
+                            let chval = 0;
+
                             if (value == 1) {
                                 setAllOnOff(1);
+                                let tmp = allProgress.map(x => {return {...x}});
+                                sendAllProgress(tmp);
                             }
                             if (value == 0) {
+                                let tmp = allProgress.map(x => {return {...x, value: 0}});
+                                sendAllProgress(tmp);
                                 setAllOnOff(0);
                             }
-                            if (value ==2) {
+                            if (value == 2) {
                                 // manual mod end
                                 setAllOnOff(-1);
+                                sendAllProgress(allProgress, true);
                             }
-
                         }}
 
                     />
@@ -175,11 +219,10 @@ export const ManuelMod = (props) => {
                 </RadioForm>
             </View>
 
-            <View style={{flex: 4}}>
+            <View style={{flex: 4, paddingLeft: 2}}>
                 <ScrollView style={{marginTop: -40}}>
-                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} delayTime={delay} allOnOff={allOnOff} setAllOnOff={setAllOnOff}></MainProgress>
+                    <MainProgress allProgress={allProgress} setAllProgress={setAllProgress} allOnOff={allOnOff} setAllOnOff={setAllOnOff} ></MainProgress>
                 </ScrollView>
-
             </View>
 
             <View style={{flex: 1, flexDirection: 'row'}}>

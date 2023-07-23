@@ -5,13 +5,11 @@ import TemplateList from "../components/TemplateList";
 import {ManuelMod} from "../components/ManuelMod";
 import {useTranslation} from "react-i18next";
 import {StatusBar} from "expo-status-bar";
-import {useContext, useEffect, useState} from "react";
+import {memo, useContext, useEffect, useState} from "react";
 import {BleContext} from "../../store/ble-context";
 import {MythContext} from "../../store/myth-context";
 import Loading from "../../loading";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
-import appLoading from "expo-app-loading/src/AppLoading";
-
 
 // const renderScene = ({route}) => {
 //     switch (route.key) {
@@ -26,10 +24,23 @@ import appLoading from "expo-app-loading/src/AppLoading";
 
 export const ManuelModTab = () => {
 
-    const renderScene = SceneMap({
-                                     manuelMod: (props) => <ManuelMod {...props} setRefresh={setRefresh} selectedTemplate={selectedTemplate}/>,
-                                     template: (props) => <TemplateList {...props} mod={'manuel'} refresh={refresh} setSelectedTemplate={setSelectedTemplate}/>
-                                 });
+
+    const renderScene = (props) => {
+
+        switch (props.route.key) {
+            case 'manuelMod':
+                return <ManuelMod {...props} setRefresh={setRefresh} selectedTemplate={selectedTemplate}/>;
+            case 'template':
+                return <TemplateList {...props} mod={'manuel'} refresh={refresh} setSelectedTemplate={setSelectedTemplate}/>;
+            default:
+                return null;
+        }
+    };
+
+    // const renderScene = SceneMap({
+    //                                  manuelMod: (props) => <ManuelMod {...props} setRefresh={setRefresh} selectedTemplate={selectedTemplate}/>,
+    //                                  template: (props) => <TemplateList {...props} mod={'manuel'} refresh={refresh} setSelectedTemplate={setSelectedTemplate}/>
+    //                              });
     const [selectedTemplate, setSelectedTemplate] = useState(null);
     const [refresh, setRefresh] = useState(false);
     const layout = useWindowDimensions();
@@ -53,8 +64,6 @@ export const ManuelModTab = () => {
         searchAndConnect();
 
     }, [])
-
-
     const searchAndConnect = () => {
         setLoading(true);
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
@@ -65,7 +74,7 @@ export const ManuelModTab = () => {
                     if (result.find(d => d.id == x.id)) {
                         console.log("I:", x.name + " already connected");
                     } else {
-                        bleCtx.connectDevice(null, x.id).then(res=>{}).catch(er=>{});
+                        bleCtx.connectDevice(null, x.id).then(res => {}).catch(er => {});
                     }
                 })
             });
@@ -95,8 +104,9 @@ export const ManuelModTab = () => {
                 onIndexChange={setIndex}
                 swipeEnabled={false}
                 initialLayout={{width: layout.width}}
-                lazy
             />
         </View>
     );
 }
+
+

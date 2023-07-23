@@ -39,7 +39,6 @@ const TemplateList = (props) => {
             navigation.navigate("simulationdetail", {template: item.value});
         } else {
             props.setSelectedTemplate(item.value);
-            sendAllProgress(item.value);
             props.jumpTo("manuelMod");
         }
     }
@@ -55,17 +54,17 @@ const TemplateList = (props) => {
         bytes[9] = (0x66);
         return bytes;
     }
-    function sendAllProgress(channelValues) {
-
-        if (channelValues.length > 0) {
-            let data = createEmptyArray();
-            data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
-            channelValues.forEach(x => {
-                data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
-            });
-            sendData(data,ctxBle,ctx);
-        }
-    }
+    // function sendAllProgress(channelValues) {
+    //
+    //     if (channelValues.length > 0) {
+    //         let data = createEmptyArray();
+    //         data[2] = props.delayTime ?? 1; // kac dk acık kalacagını dk cinsinden
+    //         channelValues.forEach(x => {
+    //             data[x.channel + 2] = x.value; //0.1.2 kanallar dolu oldugundan...
+    //         });
+    //         sendData(data,ctxBle,ctx);
+    //     }
+    // }
     const deleteTemplate = async (item) => {
         let savedTemplates = await getData(props.mod == "auto" ? "autotemplates" : "manueltemplates");
         let newArray = (savedTemplates.filter(function (t) {
@@ -139,7 +138,8 @@ const styles = StyleSheet.create({
                                      name: {
                                          fontSize: 18,
                                          flex: 1,
-                                         alignSelf: 'flex-start',
-                                         color: '#3399ff'
+                                         alignSelf: 'auto',
+                                         color: '#3399ff',
+                                         paddingLeft:20
                                      }
                                  })
