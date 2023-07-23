@@ -139,7 +139,6 @@ export const ManuelMod = (props) => {
 
                             //eğer 1 ise all progress i aynen gonder.
                             //0 ise all progress i değiştirme. tmp bi array yap 0 value ile gonder.
-                            let chval = 0;
 
                             if (value == 1) {
                                 setAllOnOff(1);

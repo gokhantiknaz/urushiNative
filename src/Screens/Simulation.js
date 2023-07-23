@@ -39,9 +39,7 @@ export const Simulation = (props) => {
     const [actions, setActions] = useState([]);
     const [bytes, setBytes] = useState([]);
     const [issimulationSent, setIsSimulationSent] = useState(false);
-
     const [manuelBytes, setManuelBytes] = useState([]);
-
     const [isRealTime, setIsRealTime] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -257,7 +255,7 @@ export const Simulation = (props) => {
 
         bytes[106] = now.getHours();
         bytes[107] = now.getMinutes();
-        bytes[108] = (0x00); // lunar Mod Off/On
+        bytes[108] = props?.route?.params.lunar; // lunar Mod Off/On
         bytes[109] = (0x66);
         setBytes(bytes);
 
