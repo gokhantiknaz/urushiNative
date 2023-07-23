@@ -29,7 +29,7 @@ export const ManuelModTab = () => {
 
         switch (props.route.key) {
             case 'manuelMod':
-                return <ManuelMod {...props} setRefresh={setRefresh} selectedTemplate={selectedTemplate}/>;
+                return <ManuelMod {...props} setRefresh={setRefresh} selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate}/>;
             case 'template':
                 return <TemplateList {...props} mod={'manuel'} refresh={refresh} setSelectedTemplate={setSelectedTemplate}/>;
             default:

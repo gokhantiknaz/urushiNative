@@ -255,7 +255,7 @@ export const Simulation = (props) => {
 
         bytes[106] = now.getHours();
         bytes[107] = now.getMinutes();
-        bytes[108] = props?.route?.params.lunar; // lunar Mod Off/On
+        bytes[108] = (0x00);// props?.route?.params.lunar; // lunar Mod Off/On
         bytes[109] = (0x66);
         setBytes(bytes);
 

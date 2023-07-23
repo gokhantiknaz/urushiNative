@@ -119,6 +119,8 @@ export const ManuelMod = (props) => {
 
             sendData(data, ctxBle, ctx);
         }
+
+        props.setSelectedTemplate(null);
     }
 
 
