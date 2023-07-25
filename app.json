@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gokhantiknaz.MythLights"
+      "bundleIdentifier": "com.gokhantiknaz.MythLightsTest"
     },
     "android": {
       "adaptiveIcon": {

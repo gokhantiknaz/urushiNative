@@ -243,7 +243,7 @@ export const Simulation = (props) => {
         bytes[0] = (0x65);
         bytes[1] = (0x01);
 
-        // 1.Kanal byte[2]]
+        // 1.Kanal byte[2]
         // 2.Kanal byte[15]
         // 3.Kanal byte[28]
         // 4.Kanal byte[41]
@@ -255,7 +255,7 @@ export const Simulation = (props) => {
 
         bytes[106] = now.getHours();
         bytes[107] = now.getMinutes();
-        bytes[108] = (0x00);// props?.route?.params.lunar; // lunar Mod Off/On
+        bytes[108] = props?.route?.params.lunar; // lunar Mod Off/On
         bytes[109] = (0x66);
         setBytes(bytes);
 

@@ -23,10 +23,7 @@ import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 // };
 
 export const ManuelModTab = () => {
-
-
     const renderScene = (props) => {
-
         switch (props.route.key) {
             case 'manuelMod':
                 return <ManuelMod {...props} setRefresh={setRefresh} selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate}/>;
@@ -37,10 +34,6 @@ export const ManuelModTab = () => {
         }
     };
 
-    // const renderScene = SceneMap({
-    //                                  manuelMod: (props) => <ManuelMod {...props} setRefresh={setRefresh} selectedTemplate={selectedTemplate}/>,
-    //                                  template: (props) => <TemplateList {...props} mod={'manuel'} refresh={refresh} setSelectedTemplate={setSelectedTemplate}/>
-    //                              });
     const [selectedTemplate, setSelectedTemplate] = useState(null);
     const [refresh, setRefresh] = useState(false);
     const layout = useWindowDimensions();

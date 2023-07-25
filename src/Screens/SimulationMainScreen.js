@@ -1,4 +1,4 @@
-import {Image, View, StyleSheet, ImageBackground, useWindowDimensions, Text, TouchableOpacity, TextInput, Alert} from "react-native";
+import {Image, View, StyleSheet, ImageBackground, useWindowDimensions, Text, TouchableOpacity, TextInput, Alert, Switch} from "react-native";
 import images from "../images/images";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
@@ -11,8 +11,6 @@ import {MythContext} from "../../store/myth-context";
 import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 import {CheckBox} from '@rneui/themed';
-import {ManuelMod} from "../components/ManuelMod";
-
 
 const SimulationMainScreen = ({navigation}) => {
 
@@ -22,6 +20,7 @@ const SimulationMainScreen = ({navigation}) => {
     const ctx = useContext(MythContext);
     const [isRealTime, setIsRealTime] = useState(false);
     const [lunar, setLunar] = useState(0);
+    const [indexLunar,setIndexLunar] = useState(1);
     const toggleCheckbox = () => setIsRealTime(!isRealTime);
 
     useEffect(() => {
@@ -37,6 +36,10 @@ const SimulationMainScreen = ({navigation}) => {
             setlightdetail(tmp);
         }
     }, [])
+
+    const options = [
+        {label: t("off"), value: 0}, {label: t("on"), value: 1}
+    ];
     const MainScreen = () => {
         return <>
             <View style={styles.container}>
@@ -50,8 +53,10 @@ const SimulationMainScreen = ({navigation}) => {
                             options={options}
                             //textStyle={{backgroundColor:'#AA3D0' }}
                             buttonColor='rgb(223,135,29)'
-                            initial={0}
+                            initial={indexLunar}
+                            value={indexLunar}
                             onPress={(value) => {
+                                setIndexLunar(value);
                                 setLunar(value);
                             }}
                         />
@@ -142,13 +147,6 @@ const SimulationMainScreen = ({navigation}) => {
                 </View>
             </View></>
     }
-    // const renderScene = SceneMap({
-    //                                  // auto: MainScreen,
-    //                                  // templates: () => <TemplateList mod={'auto'}/>,
-    //                                  auto: (props) => <MainScreen {...props} setRefresh={setRefresh} />,
-    //                                  templates: (props) => <TemplateList {...props} mod={'auto'} refresh={refresh}/>
-    //                              });
-
     const renderScene = (props) => {
 
         switch (props.route.key) {
@@ -169,9 +167,7 @@ const SimulationMainScreen = ({navigation}) => {
                                         {key: 'templates', title: t('templates')},
                                     ]);
 
-    const options = [
-        {label: t("on"), value: 1}, {label: t("off"), value: 0}
-    ];
+
     const renderTabBar = props => (
         <TabBar
             {...props}
