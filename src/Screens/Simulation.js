@@ -1,11 +1,11 @@
 import React, {useContext, useDebugValue, useEffect, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {ImageBackground, StyleSheet, Text, View, Button, TouchableOpacity, Alert} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View, Button, TouchableOpacity, Alert, BackHandler} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SettingsChartScreen from "../components/SettingsChartScreen";
 import RadioForm from "react-native-simple-radio-button";
 import {FloatingAction} from "react-native-floating-action";
-import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
+import {getAllKeys, getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
 import {createEmptyArrayManuel, findArrayElementById, getDateFromHours, minToTime, sendData} from "../utils";
@@ -23,7 +23,7 @@ export const Simulation = (props) => {
     const ctx = useContext(MythContext);
     const [t] = useTranslation();
     const ctxBle = useContext(BleContext);
-    const DUMMY_DATA = [
+    let DUMMY_DATA = [
         // <--- This is the data that is being used to create the draggable dots
         {power: 0, time: 480, color: "lightsalmon"},
         {power: 90, time: 720, color: "darkorange"},
@@ -38,16 +38,41 @@ export const Simulation = (props) => {
     const [data, setData] = useState({Channel: -1, Point: null});
     const [actions, setActions] = useState([]);
     const [bytes, setBytes] = useState([]);
-    const [issimulationSent, setIsSimulationSent] = useState(false);
     const [manuelBytes, setManuelBytes] = useState([]);
     const [isRealTime, setIsRealTime] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [activeSim, setActiveSim] = useState(null);
+    const [isSimSent, setisSimSent] = useState(false);
+    const [subModel, setSubModel] = useState({});
+    const [background, setBackground] = useState(require("../../assets/bg.jpg"));
 
     useEffect(() => {
+        let activeTmp = [];
+        const getActiveSim = async () => {
+            try {
+                const active = await getData("activeSim");
+                activeTmp = active;
+                setActiveSim(active);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getActiveSim();
 
         let params = props?.route?.params
+        let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
+        let tmpPoints = [];
+        let tmpactions = [];
+
         if (params.template) {
+            tmpPoints = params.template;
             setAllPoints(params.template);
+        }
+
+        if (params.activePoints) {
+            tmpPoints = params.activePoints;
+            setAllPoints(params.activePoints);
         }
 
         if (params.isRealTime) {
@@ -56,63 +81,83 @@ export const Simulation = (props) => {
 
         setManuelBytes(createEmptyArrayManuel(true, null, null, 10));
 
-        let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
-        let tmpactions = [];
+        if (model && model.SubModels) {
+            let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+            setSubModel(subModel);
+            if (tmpPoints.length == 0) {
+                subModel?.Channels.forEach(ch => {
+                    tmpPoints.push({Channel: ch.Channel, Point: DUMMY_DATA});
+                });
+
+                setAllPoints(tmpPoints);
+            }
+
+            subModel.Channels.map(x => {
+                tmpactions.push({text: x.label, icon: images.newLogo, name: x.label, position: 3, id: x.value, background: x.background});
+            });
+        }
 
         tmpactions.push({
                             text: "Send",
                             icon: require("../../assets/blue-check.png"),
                             name: "bt_send",
                             position: 1,
-                            id: 98
+                            id: 98,
+
                         });
         tmpactions.push({
                             text: "Save",
                             icon: require("../../assets/saveIcon.png"),
                             name: "bt_save",
                             position: 2,
-                            id: 99
-                        });
+                            id: 99,
 
+                        });
         tmpactions.push({
                             text: "Back",
                             icon: require("../../assets/back.png"),
                             name: "bt_back",
                             position: 20,
-                            id: 100
+                            id: 100,
                         });
-        if (model && model.SubModels) {
-
-            let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
-            let tmpallpoints = [...allPoints];
-            if (params.template) {
-                tmpallpoints = params.template;
-            }
-            subModel?.Channels.forEach(ch => {
-                const index = tmpallpoints.findIndex(
-                    x => ch.Channel === x.Channel
-                );
-                if (index === -1) {
-                    tmpallpoints.push({Channel: ch.Channel, Point: DUMMY_DATA});
-                }
-            })
-            setAllPoints(tmpallpoints);
-
-            subModel.Channels.map(x => {
-                tmpactions.push({text: x.label, icon: images.newLogo, name: x.label, position: 3, id: x.value});
-            });
-        }
 
         setChannelName("Royal");
         setChannel(1);
         setActions(tmpactions);
         createEmptyArray();
-
         searchAndConnect();
 
-        return () => {
 
-        }
+        const backAction = () => {
+            Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                {
+                    text: 'YES', onPress: () => {
+                        if (!isSimSent && activeSim) {
+                            let activeTmp = [...activeSim];
+                            activeTmp[106] = new Date().getHours();
+                            activeTmp[107] = new Date().getMinutes();
+                            sendData(activeTmp, ctxBle, ctx);
+                        }
+                        props.navigation.goBack();
+                    }
+                },
+            ]);
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+
+
     }, [])
 
     useEffect(() => {
@@ -120,6 +165,12 @@ export const Simulation = (props) => {
         if (selectedChannelPoint.length > 0) {
             setData(selectedChannelPoint[0]);
         }
+        if (subModel && subModel.Channels) {
+            let subBackground = findArrayElementById(subModel?.Channels, selectedChannel, "Channel");
+
+            setBackground(subBackground.background);
+        }
+
     }, [selectedChannel])
 
     useEffect(() => {
@@ -190,7 +241,7 @@ export const Simulation = (props) => {
         return Math.round(power);
     }
 
-    const sendSimulation = () => {
+    const sendSimulation = async () => {
         let tmpallpoints = [...allPoints];
         let data = [...bytes];
         let byteSira = 1;
@@ -207,31 +258,51 @@ export const Simulation = (props) => {
             });
         });
         setBytes(data);
-        setIsSimulationSent(true);
-        sendData(data, ctxBle, ctx);
+
+        await removeItem("activeSim");
+        await saveData("activeSim", data);
+
+        await removeItem("activePoints");
+        await saveData("activePoints", allPoints);
+
+        setisSimSent(true);
+        await sendData(data, ctxBle, ctx);
     }
     const searchAndConnect = async () => {
         setLoading(true);
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+            let connectedDevices= await ctxBle.getBleManagerConnectedDevices();
             ctx.aquarium.deviceList.forEach(x => {
                 //baglı değilse.
-                ctxBle.getBleManagerConnectedDevices().then(result => {
-                    if (result.find(d => d.id == x.id)) {
-                        console.log("I:", x.name + " already connected");
-                    } else {
-                        ctxBle.connectDevice(null, x.id).then(result => {
-                            console.log("I:", x.name + " connected");
-                        }).catch(error => {
-                            console.log("connect device error:", error);
-                        });
-                    }
-                    showMessage(x.name + " device Connected", "load")
-                }).catch(error => {
-                    console.log("getconnecteddevice error", error);
-                })
+                if(connectedDevices.find(d => d.id == x.id))
+                    console.log("I:", x.name + " already connected");
+                else
+                {
+                    ctxBle.connectDevice(null, x.id).then(result => {
+                        console.log("I:", x.name + " connected");
+                    }).catch(error => {
+                        console.log("connect device error:", error);
+                    });
+                }
+                // ctxBle.getBleManagerConnectedDevices().then(result => {
+                //     if (result.find(d => d.id == x.id)) {
+                //         console.log("I:", x.name + " already connected");
+                //     } else {
+                //         ctxBle.connectDevice(null, x.id).then(result => {
+                //             console.log("I:", x.name + " connected");
+                //         }).catch(error => {
+                //             console.log("connect device error:", error);
+                //         });
+                //     }
+                //     showMessage(x.name + " device Connected", "load")
+                // }).catch(error => {
+                //     console.log("getconnecteddevice error", error);
+                // })
             })
 
             setTimeout(function () { setLoading(false);}, ctx.aquarium.deviceList.length * 1000)
+        } else {
+            setLoading(false);
         }
     }
     const createEmptyArray = () => {
@@ -308,10 +379,11 @@ export const Simulation = (props) => {
         <View style={styles.container}>
             <StatusBar hidden={true}></StatusBar>
             <ImageBackground
-                source={require("../../assets/bg.jpg")}
+                // source={require("../../assets/bg.jpg")}
+                source={background}
                 resizeMode='cover'
                 style={{width: "100%", height: "100%"}}>
-                <SettingsChartScreen data={data.Point} setPoints={setPoints} channel={channelName}/>
+                <SettingsChartScreen data={data.Point} setPoints={setPoints} channel={channelName} bg={selectedChannel.background}/>
             </ImageBackground>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => {setActiveChannel("prev")}}>
@@ -331,25 +403,28 @@ export const Simulation = (props) => {
                         setChannelName(name);
                     }
 
-                    if (tmp.id > 90) {
-                        if (tmp.id == 99) {
-                            SheetManager.show("savetemplate", {
-                                payload: {value: t("templatename")},
-                            }).then(result => {
-                                // console.log(result);
-                                if (result && result.length > 0) {
-                                    saveTemplate(result);
-                                }
-                            });
-                        } else {
-                            if (tmp.id == 100) {
-                                props.navigation.goBack();
+                    if (tmp.id == 98) {
+                        //let obj = {Channel: selectedChannel, Point: points};
+                        sendSimulation();
+                    }
+                    if (tmp.id == 99) {
+                        SheetManager.show("savetemplate", {
+                            payload: {value: t("templatename")},
+                        }).then(result => {
+                            if (result && result.length > 0) {
+                                saveTemplate(result);
                             }
-                            if (tmp.id == 98) {
-                                //let obj = {Channel: selectedChannel, Point: points};
-                                sendSimulation();
-                            }
+                        });
+                    }
+                    if (tmp.id == 100) {
+
+                        if (!isSimSent) {
+                            let activeTmp = [...activeSim];
+                            activeTmp[106] = new Date().getHours();
+                            activeTmp[107] = new Date().getMinutes();
+                            sendData(activeTmp, ctxBle, ctx);
                         }
+                        props.navigation.goBack();
                     }
                 }}
             />

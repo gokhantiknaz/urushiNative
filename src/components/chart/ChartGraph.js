@@ -1,7 +1,7 @@
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Dimensions, StyleSheet, Text, View} from "react-native";
 import {Extrapolation, interpolate} from "react-native-reanimated";
-import Svg, {Defs, Path, RadialGradient, Rect, Stop} from "react-native-svg";
+import Svg, {Defs, Path, RadialGradient, Rect, Stop, TextPath} from "react-native-svg";
 
 const {width, height} = Dimensions.get("window");
 
@@ -22,7 +22,7 @@ const interpolateValue2Pos = (power = 0, time = 0) => {
     }
 };
 
-const ChartGraph = ({data}) => {
+const ChartGraph = ({data, channel}) => {
     const [points, setPoints] = useState([{x: 0, y: 0}]);
     const [lines, setLines] = useState("");
 
@@ -50,17 +50,20 @@ const ChartGraph = ({data}) => {
     }, [points]);
 
     return (
-        <View style={styles.graph}>
-            <Svg
-                height="100%"
-                width="100%">
-                <Path
-                    d={lines}
-                    stroke="purple"
-                    strokeWidth="2"
-                    fill="gray"
-                />
-            </Svg>
+            <View style={styles.graph}>
+
+                <Svg
+                    height="100%"
+                    width="100%">
+                    <Path
+                        d={lines}
+                        stroke="purple"
+                        strokeWidth="2"
+                        fill="gray"
+                    />
+                    <Text style={{color: "#36A191", fontSize: 50, marginTop: 50, alignSelf: "center"}}>{channel}</Text>
+                </Svg>
+
         </View>
     );
 };

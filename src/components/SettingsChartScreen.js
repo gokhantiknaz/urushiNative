@@ -32,6 +32,7 @@ const SettingsChartScreen = (props) => {
     const [showTimePicker, setShowTimePicker] = useState(false);
     const [currentDate, setCurrentDate] = useState({date: new Date(), index: -1});
 
+
     //convert data to points to be used in DraggableDot
     useEffect(() => {
         // @ts-ignore
@@ -115,7 +116,7 @@ const SettingsChartScreen = (props) => {
 
                     <LeftTimeBar layout={chartLayout}/>
                     <ValueBar layout={chartLayout}/>
-                    <ChartGraph data={points.values}/>
+                    <ChartGraph data={points.values} channel={props.channel}/>
                     {points.values.map((point, index) => {
                         return (
                             <DraggableDot
@@ -131,7 +132,6 @@ const SettingsChartScreen = (props) => {
                         );
                     })}
 
-                    <Text style={{color: 'red'}}>{props.channel}</Text>
                 </View>
             </GestureHandlerRootView>
 

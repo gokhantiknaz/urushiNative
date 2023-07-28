@@ -95,8 +95,6 @@ export const ManuelMod = (props) => {
     }, [allProgress])
 
     function sendAllProgress(newState, stopManuelChannel) {
-
-        console.log("asasda",allOnOff,allProgress);
         if (allOnOff == 99) {
             return;
         }

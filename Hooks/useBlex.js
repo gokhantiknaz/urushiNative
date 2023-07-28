@@ -134,11 +134,11 @@ const useBlex = () => {
         // device secili akv.a ait değilse disconnect all devam et.
         const dataToSend = base64.encodeFromByteArray(data);
         _BleManager.writeCharacteristicWithoutResponseForDevice(deviceID, (serviceUUID ?? SERVICE_UUID), CHARACTERISTIC_UUID, dataToSend).then(device => {
-                                                                                                                                                   console.log("sendDatatoDevice", deviceID, data);
+                                                                                                                                                   // console.log("sendDatatoDevice", deviceID, data);
                                                                                                                                                }
         ).catch(err => {
                     console.log("sendDatatoDevice Error", err);
-                    throw  err;
+                    throw err;
                 }
         );
     }
@@ -149,17 +149,20 @@ const useBlex = () => {
             return;
         }
         const deviceID = id ? id : device.id
-        _BleManager.monitorCharacteristicForDevice(deviceID, SERVICE_UUID, CHARACTERISTIC_UUID, (error, characteristic) => {
-            if (error) {
-                console.log("readNotifications Error", error);
-                return;
-            }
-            if (characteristic) {
-                console.log("readNotifications", characteristic.deviceID, base64.decode(characteristic.value))
-                setReceviedData(base64.decode(characteristic.value))
-                return characteristic
-            }
-        })
+        let connecteds = await getBleManagerConnectedDevices();
+        if (connecteds.find(x => x.id == device.id)) {
+            _BleManager.monitorCharacteristicForDevice(deviceID, SERVICE_UUID, CHARACTERISTIC_UUID, (error, characteristic) => {
+                if (error) {
+                    console.log("readNotifications Error", error);
+                    return;
+                }
+                if (characteristic) {
+                    console.log("readNotifications", characteristic.deviceID, base64.decode(characteristic.value))
+                    setReceviedData(base64.decode(characteristic.value))
+                    return characteristic
+                }
+            })
+        }
     }
     const getBleManagerConnectedDevices = async () => { //get connected devices
         try {

@@ -4,7 +4,7 @@
     "slug": "MythLights",
     "version": "1.0.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "Light",
+    "userInterfaceStyle": "light",
     "icon": "./assets/newIcon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -21,7 +21,6 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/newIcon.png",
-        "resizeMode": "cover",
         "backgroundColor": "#ffffff"
       },
       "package": "com.gokhantiknaz.MythLightsTest",

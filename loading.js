@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
                                          flexDirection: 'column',
                                          justifyContent: "space-around",
                                          alignItems: "center",
+                                         backgroundColor:"black"
 
                                      },
                                      container1: {

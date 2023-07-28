@@ -57,19 +57,33 @@ export const ManuelModTab = () => {
         searchAndConnect();
 
     }, [])
-    const searchAndConnect = () => {
+    const searchAndConnect = async () => {
         setLoading(true);
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
+            let connectedDevices= await bleCtx.getBleManagerConnectedDevices();
             showMessage(" Connecting devices", "load");
+
+
             ctx.aquarium.deviceList.forEach(x => {
                 //baglı değilse.
-                bleCtx.getBleManagerConnectedDevices().then(result => {
-                    if (result.find(d => d.id == x.id)) {
-                        console.log("I:", x.name + " already connected");
-                    } else {
-                        bleCtx.connectDevice(null, x.id).then(res => {}).catch(er => {});
-                    }
-                })
+                // bleCtx.getBleManagerConnectedDevices().then(result => {
+                //     if (result.find(d => d.id == x.id)) {
+                //         console.log("I:", x.name + " already connected");
+                //     } else {
+                //         bleCtx.connectDevice(null, x.id).then(res => {}).catch(er => {});
+                //     }
+                // })
+
+                if(connectedDevices.find(d => d.id == x.id))
+                    console.log("I:", x.name + " already connected");
+                else
+                {
+                    bleCtx.connectDevice(null, x.id).then(result => {
+                        console.log("I:", x.name + " connected");
+                    }).catch(error => {
+                        console.log("connect device error:", error);
+                    });
+                }
             });
 
             setTimeout(function () { setLoading(false);}, ctx.aquarium.deviceList.length * 1000)

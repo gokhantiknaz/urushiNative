@@ -11,6 +11,7 @@ import {MythContext} from "../../store/myth-context";
 import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 import {CheckBox} from '@rneui/themed';
+import {getAllKeys, getData, removeItem} from "../../data/useAsyncStorage";
 
 const SimulationMainScreen = ({navigation}) => {
 
@@ -20,7 +21,8 @@ const SimulationMainScreen = ({navigation}) => {
     const ctx = useContext(MythContext);
     const [isRealTime, setIsRealTime] = useState(false);
     const [lunar, setLunar] = useState(0);
-    const [indexLunar,setIndexLunar] = useState(1);
+    const [indexLunar, setIndexLunar] = useState(1);
+    const [activePoints, setActivePoints] = useState([]);
     const toggleCheckbox = () => setIsRealTime(!isRealTime);
 
     useEffect(() => {
@@ -35,6 +37,12 @@ const SimulationMainScreen = ({navigation}) => {
             tmp.activeChannels = subModel.Channels.length;
             setlightdetail(tmp);
         }
+
+        getData("activePoints").then(result => {
+            if (result != null) {
+                setActivePoints(result);
+            }
+        });
     }, [])
 
     const options = [
@@ -65,7 +73,8 @@ const SimulationMainScreen = ({navigation}) => {
                 <TouchableOpacity style={{flex: 2}} onPress={() => {
                     navigation.navigate("simulationdetail", {
                         isRealTime: isRealTime,
-                        lunar: lunar
+                        lunar: lunar,
+                        activePoints: activePoints
                     })
                 }}>
                     <Image style={{flex: 2, height: '100%', width: '100%', resizeMode: 'contain'}} source={images.simulation}/>

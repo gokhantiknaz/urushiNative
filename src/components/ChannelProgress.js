@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View} from "react-native";
 import {useEffect, useState} from "react";
-import MotionSlider from 'react-native-motion-slider';
 import {Slider} from "@rneui/base";
 
 

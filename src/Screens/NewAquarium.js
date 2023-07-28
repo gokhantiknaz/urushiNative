@@ -1,19 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import {View, TextInput, Button, StyleSheet, Text, Alert, Dimensions, ImageBackground, ScrollView} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-
 import Button_1 from "../components/button1";
-import firebaseConfig from "../firebase/firebaseConfig";
-import {db, collection, addDoc} from "../firebase/firebase-utilities";
 import DeviceList from "../components/DeviceList";
 import ImageSelect from "../components/ImagePicker";
-import {clearStorage, getAllKeys, getData, removeItem, saveData} from "../../data/useAsyncStorage";
-import {mergeData} from "../../data/useAsyncStorage/useAsyncStorage";
+import { getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import images from "../images/images";
-import colors from "../components/colors";
 import {useTranslation} from "react-i18next";
-
-import Dialog from "react-native-dialog";
 import {StatusBar} from "expo-status-bar";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 import {findArrayElementById} from "../utils";

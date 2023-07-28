@@ -76,12 +76,12 @@ export const Models = [
         id: 1, name: "IKIGAI", serviceUUId: "4fafc201-1fb5-459e-8fcc-c5c9c331914b", SubModels: [
             {
                 id: 1, Model: "A", Name: 'Standart', Channels: [
-                    {label: "Royal", value: 1, Channel: 1},
-                    {label: "Blue", value: 2, Channel: 2},
-                    {label: "Cyan+", value: 3, Channel: 3},
-                    {label: "Actinic+", value: 4, Channel: 4},
-                    {label: "He White", value: 5, Channel: 5},
-                    {label: "Magenta +", value: 6, Channel: 6}
+                    {label: "Royal", value: 1, Channel: 1, background:require("../assets/simBg/blue.jpg")},
+                    {label: "Blue", value: 2, Channel: 2,background:require("../assets/simBg/royalBlue.jpg")},
+                    {label: "Cyan+", value: 3, Channel: 3,background:require("../assets/simBg/cyan.jpg")},
+                    {label: "Actinic+", value: 4, Channel: 4,background:require("../assets/simBg/actinic.jpg")},
+                    {label: "He White", value: 5, Channel: 5,background:require("../assets/simBg/white.jpg")},
+                    {label: "Magenta +", value: 6, Channel: 6, background:require("../assets/simBg/magenta.jpg")}
                 ]
             },
 
