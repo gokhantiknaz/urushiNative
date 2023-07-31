@@ -7,7 +7,7 @@
     "userInterfaceStyle": "light",
     "icon": "./assets/newIcon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash.jpg",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
@@ -16,14 +16,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gokhantiknaz.MythLightsTest"
+      "bundleIdentifier": "com.gokhantiknaz.MythLights"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/newIcon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gokhantiknaz.MythLightsTest",
+      "package": "com.gokhantiknaz.MythLights",
       "permissions": [
         "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_ADMIN",

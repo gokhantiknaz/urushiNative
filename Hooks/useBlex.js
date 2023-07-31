@@ -18,6 +18,7 @@ const useBlex = () => {
     const [devices, setDevices] = useState([]);
     const [connectedDevice, setConnectedDevice] = useState(null);
     const [receviedData, setReceviedData] = useState();
+    const [foundDevice, setFoundDevice] = useState(null);
 
     const ModelIdArray = [SERVICE_UUID, SERVICE_UUID2, SERVICE_UUID3, SERVICE_UUID4];
 
@@ -84,11 +85,9 @@ const useBlex = () => {
                                             console.log("Scan", error);
                                         }
                                         if (device && device.name) {
+                                            setFoundDevice(device);
                                             setDevices((prevState) => {
                                                 if (!isDuplicteDevice(prevState, device)) {
-                                                    // console.log("Device", device.id, device.name);
-                                                    // console.log("uuid:", device.serviceUUIDs);
-                                                    //MYTH IKG MIA111230001
                                                     return [...prevState, device];
                                                 }
                                                 return prevState;
@@ -107,7 +106,9 @@ const useBlex = () => {
         _BleManager.stopDeviceScan();
 
         const options = {
-            autoConnect: false,
+            autoConnect: true,
+            //When set to false the OS connects to a device on highest available duty cycle but if the device is not available in 30 seconds the connection fails.
+            //When set to true the OS periodically checks if the device is available and connects to it as soon as it is scanned. There is no timeout involved but the scan window is quite small to preserve battery. Usually this takes longer than if called with autoConnect=false if the device is advertising nearby. There is one difference from the Android vanilla API: in the vanilla API if the device has been connected with autoConnect=true and later will get disconnected, a reconnect attempt will happen automatically without the user interaction—this is not the case when using this library.
             requestMTU: 128,
             timeout: 60000
         };
@@ -192,7 +193,8 @@ const useBlex = () => {
             getBleManagerConnectedDevices,
             stopScan,
             disconnectDeviceByDevice,
-            receviedData
+            receviedData,
+            foundDevice
         }
     )
 }

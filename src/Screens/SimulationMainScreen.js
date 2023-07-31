@@ -16,7 +16,7 @@ import {getAllKeys, getData, removeItem} from "../../data/useAsyncStorage";
 const SimulationMainScreen = ({navigation}) => {
 
     const [t] = useTranslation();
-    const [lightDetail, setlightdetail] = useState({activeChannels: 0, sunRise: "08:00", night: "24:00", activeHours: 0, maxPar: 0, maxLumen: 0});
+    const [lightDetail, setlightdetail] = useState({activeChannels: 6, sunRise: "08:00", night: "24:00", activeHours: 0, maxPar: 0, maxLumen: 0});
     const [refresh, setRefresh] = useState(false);
     const ctx = useContext(MythContext);
     const [isRealTime, setIsRealTime] = useState(false);
@@ -35,6 +35,14 @@ const SimulationMainScreen = ({navigation}) => {
             let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
             let tmp = {...lightDetail};
             tmp.activeChannels = subModel.Channels.length;
+
+            getData("activeSim").then(result=>{
+                console.log(result);
+                tmp.sunRise="14:00";
+                tmp.night="23:59";
+                //TODO buradan başlama bitiş saatlerini al
+            });
+
             setlightdetail(tmp);
         }
 

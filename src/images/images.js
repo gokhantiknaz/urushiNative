@@ -1,5 +1,5 @@
 export default {
-    background: require('../../assets/background.png'),
+    background: require('../../assets//myth/background.png'),
     background2: require('../../assets/bg.jpg'),
     undercons: require('./under_construction.jpg'),
     delete: require('../../assets/delete.png'),

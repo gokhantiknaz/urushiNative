@@ -10,13 +10,14 @@ import {MythContext} from "../../store/myth-context";
 import {Models} from "../../data/Model";
 import {createEmptyArrayManuel, findArrayElementById, getDateFromHours, minToTime, sendData} from "../utils";
 import {Icon} from '@rneui/themed';
-import {BleContext} from "../../store/ble-context";
+import bleContext, {BleContext} from "../../store/ble-context";
 import {useTranslation} from "react-i18next";
 import {SheetManager} from "react-native-actions-sheet";
 import {useIsMounted} from "../../Hooks/useIsMounted";
 import images from "../images/images";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 import Loading from "../../loading";
+import deviceList from "../components/DeviceList";
 
 export const Simulation = (props) => {
 
@@ -45,8 +46,36 @@ export const Simulation = (props) => {
     const [isSimSent, setisSimSent] = useState(false);
     const [subModel, setSubModel] = useState({});
     const [background, setBackground] = useState(require("../../assets/bg.jpg"));
+    const [scanForDevices, setScanForDevices] = useState(false);
 
     useEffect(() => {
+        const isAllConnected = async () => {
+            let allConnected = true;
+            let connected = await ctxBle.getBleManagerConnectedDevices();
+
+            ctx.aquarium.deviceList.forEach(x => {
+                if (connected.find(a => a.id == x.id)) {
+
+                } else {
+                    allConnected = false;
+                }
+            });
+
+            return allConnected;
+        }
+
+        isAllConnected().then(result => {
+            setScanForDevices(!result);
+            if (!result) {
+                const stopTimer = setTimeout(() => {
+                    ctxBle.stopScan();
+                    setLoading(false);
+                    clearTimeout(stopTimer);
+                }, ctx.aquarium.deviceList.length * 4000);
+                ctxBle.startScan();
+            }
+        });
+
         let activeTmp = [];
         const getActiveSim = async () => {
             try {
@@ -125,9 +154,7 @@ export const Simulation = (props) => {
         setChannel(1);
         setActions(tmpactions);
         createEmptyArray();
-        searchAndConnect();
-
-
+        // searchAndConnect();
         const backAction = () => {
             Alert.alert('Hold on!', 'Are you sure you want to go back?', [
                 {
@@ -137,13 +164,7 @@ export const Simulation = (props) => {
                 },
                 {
                     text: 'YES', onPress: () => {
-                        if (!isSimSent && activeSim) {
-                            let activeTmp = [...activeSim];
-                            activeTmp[106] = new Date().getHours();
-                            activeTmp[107] = new Date().getMinutes();
-                            sendData(activeTmp, ctxBle, ctx);
-                        }
-                        props.navigation.goBack();
+                        goBack();
                     }
                 },
             ]);
@@ -156,7 +177,6 @@ export const Simulation = (props) => {
         );
 
         return () => backHandler.remove();
-
 
     }, [])
 
@@ -271,13 +291,12 @@ export const Simulation = (props) => {
     const searchAndConnect = async () => {
         setLoading(true);
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
-            let connectedDevices= await ctxBle.getBleManagerConnectedDevices();
+            let connectedDevices = await ctxBle.getBleManagerConnectedDevices();
             ctx.aquarium.deviceList.forEach(x => {
                 //baglı değilse.
-                if(connectedDevices.find(d => d.id == x.id))
+                if (connectedDevices.find(d => d.id == x.id)) {
                     console.log("I:", x.name + " already connected");
-                else
-                {
+                } else {
                     ctxBle.connectDevice(null, x.id).then(result => {
                         console.log("I:", x.name + " connected");
                     }).catch(error => {
@@ -305,6 +324,61 @@ export const Simulation = (props) => {
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        if (!scanForDevices) {
+            return;
+        }
+        if (ctxBle.devices.length == 0) {
+            return;
+        }
+
+        let deviceList = [...ctx.aquarium.deviceList];
+
+        setLoading(true);
+
+        console.log("found:", ctxBle.foundDevice.id);
+        const searchThenConnect = async () => {
+
+            // bağlı ise search te bulunmayacak.
+            let selected = findArrayElementById(deviceList, ctxBle.foundDevice.id, "id");
+            let index = ctx.aquarium.deviceList.findIndex(x => x.id == selected.id);
+            let connectedList = await ctxBle.getBleManagerConnectedDevices();
+
+            // bulunan cihaz kayıtlı armatürlerde varsa
+
+            selected.connected = false;
+            selected.online = false;
+
+            if (ctxBle.foundDevice.id == selected.id) {
+                selected.online = true;
+            }
+            if (selected) {
+                if (connectedList.find(a => a.id == ctxBle.foundDevice)) {
+                    selected.connected = true;
+                    console.log("I:", ctxBle.foundDevice.id + " already connected");
+                } else {
+                    ctxBle.connectDevice(null, ctxBle.foundDevice.id).then(result => {
+                        selected.connected = true;
+                        console.log("I:", ctxBle.foundDevice.id + " connected");
+                    }).catch(error => {
+                        console.log("connect device error:", error);
+                    });
+                }
+
+                deviceList[index] = selected
+                let newAq = {...ctx.aquarium, deviceList: deviceList};
+                ctx.setAquarium(newAq);
+            }
+        }
+
+        searchThenConnect().then(result => {
+
+        }).catch(error => {
+            console.log(error);
+        });
+    }, [ctxBle.devices, scanForDevices])
+
     const createEmptyArray = () => {
         let bytes = [];
         let now = new Date();
@@ -372,8 +446,20 @@ export const Simulation = (props) => {
         Alert.alert(t("Success"), t("Success"));
     }
 
+    function goBack() {
+        if (!isSimSent && activeSim) {
+            let activeTmp = [...activeSim];
+            if (activeTmp) {
+                activeTmp[106] = new Date().getHours();
+                activeTmp[107] = new Date().getMinutes();
+                sendData(activeTmp, ctxBle, ctx);
+            }
+        }
+        props.navigation.goBack();
+    }
+
     if (loading) {
-        return <Loading>{<Text>Connecting to saved devices</Text>}</Loading>
+        return <Loading>{<Text style={{color:"white"}}>Connecting to devices...</Text>}</Loading>
     }
     return (
         <View style={styles.container}>
@@ -418,13 +504,7 @@ export const Simulation = (props) => {
                     }
                     if (tmp.id == 100) {
 
-                        if (!isSimSent) {
-                            let activeTmp = [...activeSim];
-                            activeTmp[106] = new Date().getHours();
-                            activeTmp[107] = new Date().getMinutes();
-                            sendData(activeTmp, ctxBle, ctx);
-                        }
-                        props.navigation.goBack();
+                        goBack();
                     }
                 }}
             />

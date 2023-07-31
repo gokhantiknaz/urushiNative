@@ -1,5 +1,3 @@
-import {useContext} from "react";
-import {BleContext} from "../store/ble-context";
 import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 
 export function findArrayElementById(array, id, findBy) {
@@ -54,10 +52,14 @@ export const createEmptyArrayManuel = (isSimulation, channel, value, delayTime) 
 }
 
 export const sendData = async (data, ctxBle, ctx) => {
-  //  console.log("sending data from utils:", data);
+    //  console.log("sending data from utils:", data);
     ctxBle.getBleManagerConnectedDevices().then(devices => {
-        if(devices.length===0)
+
+        if(ctx.aquarium.deviceList.length!=devices.length)
         {
+            showMessage("Tüm Cihazlara Bağlanılamadı.Lütfen cihazın açık olduğundan emin olun.");
+        }
+        if (devices.length === 0) {
             console.log("no devices");
             showMessage("Cannoat Connect to Devices");
             return;
@@ -65,8 +67,14 @@ export const sendData = async (data, ctxBle, ctx) => {
         devices.forEach(x => {
             if (ctx.aquarium.deviceList.filter(a => a.id == x.id).length > 0) {
                 let serviceid = ctx.aquarium.deviceList.filter(a => a.id == x.id)[0].serviceUUIDs[0];
+                console.log("sending to", x.id,"=>", data);
                 ctxBle.sendDatatoDevice(x, data, null, serviceid);
             }
         });
     });
+}
+
+
+export const searchAndConnect = async (bleCtx, ctx) => {
+
 }
