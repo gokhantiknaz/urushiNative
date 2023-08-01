@@ -25,7 +25,9 @@ const SimulationMainScreen = ({navigation}) => {
     const [activePoints, setActivePoints] = useState([]);
     const toggleCheckbox = () => setIsRealTime(!isRealTime);
 
+
     useEffect(() => {
+
         if (ctx.aquarium.deviceList.length == 0) {
             Alert.alert(t("warn"), t("noDevice"));
         }
@@ -35,12 +37,17 @@ const SimulationMainScreen = ({navigation}) => {
             let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
             let tmp = {...lightDetail};
             tmp.activeChannels = subModel.Channels.length;
+            tmp.sunRise = "----";
+            tmp.night = "----";
+            getData("activeSim").then(result => {
+                let hour = result[4];
+                let min = result[5];
 
-            getData("activeSim").then(result=>{
-                console.log(result);
-                tmp.sunRise="14:00";
-                tmp.night="23:59";
-                //TODO buradan başlama bitiş saatlerini al
+                let hour2 = result[13];
+                let min2 = result[14];
+
+                tmp.sunRise = hour + ":" + min;
+                tmp.night = hour2 + ":" + min2;
             });
 
             setlightdetail(tmp);
