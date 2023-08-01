@@ -81,7 +81,7 @@ export const Models = [
                     {label: "Cyan+", value: 3, Channel: 3,background:require("../assets/simBg/cyan.jpg")},
                     {label: "Actinic+", value: 4, Channel: 4,background:require("../assets/simBg/actinic.jpg")},
                     {label: "He White", value: 5, Channel: 5,background:require("../assets/simBg/white.jpg")},
-                    {label: "Magenta +", value: 6, Channel: 6, background:require("../assets/simBg/magenta.jpg")}
+                    {label: "Magenta+", value: 6, Channel: 6, background:require("../assets/simBg/magenta.jpg")}
                 ]
             },
 
@@ -92,7 +92,7 @@ export const Models = [
                     {label: "Sky", value: 3, Channel: 3},
                     {label: "Deep", value: 4, Channel: 4},
                     {label: "Cool White", value: 5, Channel: 5},
-                    {label: "Magenta +", value: 6, Channel: 6}
+                    {label: "Magenta+", value: 6, Channel: 6}
                 ]
             },
             {

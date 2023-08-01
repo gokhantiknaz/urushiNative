@@ -40,12 +40,12 @@
     "night": "Night",
     "activehours": "Active Hours",
     "maxlumen": "Max Lumen",
-    "maxpar": " Max Par",
+    "maxpar": "Max Par",
     "simulation": "Simulation",
     "scanning": "Scanning...",
     "scanBluetooth": "Scan Bluetooth Devices",
     "warn": "Warning",
-    "noDevicel": "No recorded device founded. Please save devices from connections section first!",
+    "noDevice": "No recorded device founded. Please save devices from connections section first!",
     "deletestorage": "This Will Delete all saved data.(aquariums,templates...)",
     "deletestoragesummary": "Clear All Saved Data Include Aquarium",
     "deleteaquariumsummary": "Delete Saved Aquarium",
@@ -64,6 +64,5 @@
     "connecting": "Connecting",
     "notsamemodel": "Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir",
     "connected": "Connected"
-
   }
 }
