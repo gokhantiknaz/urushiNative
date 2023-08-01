@@ -61,8 +61,7 @@ export const ManuelModTab = () => {
         setLoading(true);
         if (ctx.aquarium && ctx.aquarium.deviceList && ctx.aquarium.deviceList.length > 0) {
             let connectedDevices= await bleCtx.getBleManagerConnectedDevices();
-            showMessage(" Connecting devices", "load");
-
+            showMessage(t("connecting", "load"));
 
             ctx.aquarium.deviceList.forEach(x => {
                 //baglı değilse.

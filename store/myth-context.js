@@ -4,6 +4,7 @@ import useBlex from "../Hooks/useBlex";
 import React from 'react'
 import {useState} from "react";
 import {useEffect} from "react";
+import {useTranslation} from "react-i18next";
 
 
 export const MythContext = React.createContext({
@@ -11,10 +12,12 @@ export const MythContext = React.createContext({
                                                    setTemplate: () => { },
                                                    setAquarium: () => { },
                                                    aquarium: {},
+                                                   t: useTranslation()
                                                });
 const MythContextProvider = ({children}) => {
     const [manuelTemlate, setManuelTemplate] = useState();
     const [selectedAquarium, setSelectedAquarium] = useState();
+    const [t] = useTranslation();
     const setTemplate = (template) => {
         setManuelTemplate(template);
     }
@@ -22,7 +25,7 @@ const MythContextProvider = ({children}) => {
         setSelectedAquarium(aq);
     }
     return (
-        <MythContext.Provider value={{manuelTemplate: manuelTemlate, setTemplate: setTemplate, setAquarium: setAq, aquarium: selectedAquarium}}>
+        <MythContext.Provider value={{manuelTemplate: manuelTemlate, setTemplate: setTemplate, setAquarium: setAq, aquarium: selectedAquarium, t: t}}>
             {children}
         </MythContext.Provider>
     )

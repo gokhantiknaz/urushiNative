@@ -54,7 +54,7 @@ const NewAquarium = () => {
                     );
 
                 if (unique_values && unique_values.length > 1) {
-                    showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
+                    showMessage(t("notsamemodel"));
                     return;
                 }
 
@@ -64,7 +64,7 @@ const NewAquarium = () => {
                     );
 
                 if (subModels && subModels.length > 1) {
-                    showMessage("Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir");
+                    showMessage(t("notsamemodel"));
                     return;
                 }
 

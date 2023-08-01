@@ -30,11 +30,10 @@ export const DeviceListTemp = (props) => {
                 //baglı değilse.
                 ctxBle.getBleManagerConnectedDevices().then(result => {
                     if (result.find(d => d.id == x.id)) {
-                        console.log("I:", x.name + " already connected");
-                        showMessage(x.name + " already connected", "load");
+                        showMessage(x.name + t("alreadyconnect)", "load"));
                     } else {
                         ctxBle.connectDevice(null, x.id).then(result => {
-                            showMessage(x.name + " device Connected", "load");
+                            showMessage(x.name + t("connected"), "load");
                             console.log("I:", x.name + " connected");
                         });
                     }

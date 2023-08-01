@@ -52,11 +52,17 @@
     "deleteaquarium": "Akvaryum Sil",
     "clearStorage": "Sıfırla",
     "chosoLanguage": "Dil Seçimi",
-    "aquariumDetail": "Akvaryum Detayı",
+    "aquariumDetail": "Akvaryum Detay",
     "lights": "Işıklar",
     "modelName": "Modal Adı",
     "save": "Kaydet",
     "devicedetail": "Detay için Tıklayın",
-    "refrestempinfo": "Sıcaklığ değerini almak için yenile butonuna basınız."
+    "refrestempinfo": "Sıcaklığ değerini almak için yenile butonuna basınız.",
+    "cannotConnect":"Cihazlara bağlanılamadı",
+    "cannotconnectalldevices":"Tüm Cihazlara Bağlanılamadı.Lütfen cihazın açık olduğundan emin olun.",
+    "alreadyconnect": "zaten bağlı",
+    "connecting": "Bağlanıyor",
+    "notsamemodel": "Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir",
+    "connected": "Bağlandı"
   }
 }

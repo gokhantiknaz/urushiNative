@@ -57,7 +57,13 @@
     "modelName": "Model",
     "save": "Save",
     "devicedetail": "Click for Details",
-    "refrestempinfo": "Click Refresh button to get temperature"
+    "refrestempinfo": "Click Refresh button to get temperature",
+    "cannotConnect":"Cannot connect to devices",
+    "cannotconnectalldevices":"Cannot connect to all devices. Make Sure all devices are online.",
+    "alreadyconnect": "already connected",
+    "connecting": "Connecting",
+    "notsamemodel": "Bir akvaryum için aynı model cihazları seçmeniz gerekmektedir",
+    "connected": "Connected"
 
   }
 }
