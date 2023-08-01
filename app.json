@@ -35,11 +35,6 @@
     "web": {
       "favicon": "./assets/blackIcon.jpg"
     },
-    "extra": {
-      "eas": {
-        "projectId": "0d92669c-43fd-4af7-a4a4-4a6abfa0dd6a"
-      }
-    },
     "plugins": [
       [
         "expo-image-picker",
@@ -64,6 +59,11 @@
     },
     "updates": {
       "url": "https://u.expo.dev/0d92669c-43fd-4af7-a4a4-4a6abfa0dd6a"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "05759b9f-ffb3-48ed-94e2-c903522a5393"
+      }
     }
   }
 }
