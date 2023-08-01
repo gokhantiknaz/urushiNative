@@ -192,48 +192,6 @@ const LightSettings = (props) => {
                     </Col>
                 </Row>
 
-                {/*<View style={{flexDirection: 'row', alignItems: 'center'}}>*/}
-                {/*    <View style={{flex: 1, height: 1, backgroundColor: 'white'}}/>*/}
-                {/*    <View>*/}
-                {/*        <Text style={{width: 170, textAlign: 'center', color: 'white'}}>{t("devicenumber")}</Text>*/}
-                {/*    </View>*/}
-                {/*    <View style={{flex: 1, height: 1, backgroundColor: 'white'}}/>*/}
-                {/*</View>*/}
-
-
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <View style={{flex: 1, height: 1, backgroundColor: 'white'}}/>
-                    <View style={{flex: 1, padding: 10}}>
-                        {/*<Text style={{width: 170, textAlign: 'center', color: 'rgb(253,192,41)'}}*/}
-                        {/*      onPress={() => {props.navigation.navigate("temperatureSettings")}}>*/}
-                        {/*    {t("devicedetail")}*/}
-                        {/*</Text>*/}
-                        <Button_1 title= {t("devicedetail")}  onPress={() => {props.navigation.navigate("temperatureSettings")}} />
-                    </View>
-                    <View style={{flex: 1, height: 1, backgroundColor: 'white'}}/>
-                </View>
-
-                {/*<ScrollView>*/}
-                {/*    <Row>*/}
-                {/*        <Col numRows={3}>*/}
-                {/*            <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>*/}
-                {/*            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"Device Name"}</Text>*/}
-                {/*            <Text style={styles.text}>{"Sıcaklık:--"}</Text>*/}
-                {/*        </Col>*/}
-
-                {/*        <Col numRows={3}>*/}
-                {/*            <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>*/}
-                {/*            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"Device Name"}</Text>*/}
-                {/*            <Text style={styles.text}>{"Sıcaklık:--"}</Text>*/}
-                {/*        </Col>*/}
-
-                {/*        <Col numRows={3}>*/}
-                {/*            <Image source={images.newLogo} style={{height: 25, width: 80, alignSelf: "center"}}></Image>*/}
-                {/*            <Text style={[styles.text, {fontSize: 9, marginLeft: 15}]}>{"Device Name"}</Text>*/}
-                {/*            <Text style={styles.text}>{"Sıcaklık:--"}</Text>*/}
-                {/*        </Col>*/}
-                {/*    </Row>*/}
-                {/*</ScrollView>*/}
                 <Row>
                     <Col numRows={1}>
                         <View style={{

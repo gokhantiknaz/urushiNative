@@ -5,7 +5,6 @@ import Login from "../Screens/Login";
 import NewAquarium from "../Screens/NewAquarium";
 import Welcome_screen from '../Screens/Welcome';
 import LightDetail from "../Screens/LightDetail";
-import MainMenu from "../components/MainMenu";
 import UnderCons from "../components/UnderCons";
 import colors from "../components/colors";
 import {useTranslation} from "react-i18next";
@@ -28,11 +27,14 @@ function AuthScreens() {
     return (
 
         <Stack.Navigator screenOptions={{headerShown: false}}>
-            {/*<Stack.Screen name="spiralMenux" component={SprialMenu}/>*/}
-            {/*<Stack.Screen name="BleScreen" component={BLEScreen} options={{title: 'BLE Devce Scanner'}}/>*/}
-            {/*<Stack.Screen name="chart" component={SpectrumChart}/>*/}
             <Stack.Screen name="home" component={Welcome_screen} options={{
                 title: t('Welcome'), headerShown: false, headerTintColor: '#fff', headerStyle: {
+                    backgroundColor: colors.black,
+                }
+            }}/>
+
+            <Stack.Screen name="lights" component={LightDetail} options={{
+                title: t('lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>
@@ -43,16 +45,6 @@ function AuthScreens() {
             }}/>
             <Stack.Screen name="NewAquarium" component={NewAquarium} options={{
                 title: t('newAquarium'), headerShown: true, headerTintColor: '#fff', headerStyle: {
-                    backgroundColor: colors.black,
-                }
-            }}/>
-            <Stack.Screen name="detail" component={MainMenu} options={{
-                title: t('aquariumDetail'), headerShown: true, headerTintColor: '#fff', headerStyle: {
-                    backgroundColor: colors.black,
-                }
-            }}/>
-            <Stack.Screen name="lights" component={LightDetail} options={{
-                title: t('lights'), headerShown: true, headerTintColor: '#fff', headerStyle: {
                     backgroundColor: colors.black,
                 }
             }}/>

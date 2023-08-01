@@ -1,6 +1,6 @@
 import {BleManager} from "react-native-ble-plx";
-import {View, Text, PermissionsAndroid, Platform} from 'react-native'
-import React, {memo, useContext, useEffect, useMemo, useState} from 'react'
+import {PermissionsAndroid, Platform} from 'react-native'
+import { useEffect, useMemo, useState} from 'react'
 import {LogBox} from 'react-native';
 import base64 from "react-native-base64";
 import * as ExpoDevice from "expo-device";

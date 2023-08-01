@@ -12,7 +12,7 @@ export const MythContext = React.createContext({
                                                    setTemplate: () => { },
                                                    setAquarium: () => { },
                                                    aquarium: {},
-                                                   t: useTranslation()
+                                                   t: null
                                                });
 const MythContextProvider = ({children}) => {
     const [manuelTemlate, setManuelTemplate] = useState();

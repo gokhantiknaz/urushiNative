@@ -51,7 +51,7 @@ const Welcome_screen = ({navigation}) => {
     const navigate = (item) => {
         ctx.setAquarium(item);
         ctx.setTemplate()
-        navigation.navigate("detail", {aquarium: item});
+        navigation.navigate("lights", {aquarium: item});
     }
     const RowInfo = (item) => (
         <TouchableOpacity style={[styles.list, item.item.selectedClass]}

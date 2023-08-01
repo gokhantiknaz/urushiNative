@@ -14,7 +14,6 @@ import {listData} from "../../data/data";
 
 const LightDetail = (props) => {
 
-    const ctx = useContext(MythContext);
     const {navigation} = props;
     const {t, i18n} = useTranslation();
     const clickEventListener = item => {
@@ -92,69 +91,9 @@ const LightDetail = (props) => {
                     data={listData}
                     renderItem={renderRow}
                 />
-
             </View>
         </ImageBackground>
     );
 }
 
-const styles = StyleSheet.create({
-
-                                     container: {
-                                         flex: 1,
-                                         flexDirection: 'row',
-                                         flexWrap: 'wrap',
-                                         alignItems: 'flex-start',
-                                         backgroundColor: colors.black
-
-                                     },
-                                     image: {
-                                         width: 50,
-                                         height: 50,
-                                         alignContent: 'center',
-                                         alignItems: 'center',
-                                         marginTop: 20
-                                     },
-
-                                     card: {
-                                         justifyContent: 'center',
-                                         alignItems: 'center',
-                                         width: (Dimensions.get("window").width / 2) - 10,
-                                         margin: 5,
-                                         height: 130,
-                                         borderRadius: 20,
-
-                                     },
-
-                                     name: {
-                                         fontSize: 18,
-                                         flex: 1,
-                                         alignSelf: 'center',
-                                         color: '#fff',
-                                         fontWeight: 'bold',
-                                     },
-                                     count: {
-                                         fontSize: 14,
-                                         flex: 1,
-                                         alignSelf: 'center',
-                                         color: '#6666ff',
-                                     },
-                                     followButton: {
-                                         marginTop: 10,
-                                         height: 35,
-                                         width: 100,
-                                         padding: 10,
-                                         flexDirection: 'row',
-                                         justifyContent: 'center',
-                                         alignItems: 'center',
-                                         borderRadius: 30,
-                                         backgroundColor: 'white',
-                                         borderWidth: 1,
-                                         borderColor: '#dcdcdc',
-                                     },
-                                     followButtonText: {
-                                         color: '#dcdcdc',
-                                         fontSize: 12,
-                                     },
-                                 })
 export default LightDetail;

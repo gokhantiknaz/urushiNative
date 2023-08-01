@@ -66,25 +66,25 @@ const SimulationMainScreen = ({navigation}) => {
     const MainScreen = () => {
         return <>
             <View style={styles.container}>
-                <View style={{flex: 1, flexDirection: 'row', marginTop: 10, alignItems: "center"}}>
-                    <View style={{flex: 2, marginTop: 5, alignItems: "center"}}>
-                        <Text style={{color: 'white', marginLeft: 20}}>{t("lunar")}</Text>
-                    </View>
-                    <View style={{flex: 3, marginRight: 20}}>
-                        <SwitchSelector
-                            hasPadding
-                            options={options}
-                            //textStyle={{backgroundColor:'#AA3D0' }}
-                            buttonColor='rgb(223,135,29)'
-                            initial={indexLunar}
-                            value={indexLunar}
-                            onPress={(value) => {
-                                setIndexLunar(value);
-                                setLunar(value);
-                            }}
-                        />
-                    </View>
-                </View>
+                {/*<View style={{flex: 1, flexDirection: 'row', marginTop: 10, alignItems: "center"}}>*/}
+                {/*    <View style={{flex: 2, marginTop: 5, alignItems: "center"}}>*/}
+                {/*        <Text style={{color: 'white', marginLeft: 20}}>{t("lunar")}</Text>*/}
+                {/*    </View>*/}
+                {/*    <View style={{flex: 3, marginRight: 20}}>*/}
+                {/*        <SwitchSelector*/}
+                {/*            hasPadding*/}
+                {/*            options={options}*/}
+                {/*            //textStyle={{backgroundColor:'#AA3D0' }}*/}
+                {/*            buttonColor='rgb(223,135,29)'*/}
+                {/*            initial={indexLunar}*/}
+                {/*            value={indexLunar}*/}
+                {/*            onPress={(value) => {*/}
+                {/*                setIndexLunar(value);*/}
+                {/*                setLunar(value);*/}
+                {/*            }}*/}
+                {/*        />*/}
+                {/*    </View>*/}
+                {/*</View>*/}
                 <TouchableOpacity style={{flex: 2}} onPress={() => {
                     navigation.navigate("simulationdetail", {
                         isRealTime: isRealTime,
@@ -131,22 +131,22 @@ const SimulationMainScreen = ({navigation}) => {
                             <Text style={{color: "white"}}>{lightDetail.activeHours}</Text>
                         </View>
                     </View>
-                    <View style={styles.row}>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{t('maxpar')}</Text>
-                        </View>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{lightDetail.maxPar}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.row}>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{t('maxlumen')}</Text>
-                        </View>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{lightDetail.maxLumen}</Text>
-                        </View>
-                    </View>
+                    {/*<View style={styles.row}>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{t('maxpar')}</Text>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{lightDetail.maxPar}</Text>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
+                    {/*<View style={styles.row}>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{t('maxlumen')}</Text>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{lightDetail.maxLumen}</Text>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
 
                     <View style={styles.row}>
                         {/*<View style={{flex: 2}}>*/}
