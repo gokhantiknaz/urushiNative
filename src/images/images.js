@@ -11,6 +11,6 @@ export default {
     en: require('../../assets/en.png'),
     newLogo: require('../../assets/prizelogo.png'),
     refreshing: require('../../assets/refreshing.gif'),
-    transLogo: require('../../assets/iconNew-removebg-preview.png'),
+    transLogo: require('../../assets/prizelogo-removebg-preview.png'),
 
 }

@@ -2,7 +2,6 @@ import {ImageBackground, LogBox} from 'react-native';
 import {getApp, initializeApp} from 'firebase/app';
 import firebaseConfig from './src/firebase/firebaseConfig';
 import Home from "./src/navigation/navigation";
-import AppLoading from 'expo-app-loading';
 import Loading_Screen from './loading';
 import './ i18n';
 import {SheetProvider} from "react-native-actions-sheet";
@@ -25,8 +24,6 @@ import {
     OpenSans_800ExtraBold_Italic,
 } from '@expo-google-fonts/open-sans';
 import MythContextProvider from "./store/myth-context";
-import BleContextProvider from "./store/ble-context";
-import {clearStorage} from "./data/useAsyncStorage";
 
 
 try {

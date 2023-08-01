@@ -7,7 +7,7 @@ const Loading_Screen = ({children}) => {
             <Image
                 style={styles.image}
                 resizeMode="contain"
-                source={require("./assets/mythLoading.gif")}
+                source={require("./assets/loading2.gif")}
             />
             {children ?? <Text style={{color:"white"}}>Loading...</Text>}
 
