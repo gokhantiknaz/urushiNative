@@ -99,10 +99,10 @@ const SimulationMainScreen = ({navigation}) => {
 
                     <View style={styles.row}>
                         <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{t('activechannel')}</Text>
+                            <Text style={{color: "black"}}>{t('activechannel')}</Text>
                         </View>
                         <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{lightDetail.activeChannels}</Text>
+                            <Text style={{color: "black"}}>{lightDetail.activeChannels}</Text>
                         </View>
                     </View>
 
@@ -155,8 +155,8 @@ const SimulationMainScreen = ({navigation}) => {
 
                         <CheckBox
                             size={18}
-                            containerStyle={{width: "50%", backgroundColor: "black"}}
-                            textStyle={{color: "white"}}
+                            containerStyle={{width: "50%", backgroundColor: "trans"}}
+                            textStyle={{color: "black"}}
                             title="Real Time Simulation"
                             checked={isRealTime}
                             onPress={toggleCheckbox}

@@ -81,9 +81,10 @@ const Welcome_screen = ({navigation}) => {
                 <View style={styles.Image}>
                     <Image
                         source={images.transLogo}
-                        style={{height:256,width:256}}
+                        style={{height:250,width:256}}
                         resizeMode="center"
                     />
+                    <Text style={{color:"white",fontSize:30}}>PRIZE LED</Text>
                 </View>
                 <View style={styles.containerLang}>
                     {LANGUAGES.map((language) => {
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
                                      Image: {
                                         width: width, paddingTop: "15%", alignItems: "center"
                                      },
-                                     containerLang: {},
+                                     containerLang: {marginTop:20},
                                      button: {
                                          width: width,
                                          paddingTop: '5%',
