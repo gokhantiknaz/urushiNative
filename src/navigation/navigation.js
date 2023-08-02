@@ -29,7 +29,7 @@ function AuthScreens() {
         <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="home" component={Welcome_screen} options={{
                 title: t('Welcome'), headerShown: false, headerTintColor: '#fff', headerStyle: {
-                    backgroundColor: colors.black,
+                    backgroundColor: colors.darkGrey,
                 }
             }}/>
 
