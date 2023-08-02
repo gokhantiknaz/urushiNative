@@ -106,31 +106,31 @@ const SimulationMainScreen = ({navigation}) => {
                         </View>
                     </View>
 
-                    <View style={styles.row}>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{t('sunrise')}</Text>
-                        </View>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{lightDetail.sunRise}</Text>
-                        </View>
-                    </View>
+                    {/*<View style={styles.row}>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{t('sunrise')}</Text>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{lightDetail.sunRise}</Text>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
 
-                    <View style={styles.row}>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{t('night')}</Text>
-                        </View>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{lightDetail.night}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.row}>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{t('activehours')}</Text>
-                        </View>
-                        <View style={{flex: 2}}>
-                            <Text style={{color: "white"}}>{lightDetail.activeHours}</Text>
-                        </View>
-                    </View>
+                    {/*<View style={styles.row}>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{t('night')}</Text>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{lightDetail.night}</Text>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
+                    {/*<View style={styles.row}>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{t('activehours')}</Text>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={{flex: 2}}>*/}
+                    {/*        <Text style={{color: "white"}}>{lightDetail.activeHours}</Text>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
                     {/*<View style={styles.row}>*/}
                     {/*    <View style={{flex: 2}}>*/}
                     {/*        <Text style={{color: "white"}}>{t('maxpar')}</Text>*/}
@@ -148,26 +148,26 @@ const SimulationMainScreen = ({navigation}) => {
                     {/*    </View>*/}
                     {/*</View>*/}
 
-                    <View style={styles.row}>
-                        {/*<View style={{flex: 2}}>*/}
-                        {/*    <Text style={{color: "white"}}>Real Time Data</Text>*/}
-                        {/*</View>*/}
+                    {/*<View style={styles.row}>*/}
+                    {/*    /!*<View style={{flex: 2}}>*!/*/}
+                    {/*    /!*    <Text style={{color: "white"}}>Real Time Data</Text>*!/*/}
+                    {/*    /!*</View>*!/*/}
 
-                        <CheckBox
-                            size={18}
-                            containerStyle={{width: "50%", backgroundColor: "black"}}
-                            textStyle={{color: "white"}}
-                            title="Real Time Simulation"
-                            checked={isRealTime}
-                            onPress={toggleCheckbox}
-                            // Use ThemeProvider to make change for all checkbox
-                            iconType="material-community"
-                            checkedIcon="checkbox-marked"
-                            uncheckedIcon="checkbox-blank-outline"
-                            checkedColor="orange"
-                        />
+                    {/*    <CheckBox*/}
+                    {/*        size={18}*/}
+                    {/*        containerStyle={{width: "50%", backgroundColor: "black"}}*/}
+                    {/*        textStyle={{color: "white"}}*/}
+                    {/*        title="Real Time Simulation"*/}
+                    {/*        checked={isRealTime}*/}
+                    {/*        onPress={toggleCheckbox}*/}
+                    {/*        // Use ThemeProvider to make change for all checkbox*/}
+                    {/*        iconType="material-community"*/}
+                    {/*        checkedIcon="checkbox-marked"*/}
+                    {/*        uncheckedIcon="checkbox-blank-outline"*/}
+                    {/*        checkedColor="orange"*/}
+                    {/*    />*/}
 
-                    </View>
+                    {/*</View>*/}
                 </View>
             </View></>
     }
