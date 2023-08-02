@@ -30,7 +30,6 @@ export const Models = [
                     {label: "Deep", value: 4, Channel: 4, background: require("../assets/simBg/blue.jpg")}
                 ]
             }
-
         ]
     }
 
