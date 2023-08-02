@@ -85,24 +85,24 @@ const Welcome_screen = ({navigation}) => {
                         resizeMode="center"
                     />
                 </View>
-                {/*<View style={styles.containerLang}>*/}
-                {/*    {LANGUAGES.map((language) => {*/}
-                {/*        const selectedLanguage = language.code === selectedLanguageCode;*/}
-                {/*        return (*/}
-                {/*            <Pressable*/}
-                {/*                key={language.code}*/}
-                {/*                disabled={selectedLanguage}*/}
-                {/*                onPress={() => {*/}
-                {/*                    setLanguage(language.code);*/}
-                {/*                    saveData("language", language.code);*/}
-                {/*                }}>*/}
-                {/*                <Text style={[selectedLanguage ? styles.selectedText : styles.text]}>*/}
-                {/*                    {language.label}*/}
-                {/*                </Text>*/}
-                {/*            </Pressable>*/}
-                {/*        );*/}
-                {/*    })}*/}
-                {/*</View>*/}
+                <View style={styles.containerLang}>
+                    {LANGUAGES.map((language) => {
+                        const selectedLanguage = language.code === selectedLanguageCode;
+                        return (
+                            <Pressable
+                                key={language.code}
+                                disabled={selectedLanguage}
+                                onPress={() => {
+                                    setLanguage(language.code);
+                                    saveData("language", language.code);
+                                }}>
+                                <Text style={[selectedLanguage ? styles.selectedText : styles.text]}>
+                                    {language.label}
+                                </Text>
+                            </Pressable>
+                        );
+                    })}
+                </View>
                 <View style={styles.containerList}>
                     <Text style={{color: colors.test5, paddingBottom: "10%"}}>{t('selectaquarium')}</Text>
                     {aquarimList &&
