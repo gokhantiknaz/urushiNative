@@ -150,7 +150,7 @@ export const Simulation = (props) => {
                             id: 100,
                         });
 
-        setChannelName("Royal");
+        setChannelName("6000K");
         setChannel(1);
         setActions(tmpactions);
         createEmptyArray();
