@@ -22,7 +22,7 @@ const LightSettings = (props) => {
     const [t] = useTranslation();
     const [image, setImage] = useState(null);
     const [imageUri, setImageUri] = useState('');
-    const [modelName, setModelName] = useState("IKIGAI-STANDART")
+    const [modelName, setModelName] = useState("Prize Led")
 
     const styles = {
         app: {

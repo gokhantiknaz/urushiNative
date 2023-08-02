@@ -5,8 +5,8 @@ import tr from './assets/locales/tr.json';
 
 i18n.use(initReactI18next).init({
                                     compatibilityJSON: 'v3',
-                                    lng: 'en',
-                                    fallbackLng: 'en',
+                                    lng: 'tr',
+                                    fallbackLng: 'tr',
                                     resources: {
                                         en: en,
                                         tr: tr,

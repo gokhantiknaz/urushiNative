@@ -92,22 +92,22 @@ const MainSettings = (props) => {
 
         if (item.key == 1) {
             actualRowComponent = <View style={css.home_screen_list.row}>
-                <View style={css.home_screen_list.row_cell_timeplace}>
-                    <Pressable onPress={() => {i18n.changeLanguage("tr")}}>
+                {/*<View style={css.home_screen_list.row_cell_timeplace}>*/}
+                {/*    <Pressable onPress={() => {i18n.changeLanguage("tr")}}>*/}
 
-                        <Text style={[css.home_screen_list.row_place, {alignSelf: "center"}]}>Türkçe</Text>
-                        <Image style={styles.image} source={images.tr}></Image>
+                {/*        <Text style={[css.home_screen_list.row_place, {alignSelf: "center"}]}>Türkçe</Text>*/}
+                {/*        <Image style={styles.image} source={images.tr}></Image>*/}
 
-                    </Pressable>
-                </View>
-                <View style={css.home_screen_list.row_cell_timeplace}>
-                    <Pressable onPress={() => { i18n.changeLanguage("en")}} style={{alignSelf: "center"}}>
+                {/*    </Pressable>*/}
+                {/*</View>*/}
+                {/*<View style={css.home_screen_list.row_cell_timeplace}>*/}
+                {/*    <Pressable onPress={() => { i18n.changeLanguage("en")}} style={{alignSelf: "center"}}>*/}
 
-                        <Text style={[css.home_screen_list.row_place, {alignSelf: "center"}]}>English</Text>
-                        {/*<Text style={css.home_screen_list.row_time}>{t(desc)}</Text>*/}
-                        <Image style={styles.image} source={images.en}></Image>
-                    </Pressable>
-                </View>
+                {/*        <Text style={[css.home_screen_list.row_place, {alignSelf: "center"}]}>English</Text>*/}
+                {/*        /!*<Text style={css.home_screen_list.row_time}>{t(desc)}</Text>*!/*/}
+                {/*        <Image style={styles.image} source={images.en}></Image>*/}
+                {/*    </Pressable>*/}
+                {/*</View>*/}
             </View>;
         }
 
