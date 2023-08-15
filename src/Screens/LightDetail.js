@@ -2,11 +2,8 @@ import React, {useContext, useState} from 'react'
 import {Text, TouchableOpacity, View, Dimensions, TouchableNativeFeedback, TouchableHighlight, ImageBackground} from "react-native";
 import {StyleSheet, Image, FlatList, Alert, useWindowDimensions} from 'react-native';
 import {useTranslation} from "react-i18next";
-import colors from "../components/colors";
 import images from "../images/images";
 
-import {MythContext} from "../../store/myth-context";
-import {showConfirmDialog} from "../components/Confirm";
 import {StatusBar} from "expo-status-bar";
 import {Icon} from "react-native-elements";
 import * as css from "../Styles/styles";

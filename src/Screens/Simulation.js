@@ -1,4 +1,4 @@
-import React, {useContext,  useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {ImageBackground, StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler} from 'react-native';
 import SettingsChartScreen from "../components/SettingsChartScreen";
@@ -117,35 +117,45 @@ export const Simulation = (props) => {
             }
 
             subModel.Channels.map(x => {
-                tmpactions.push({text: x.label, icon: images.newLogo, name: x.label, position: 3, id: x.value, background: x.background});
+                tmpactions.push({
+                    text: x.label,
+                    icon: images.newLogo,
+                    name: x.label,
+                    position: 3,
+                    id: x.value,
+                    background: x.background
+                });
             });
+
+
+            setChannelName(subModel.Channels[0].label);
         }
 
         tmpactions.push({
-                            text: "Send",
-                            icon: require("../../assets/blue-check.png"),
-                            name: "bt_send",
-                            position: 1,
-                            id: 98,
+            text: "Send",
+            icon: require("../../assets/blue-check.png"),
+            name: "bt_send",
+            position: 1,
+            id: 98,
 
-                        });
+        });
         tmpactions.push({
-                            text: "Save",
-                            icon: require("../../assets/saveIcon.png"),
-                            name: "bt_save",
-                            position: 2,
-                            id: 99,
+            text: "Save",
+            icon: require("../../assets/saveIcon.png"),
+            name: "bt_save",
+            position: 2,
+            id: 99,
 
-                        });
+        });
         tmpactions.push({
-                            text: "Back",
-                            icon: require("../../assets/back.png"),
-                            name: "bt_back",
-                            position: 20,
-                            id: 100,
-                        });
+            text: "Back",
+            icon: require("../../assets/back.png"),
+            name: "bt_back",
+            position: 20,
+            id: 100,
+        });
 
-        setChannelName(subModel.Channels[0].label);
+
         setChannel(1);
         setActions(tmpactions);
         createEmptyArray();
@@ -314,7 +324,9 @@ export const Simulation = (props) => {
                 // })
             })
 
-            setTimeout(function () { setLoading(false);}, ctx.aquarium.deviceList.length * 1000)
+            setTimeout(function () {
+                setLoading(false);
+            }, ctx.aquarium.deviceList.length * 1000)
         } else {
             setLoading(false);
         }
@@ -454,7 +466,7 @@ export const Simulation = (props) => {
     }
 
     if (loading) {
-        return <Loading>{<Text style={{color:"white"}}>Connecting to devices...</Text>}</Loading>
+        return <Loading>{<Text style={{color: "white"}}>Connecting to devices...</Text>}</Loading>
     }
     return (
         <View style={styles.container}>
@@ -464,13 +476,18 @@ export const Simulation = (props) => {
                 source={background}
                 resizeMode='cover'
                 style={{width: "100%", height: "100%"}}>
-                <SettingsChartScreen data={data.Point} setPoints={setPoints} channel={channelName} bg={selectedChannel.background}/>
+                <SettingsChartScreen data={data.Point} setPoints={setPoints} channel={channelName}
+                                     bg={selectedChannel.background}/>
             </ImageBackground>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={() => {setActiveChannel("prev")}}>
+                <TouchableOpacity onPress={() => {
+                    setActiveChannel("prev")
+                }}>
                     <Icon reverse name='arrow-back-outline' type='ionicon' color='#163dab' raised={true}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setActiveChannel("next")}}>
+                <TouchableOpacity onPress={() => {
+                    setActiveChannel("next")
+                }}>
                     <Icon reverse name='arrow-forward-outline' type='ionicon' color='#163dab' raised={true}/>
                 </TouchableOpacity>
             </View>
@@ -508,25 +525,25 @@ export const Simulation = (props) => {
 }
 
 const styles = StyleSheet.create({
-                                     container: {
-                                         flex: 1,
-                                         backgroundColor: '#fff',
-                                         alignItems: 'center',
-                                         justifyContent: 'center',
-                                         paddingHorizontal: 10
-                                     },
-                                     buttonContainer: {
-                                         position: "absolute",
-                                         display: "flex",
-                                         justifyContent: 'flex-end',
-                                         bottom: 25,
-                                         left: 20,
-                                         width: '70%',
-                                         flexDirection: 'row',
-                                     },
-                                     button: {
-                                         position: 'relative',
-                                         marginRight: '20px',
-                                     }
-                                 });
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 10
+    },
+    buttonContainer: {
+        position: "absolute",
+        display: "flex",
+        justifyContent: 'flex-end',
+        bottom: 25,
+        left: 20,
+        width: '70%',
+        flexDirection: 'row',
+    },
+    button: {
+        position: 'relative',
+        marginRight: '20px',
+    }
+});
 

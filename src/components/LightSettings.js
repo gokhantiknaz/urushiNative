@@ -1,4 +1,19 @@
-import {Dimensions, Image, ImageBackground, StatusBar, View, StyleSheet, Text, TextInput, Button, Pressable, TouchableOpacity, Alert, ScrollView, Linking} from "react-native";
+import {
+    Dimensions,
+    Image,
+    ImageBackground,
+    StatusBar,
+    View,
+    StyleSheet,
+    Text,
+    TextInput,
+    Button,
+    Pressable,
+    TouchableOpacity,
+    Alert,
+    ScrollView,
+    Linking
+} from "react-native";
 import images from "../images/images";
 import React, {useContext, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
@@ -10,6 +25,7 @@ import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 import {BleContext} from "../../store/ble-context";
 import {Button_1} from "./export";
+import {showConfirmDialog} from "./Confirm";
 
 const width = Dimensions.get('window').width;
 const LightSettings = (props) => {
@@ -87,6 +103,22 @@ const LightSettings = (props) => {
     const Row = ({children}) => (
         <View style={styles.row}>{children}</View>
     )
+
+    const deleteAqu = async () => {
+        showConfirmDialog(null, () => {
+            getData("aquariumList").then((result) => {
+                let newArray = (result.filter(function (t) {
+                    return t.name !== ctx.aquarium.name
+                }));
+                removeItem("aquariumList").then(x => {
+                    saveData("aquariumList", newArray).then(res => {
+                        Alert.alert(t("success"), "Deleted Successfully");
+                        props.navigation.navigate("home");
+                    });
+                });
+            });
+        });
+    }
     const save = async () => {
 
         getData("aquariumList").then(result => {
@@ -107,12 +139,12 @@ const LightSettings = (props) => {
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
-                                                                   mediaTypes: ImagePicker.MediaTypeOptions.All,
-                                                                   allowsEditing: true,
-                                                                   aspect: [4, 3],
-                                                                   quality: 1,
-                                                                   base64: true
-                                                               });
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+            base64: true
+        });
         // console.log(result);
         if (!result.canceled) {
             setImage(result.assets[0].uri);
@@ -129,8 +161,10 @@ const LightSettings = (props) => {
                     <Col numRows={1}>
                         <TouchableOpacity onPress={pickImage}>
                             {selectedAquarium.image ?
-                                <Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}} style={{height: 300, width: Dimensions.get('window').width}}></Image> :
-                                <Image source={images.newLogo} style={{height: 300, width: Dimensions.get('window').width}}></Image>
+                                <Image source={{uri: `data:image/png;base64,${selectedAquarium.image}`}}
+                                       style={{height: 300, width: Dimensions.get('window').width}}></Image> :
+                                <Image source={images.newLogo}
+                                       style={{height: 300, width: Dimensions.get('window').width}}></Image>
                             }
                         </TouchableOpacity>
                     </Col>
@@ -155,7 +189,8 @@ const LightSettings = (props) => {
                         <Text style={styles.text}>{t("createddate")} :</Text>
                     </Col>
                     <Col numRows={3}>
-                        <Text style={styles.text}>{new Date(selectedAquarium.createdDate).toLocaleDateString() ?? ''}</Text>
+                        <Text
+                            style={styles.text}>{new Date(selectedAquarium.createdDate).toLocaleDateString() ?? ''}</Text>
                     </Col>
                 </Row>
                 {/*<Row>*/}
@@ -195,6 +230,37 @@ const LightSettings = (props) => {
                     <Col numRows={1}>
                         <View style={{
                             width: width,
+
+                            justifyContent: "center",
+                            alignItems: "center",
+                            bottom: "1%",
+                            marginTop: 20
+                        }}>
+
+                            <Pressable style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                paddingVertical: 12,
+                                paddingHorizontal: 32,
+                                borderRadius: 4,
+                                elevation: 3,
+                                backgroundColor: 'black',
+                            }} onPress={deleteAqu}>
+                                <Text style={{
+                                    fontSize: 16,
+                                    lineHeight: 21,
+                                    fontWeight: 'bold',
+                                    letterSpacing: 0.25,
+                                    color: 'white',
+                                }}>{t("delete")}</Text>
+                            </Pressable>
+                        </View>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col numRows={1}>
+                        <View style={{
+                            width: width,
                             justifyContent: "center",
                             alignItems: "center",
                             bottom: "5%",
@@ -204,6 +270,7 @@ const LightSettings = (props) => {
                         </View>
                     </Col>
                 </Row>
+
             </View>
         </ImageBackground>
     );
