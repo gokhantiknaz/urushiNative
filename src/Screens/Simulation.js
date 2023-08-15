@@ -1,9 +1,7 @@
-import React, {useContext, useDebugValue, useEffect, useState} from 'react';
+import React, {useContext,  useEffect, useState} from 'react';
 import {StatusBar} from 'expo-status-bar';
-import {ImageBackground, StyleSheet, Text, View, Button, TouchableOpacity, Alert, BackHandler} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {ImageBackground, StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler} from 'react-native';
 import SettingsChartScreen from "../components/SettingsChartScreen";
-import RadioForm from "react-native-simple-radio-button";
 import {FloatingAction} from "react-native-floating-action";
 import {getAllKeys, getData, removeItem, saveData} from "../../data/useAsyncStorage";
 import {MythContext} from "../../store/myth-context";
@@ -13,11 +11,8 @@ import {Icon} from '@rneui/themed';
 import bleContext, {BleContext} from "../../store/ble-context";
 import {useTranslation} from "react-i18next";
 import {SheetManager} from "react-native-actions-sheet";
-import {useIsMounted} from "../../Hooks/useIsMounted";
 import images from "../images/images";
-import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 import Loading from "../../loading";
-import deviceList from "../components/DeviceList";
 
 export const Simulation = (props) => {
 
@@ -150,7 +145,7 @@ export const Simulation = (props) => {
                             id: 100,
                         });
 
-        setChannelName("6000K");
+        setChannelName(subModel.Channels[0].label);
         setChannel(1);
         setActions(tmpactions);
         createEmptyArray();
