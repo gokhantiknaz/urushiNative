@@ -5,8 +5,6 @@ import {useTranslation} from "react-i18next";
 import images from "../images/images";
 import {BleContext} from "../../store/ble-context";
 import {Button_1} from "./export";
-import {Models} from "../../data/Model";
-import {findArrayElementById} from "../utils";
 
 const DeviceList = (props) => {
 

@@ -4,7 +4,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
 import {BleContext} from "../../store/ble-context";
 import {StatusBar} from "expo-status-bar";
-import {createEmptyArrayManuel, findArrayElementById, sendData} from "../utils";
+import { findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 
 const MainProgress = (props) => {
@@ -15,19 +15,15 @@ const MainProgress = (props) => {
 
     useEffect(() => {
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
-        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.subModel ?? "A", "Model");
         setSubModel(selectedsubModel);
 
     }, [])
 
     useEffect(() => {
-
         if (props.allProgress.length == 0) {
             return;
         }
-
-        console.log("allonof:", props.allOnOff);
-        console.log("all prog:", props.allProgress);
         if (progressObject && progressObject.channel) {
             if (!props.allProgress || props.allProgress.length === 0) {
                 return;

@@ -111,7 +111,7 @@ export const Simulation = (props) => {
         setManuelBytes(createEmptyArrayManuel(true, null, null, 10));
 
         if (model && model.SubModels) {
-            let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+            let subModel = findArrayElementById(model.SubModels, ctx.aquarium.subModel ?? "A", "Model");
             setSubModel(subModel);
             if (tmpPoints.length == 0) {
                 subModel?.Channels.forEach(ch => {

@@ -8,7 +8,7 @@ import {Icon} from "react-native-elements";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
 import {BleContext} from "../../store/ble-context";
-import {sendData} from "../utils";
+
 
 const TemplateList = (props) => {
 

@@ -1,7 +1,7 @@
 import {Text, View, StyleSheet, TouchableOpacity, ImageBackground, StatusBar, ScrollView, Dimensions, Alert} from "react-native";
 import React, {useContext, useEffect, useState} from "react";
 import {BleContext} from "../../store/ble-context";
-import {Button_1} from "../components/export";
+
 import {useTranslation} from "react-i18next";
 import images from "../images/images";
 import {MythContext} from "../../store/myth-context";

@@ -3,14 +3,13 @@ import images from "../images/images";
 import React, {useContext, useEffect, useState} from "react";
 import {MythContext} from "../../store/myth-context";
 import {useTranslation} from "react-i18next";
-import {clearStorage, getAllKeys, getData, removeItem, saveData} from "../../data/useAsyncStorage";
-import ImageSelect from "./ImagePicker";
+import {getData, removeItem, saveData} from "../../data/useAsyncStorage";
+
 import * as ImagePicker from "expo-image-picker";
 import {findArrayElementById} from "../utils";
 import {Models} from "../../data/Model";
 import {BleContext} from "../../store/ble-context";
 import {Button_1} from "./export";
-import {showMessage} from "react-native/Libraries/Utilities/LoadingView";
 
 const width = Dimensions.get('window').width;
 const LightSettings = (props) => {
@@ -62,7 +61,7 @@ const LightSettings = (props) => {
 
             if (selected.deviceList.length > 0) {
                 let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
-                let subModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+                let subModel = findArrayElementById(model.SubModels, ctx.aquarium.subModel ?? ctx.aquarium.modelId, "Model");
                 setModelName(model?.name + '-' + subModel?.Name);
             }
         });

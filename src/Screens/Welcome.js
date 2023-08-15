@@ -49,6 +49,9 @@ const Welcome_screen = ({navigation}) => {
         }
     };
     const navigate = (item) => {
+        if(item.deviceList.length>0)
+            item.subModel=item.deviceList[0].subModel;
+        console.log(item);
         ctx.setAquarium(item);
         ctx.setTemplate()
         navigation.navigate("lights", {aquarium: item});

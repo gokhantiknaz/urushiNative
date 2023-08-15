@@ -5,10 +5,8 @@ import {LogBox} from 'react-native';
 import base64 from "react-native-base64";
 import * as ExpoDevice from "expo-device";
 
-const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
-const SERVICE_UUID2 = "00002d8d-0000-1000-8000-00805f9b34fb"; // VOO
-const SERVICE_UUID3 = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
-const SERVICE_UUID4 = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+const SERVICE_UUID = "5b2487d6-52d2-4645-beff-88202e155af1";
+const SERVICE_UUID2 = "4d47083a-311c-11ee-be56-0242ac120002"; // VOO
 
 const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
@@ -20,7 +18,7 @@ const useBlex = () => {
     const [receviedData, setReceviedData] = useState();
     const [foundDevice, setFoundDevice] = useState(null);
 
-    const ModelIdArray = [SERVICE_UUID, SERVICE_UUID2, SERVICE_UUID3, SERVICE_UUID4];
+    const ModelIdArray = [SERVICE_UUID, SERVICE_UUID2];
 
     useEffect(() => {
         LogBox.ignoreLogs(['new NativeEventEmitter']);

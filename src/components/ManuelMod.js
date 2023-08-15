@@ -13,7 +13,7 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-
 import {SheetManager} from "react-native-actions-sheet";
 import {MythContext} from "../../store/myth-context";
 import {Button_1} from "./export";
-import {CountDown} from "./CountDown";
+
 import {createEmptyArrayManuel, findArrayElementById, sendData} from "../utils";
 import {Models} from "../../data/Model";
 import {BleContext} from "../../store/ble-context";
@@ -51,7 +51,7 @@ export const ManuelMod = (props) => {
 
     useEffect(() => {
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
-        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.subModel ?? ctx.aquarium.modelId, "Model");
         let tmp = selectedsubModel.Channels.map(x => {return {channel: x.Channel, value: 0}});
         setAllProgress(tmp);
     }, [])
@@ -65,7 +65,7 @@ export const ManuelMod = (props) => {
     const complete = (value) => {
         // all progress burda boşa atıyor. oncomplete metodundan kaynaklıdır diye düşünüyorum. o yüzden tekrar setliyorum.
         let model = findArrayElementById(Models, ctx.aquarium.modelId, "id");
-        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.submodelId ?? ctx.aquarium.modelId, "id");
+        let selectedsubModel = findArrayElementById(model.SubModels, ctx.aquarium.subModel ?? ctx.aquarium.modelId, "Model");
         let tmp = selectedsubModel.Channels.map(x => {return {channel: x.Channel, value: value == -1 ? 0 : value}});
         setAllProgress(tmp);
         setAllOnOff(value);
