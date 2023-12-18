@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "PRIZE LED",
+    "name": "PRIZELED",
     "slug": "Prize",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -16,17 +16,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.prizeled.prize",
-      "runtimeVersion": {
-        "policy": "sdkVersion"
-      }
+      "bundleIdentifier": "com.prizeled.prize"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/prizelogo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mythlights.prize",
+      "package": "com.prizeled.prize",
       "permissions": [
         "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_ADMIN",
