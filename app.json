@@ -16,21 +16,25 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.prizeled.prize"
+      "bundleIdentifier": "com.prizeled.prize",
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/prizelogo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.prizeled.prize",
+      "package": "com.mythlights.prize",
       "permissions": [
         "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_ADMIN",
         "android.permission.BLUETOOTH_CONNECT",
         "android.permission.BLUETOOTH_SCAN",
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/blackIcon.jpg"
@@ -52,13 +56,20 @@
           ],
           "bluetoothAlwaysPermission": "Allow $(PRODUCT_NAME) to connect to bluetooth devices"
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          }
+        }
       ]
     ],
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
     "updates": {
-      "url": "https://u.expo.dev/0d92669c-43fd-4af7-a4a4-4a6abfa0dd6a"
+      "url": "https://u.expo.dev/05759b9f-ffb3-48ed-94e2-c903522a5393"
     },
     "extra": {
       "eas": {
