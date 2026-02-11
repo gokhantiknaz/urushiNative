@@ -163,6 +163,7 @@ const useBlex = () => {
             })
         }
     }
+
     const getBleManagerConnectedDevices = async () => { //get connected devices
         try {
             const connectedDevices = await _BleManager.connectedDevices(ModelIdArray);

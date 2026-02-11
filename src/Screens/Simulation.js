@@ -34,8 +34,6 @@ export const Simulation = (props) => {
     const [data, setData] = useState({Channel: -1, Point: null});
     const [actions, setActions] = useState([]);
     const [bytes, setBytes] = useState([]);
-    const [manuelBytes, setManuelBytes] = useState([]);
-    const [isRealTime, setIsRealTime] = useState(false);
     const [loading, setLoading] = useState(false);
     const [activeSim, setActiveSim] = useState(null);
     const [isSimSent, setisSimSent] = useState(false);
@@ -98,12 +96,6 @@ export const Simulation = (props) => {
             tmpPoints = params.activePoints;
             setAllPoints(params.activePoints);
         }
-
-        if (params.isRealTime) {
-            setIsRealTime(params.isRealTime);
-        }
-
-        setManuelBytes(createEmptyArrayManuel(true, null, null, 10));
 
         if (model && model.SubModels) {
             let subModel = findArrayElementById(model.SubModels, ctx.aquarium.subModel ?? "A", "Model");
@@ -214,15 +206,7 @@ export const Simulation = (props) => {
 
             let selectedPoint = findArrayElementById(obj.Point, true, "selected");
             let powerWillBeSent = Math.round(selectedPoint.power);
-            if (isRealTime) {
-                powerWillBeSent = calculateSimulation(obj);
-            }
 
-
-            // let newByteArray = [...manuelBytes];
-            // newByteArray[obj.Channel + 2] = powerWillBeSent;
-            // setManuelBytes(newByteArray);
-            // sendData(newByteArray);
 
             let dataWillSent = createEmptyArrayManuel(true, obj.Channel, powerWillBeSent, 10);
             sendData(dataWillSent, ctxBle, ctx);
@@ -270,6 +254,14 @@ export const Simulation = (props) => {
         let tmpallpoints = [...allPoints];
         let data = [...bytes];
         let byteSira = 1;
+
+        let DUMMY_DATA = [
+            // <--- This is the data that is being used to create the draggable dots
+            {power: 0, time: 480, color: "lightsalmon"},
+            {power: 90, time: 720, color: "darkorange"},
+            {power: 90, time: 1080, color: "darkturquoise"},
+            {power: 0, time: 1250, color: "chartreuse"}
+        ];
 
         tmpallpoints.forEach(ch => {
             data[++byteSira] = (ch.Channel);
